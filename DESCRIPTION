@@ -1,0 +1,14 @@
+Package: confcons
+Type: Package
+Title: Confidence and Consistence of Predictive Distribution Models
+Version: 0.1.0
+Author: Ákos Bede-Fazekas, Imelda Somodi
+Maintainer: Ákos Bede-Fazekas <bfakos@gmail.com>
+Description: Calculate confidence and consistence that measures the
+    goodness-of-fit and transferability of predictive/potential distribution
+    models (incl. species distribution models).
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+URL: https://github.com/bfakos/confcons
+BugReports: https://github.com/bfakos/confcons/issues
