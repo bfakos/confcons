@@ -1,8 +1,12 @@
-﻿#' Calculate the two thresholds needed to create the extended confusion matrix
-#' 
+#TODO: split to 2/3 files
+#TODO: add roxygen comments
+#TODO: be aware of the 80char limit
+
+#' Calculate the two thresholds needed to create the extended confusion matrix
+#'
 #' Should be called using the full dataset containing both training and
 #' evaluation locations.
-#' 
+#'
 #' @param observations An integer or logical vector containing the binary observations where
 #'   presences are encoded as \code{1}s/\code{TRUE}s and absences as \code{0}s/\code{FALSE}s.
 #' @param predictions A numeric vector containing the predicted probabilities of occurrence.
