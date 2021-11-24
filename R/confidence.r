@@ -1,6 +1,22 @@
-#TODO: add roxygen comments
-#TODO: be aware of the 80char limit
+#TODO: update roxygen comments
 
+#' Calculate confidence of the predictive distribution model
+#'
+#' # TODO
+#'
+#' @param observations # TODO
+#' @param predictions # TODO
+#' @param thresholds # TODO
+#' @param type # TODO
+#' @return # TODO
+#' @examples
+#' set.seed(12345)
+#' # TODO
+#' \dontrun{
+#' # TODO
+#' }
+#' @seealso \code{\link{thresholds}} for calculating the two thresholds,
+#'   \code{\link{consistence}} for calculating consistence
 confidence <- function(observations, predictions, thresholds, type) {
 	if (!type %in% c("positive", "neutral")) stop("Parameter 'type' must be 'positive' or 'neutral'.")
 	occurrence_mask <- observations == 1

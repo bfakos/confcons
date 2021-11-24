@@ -1,6 +1,3 @@
-#TODO: add roxygen comments
-#TODO: be aware of the 80char limit
-
 #' Calculate the two thresholds needed to create the extended confusion matrix
 #'
 #' Should be called using the full dataset containing both training and
@@ -12,12 +9,12 @@
 #' @param predictions A numeric vector containing the predicted probabilities of
 #'   occurrence. \code{length(predictions)} should be equal to
 #'   \code{length(observations)} and the order of the elements should match.
-#' @return A named numeric vector of length 2. First element
+#' @return A named numeric vector of length 2. The first element
 #'   ('\code{threshold1}') is the mean of probabilities predicted to the absence
-#'   locations distinguishing certain absences from uncertain predictions.
-#'   Second element ('\code{threshold2}') is the mean of probabilities predicted
-#'   to the presence locations distinguishing certain absences from uncertain
-#'   predictions
+#'   locations distinguishing certain negatives (certain absences) from
+#'   uncertain predictions. The second element ('\code{threshold2}') is the mean
+#'   of probabilities predicted to the presence locations distinguishing certain
+#'   positives (certain presences) from uncertain predictions
 #' @examples
 #' set.seed(12345)
 #' thresholds(observations = c(rep(x = TRUE, times = 50), rep(x = FALSE, times = 50)), predictions = c(runif(n = 50, min = 0.3, max = 1), runif(n = 50, min = 0, max = 0.7)))
@@ -26,8 +23,8 @@
 #' thresholds(observations = c(rep(x = 0, times = 300), rep(x = 1, times = 100)), predictions = c(runif(n = 300, min = 0, max = 0.6), runif(n = 100, min = 0.4, max = 1))) # throw a warning
 #' thresholds(observations = c(FALSE, FALSE, TRUE, TRUE), predictions = c(0.2, 0.4, 0.7, 1.1)) # throw a warning
 #' }
-#' @seealso \code{\link{confidence}} for calculating confidences,
-#'   \code{\link{consistence}} for calculating consistences
+#' @seealso \code{\link{confidence}} for calculating confidence,
+#'   \code{\link{consistence}} for calculating consistence
 thresholds <- function(observations, predictions) {
 	if (missing(observations) | missing(predictions)) stop("Both parameter 'observations' and 'predictions' should be set.")
 	if (is.logical(observations)) observations <- as.integer(observations)
