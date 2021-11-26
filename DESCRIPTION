@@ -2,11 +2,12 @@ Package: confcons
 Type: Package
 Title: Confidence and Consistence of Predictive Distribution Models
 Version: 0.1.0
-Author: Ákos Bede-Fazekas, Imelda Somodi
-Maintainer: Ákos Bede-Fazekas <bfakos@ecolres.hu>
-Description: Calculate confidence and consistence that measures the
+Authors@R: c(
+    person(given = "Ákos", family = "Bede-Fazekas", email = "bfakos@ecolres.hu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2905-338X")),
+    person(given = "Imelda", family = "Somodi", role = "aut", comment = c(ORCID = "0000-0002-6207-3796")))
+Description: Calculate confidence and consistence that measure the
     goodness-of-fit and transferability of predictive/potential distribution
-    models (incl. species distribution models).
+    models (including species distribution models).
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
