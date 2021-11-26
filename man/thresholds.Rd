@@ -2,7 +2,7 @@
 % Please edit documentation in R/thresholds.r
 \name{thresholds}
 \alias{thresholds}
-\title{Calculate the two thresholds needed to create the extended confusion matrix}
+\title{Thresholds needed to create the extended confusion matrix}
 \usage{
 thresholds(observations, predictions)
 }
@@ -12,8 +12,9 @@ observations where presences are encoded as \code{1}s/\code{TRUE}s and
 absences as \code{0}s/\code{FALSE}s.}
 
 \item{predictions}{A numeric vector containing the predicted probabilities of
-occurrence. \code{length(predictions)} should be equal to
-\code{length(observations)} and the order of the elements should match.}
+occurrence typically within the \code{[0, 1]} interval.
+\code{length(predictions)} should be equal to \code{length(observations)}
+and the order of the elements should match.}
 }
 \value{
 A named numeric vector of length 2. The first element
@@ -21,11 +22,16 @@ A named numeric vector of length 2. The first element
   locations distinguishing certain negatives (certain absences) from
   uncertain predictions. The second element ('\code{threshold2}') is the mean
   of probabilities predicted to the presence locations distinguishing certain
-  positives (certain presences) from uncertain predictions
+  positives (certain presences) from uncertain predictions.
 }
 \description{
+Calculate the two thresholds distinguishing certain negatives/positives from
+uncertain predictions. The thresholds are needed to create the extended
+confusion matrix and are further used for confidence calculation.
+}
+\note{
 Should be called using the full dataset containing both training and
-evaluation locations.
+  evaluation locations.
 }
 \examples{
 set.seed(12345)

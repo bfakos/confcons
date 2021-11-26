@@ -2,24 +2,49 @@
 % Please edit documentation in R/confidence.r
 \name{confidence}
 \alias{confidence}
-\title{Calculate confidence of the predictive distribution model}
+\title{Confidence of the predictive distribution model}
 \usage{
-confidence(observations, predictions, thresholds, type)
+confidence(
+  observations,
+  predictions,
+  thresholds = confcons::thresholds(observations = observations, predictions =
+    predictions),
+  type = "positive"
+)
 }
 \arguments{
-\item{observations}{# TODO}
+\item{observations}{An integer or logical vector containing the binary
+observations where presences are encoded as \code{1}s/\code{TRUE}s and
+absences as \code{0}s/\code{FALSE}s.}
 
-\item{predictions}{# TODO}
+\item{predictions}{A numeric vector containing the predicted probabilities of
+occurrence typically within the \code{[0, 1]} interval.
+\code{length(predictions)} should be equal to \code{length(observations)}
+and the order of the elements should match.}
 
-\item{thresholds}{# TODO}
+\item{thresholds}{A numeric vector of length 2, typically calculated by
+\code{\link{thresholds}()}. The first element distinguishes certain
+negatives (certain absences) from uncertain predictions. The second element
+distinguishes certain positives (certain presences) from uncertain
+predictions. If missing, \code{confcons::thresholds(observations =
+observations, predictions = predictions)} is called.}
 
-\item{type}{# TODO}
+\item{type}{A character vector of length one containing the value "positive"
+(for calculating \emph{confidence in positive predictions} within known
+presences (CPP)) or "neutral" (for calculating \emph{confidence in
+predictions} within known presences (CP)). Defaults to "positive".}
 }
 \value{
-# TODO
+A numeric vector of length one. It is either NA_real_ or positive
+  number within the \code{[0, 1]} interval.
 }
 \description{
-# TODO
+Calculate the confidence in positive predictions within known presences (CPP,
+\code{type = "positive"}) or confidence in predictions within known presences
+(CP, \code{type = "neutral"}) based on the occurrence \code{observations},
+the probability of occurrence \code{predictions} and the two
+\code{thresholds} distinguishing certain negatives/positives from uncertain
+predictions.
 }
 \examples{
 set.seed(12345)
