@@ -2,6 +2,7 @@ Package: confcons
 Type: Package
 Title: Confidence and Consistence of Predictive Distribution Models
 Version: 0.1.0
+Date: 2021-11-28
 Authors@R: c(
     person(given = "Ákos", family = "Bede-Fazekas", email = "bfakos@ecolres.hu", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-2905-338X")),
     person(given = "Imelda", family = "Somodi", role = "aut", comment = c(ORCID = "0000-0002-6207-3796")))
