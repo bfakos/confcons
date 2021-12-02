@@ -1,0 +1,40 @@
+---
+title: "Introduction to package 'confcons'"
+author: Ákos Bede-Fazekas, Imelda Somodi
+date: "`r format(Sys.Date(), '%Y-%m-%d')`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+vignette: >
+  %\VignetteIndexEntry{Introduction to package 'confcons'}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+# Confidence and consistence: what are they and why using them?
+
+TODO: some sentence about the novel measures; citation to the upcoming paper
+
+# Functions for calculating confidence and consistence
+
+TODO: writing about the functions
+
+# Workflow
+
+TODO: create environment & presence/absence data, train a simple model (GLM), evaluate model
+
+```{r setup}
+library(confcons)
+```
+
+# Interpretation of the measures
+
+TODO: examples with interpretation
+
