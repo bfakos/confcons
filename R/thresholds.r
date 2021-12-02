@@ -25,7 +25,7 @@
 #' thresholds(observations = c(rep(x = 0, times = 300), rep(x = 1, times = 100)), predictions = c(runif(n = 300, min = 0, max = 0.6), runif(n = 100, min = 0.4, max = 1))) # throw a warning
 #' thresholds(observations = c(FALSE, FALSE, TRUE, TRUE), predictions = c(0.2, 0.4, 0.7, 1.1)) # throw a warning
 #' }
-#' @note Should be called using the full dataset containing both training and
+#' @note \code{thresholds()} should be called using the whole dataset containing both training and
 #'   evaluation locations.
 #' @seealso \code{\link{confidence}} for calculating confidence,
 #'   \code{\link{consistence}} for calculating consistence
