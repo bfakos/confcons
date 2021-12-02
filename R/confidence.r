@@ -82,6 +82,7 @@
 #'   example below and the vignette.
 #' @seealso \code{\link{thresholds}} for calculating the two thresholds,
 #'   \code{\link{consistence}} for calculating consistence
+#' @export
 confidence <- function(observations, predictions, thresholds = confcons::thresholds(observations = observations, predictions = predictions), type = "positive") {
 	if (missing(observations) | missing(predictions)) stop("Both parameter 'observations' and 'predictions' should be set.")
 	if (is.logical(observations)) observations <- as.integer(observations)

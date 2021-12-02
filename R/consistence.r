@@ -48,6 +48,7 @@
 #' }
 #' @seealso \code{\link{thresholds}} for calculating the two thresholds,
 #'   \code{\link{confidence}} for calculating confidence
+#' @export
 consistence <- function(conf_train, conf_eval) {
 	if (missing(conf_train) | missing(conf_eval)) stop("Both parameter 'conf_train' and 'conf_eval' should be set.")
 	if (!is.numeric(conf_train)) stop("Parameter 'conf_train' should be a numeric vector of length one.")

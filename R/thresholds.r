@@ -45,6 +45,7 @@
 #'   both training and evaluation locations.
 #' @seealso \code{\link{confidence}} for calculating confidence,
 #'   \code{\link{consistence}} for calculating consistence
+#' @export
 thresholds <- function(observations, predictions) {
 	if (missing(observations) | missing(predictions)) stop("Both parameter 'observations' and 'predictions' should be set.")
 	if (is.logical(observations)) observations <- as.integer(observations)
