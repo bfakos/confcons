@@ -3,7 +3,7 @@
 #' Calculate the confidence in positive predictions within known presences (CPP,
 #' \code{type = "positive"}) or confidence in predictions within known presences
 #' (CP, \code{type = "neutral"}) based on the occurrence \code{observations},
-#' the probability of occurrence \code{predictions} and the two
+#' the \code{predictions} of the probability of occurrence and the two
 #' \code{thresholds} distinguishing certain negatives/positives from uncertain
 #' predictions.
 #'
@@ -19,19 +19,51 @@
 #'   negatives (certain absences) from uncertain predictions. The second element
 #'   distinguishes certain positives (certain presences) from uncertain
 #'   predictions. If missing, \code{confcons::thresholds(observations =
-#'   observations, predictions = predictions)} is called.
+#'   observations, predictions = predictions)} is called, but see section 'Note'
+#'   about why you should not use the default value.
 #' @param type A character vector of length one containing the value "positive"
 #'   (for calculating \emph{confidence in positive predictions} within known
 #'   presences (CPP)) or "neutral" (for calculating \emph{confidence in
 #'   predictions} within known presences (CP)). Defaults to "positive".
-#' @return A numeric vector of length one. It is either NA_real_ or positive
+#' @return A numeric vector of length one. It is either NA_real_ or a positive
 #'   number within the \code{[0, 1]} interval.
 #' @examples
 #' set.seed(12345)
-#' # TODO
-#' \dontrun{
-#' # TODO
-#' }
+#'
+#' # Using logical observations, default 'thresholds' and 'type' parameter:
+#' observations_1000_logical <- c(rep(x = FALSE, times = 500), rep(x = TRUE, times = 500))
+#' predictions_1000 <- c(runif(n = 500, min = 0, max = 0.7), runif(n = 500, min = 0.3, max = 1))
+#' confidence(observations = observations_1000_logical, predictions = predictions_1000) # 0.561
+#'
+#' # Using integer observations, default 'thresholds' parameter, both 'positive' and 'neutral' confidence type:
+#' observations_4000_integer <- c(rep(x = 0L, times = 3000), rep(x = 1L, times = 1000))
+#' predictions_4000 <- c(runif(n = 3000, min = 0, max = 0.8), runif(n = 1000, min = 0.2, max = 0.9))
+#' confidence(observations = observations_4000_integer, predictions = predictions_4000, type = "positive") # 0.691
+#' confidence(observations = observations_4000_integer, predictions = predictions_4000, type = "neutral") # 0.778
+#'
+#' # Using some previously selected thresholds:
+#' strict_thresholds <- c(0.1, 0.9)
+#' permissive_thresholds <- c(0.4, 0.5)
+#' percentile_thresholds <- quantile(x = predictions_4000[observations_4000_integer == 1], probs = c(0.1, 0.9)) # 10th and 90th percentile of the predictions to presence locations (0.2697622, 0.8192428)
+#' confidence(observations = observations_4000_integer, predictions = predictions_4000, thresholds = strict_thresholds, type = "neutral") # 0
+#' confidence(observations = observations_4000_integer, predictions = predictions_4000, thresholds = permissive_thresholds, type = "neutral") # 0.836
+#' confidence(observations = observations_4000_integer, predictions = predictions_4000, thresholds = percentile_thresholds, type = "neutral") # 0.2
+#'
+#' # Real-life case (thresholds calculated from the whole dataset, confidence from the evaluation subset):
+#' dataset <- data.frame(
+#' 	observations = observations_4000_integer,
+#' 	predictions = predictions_4000,
+#' 	for_evaluation = c(rep(x = FALSE, times = 250), rep(x = TRUE, times = 250), rep(x = FALSE, times = 250), rep(x = TRUE, times = 250))
+#' )
+#' thresholds_whole <- thresholds(observations = dataset$observations, predictions = dataset$predictions)
+#' (confidence_evaluation <- confidence(observations = dataset$observations[dataset$for_evaluation], predictions = dataset$predictions[dataset$for_evaluation], thresholds = thresholds_whole)) # 0.671
+#' @note Technically, confidence can be calculated for the training subset, the
+#'   evaluation subset, or the whole dataset as well. Note, however, that there
+#'   is not so much sence to calculate confidence in the training subset, except
+#'   for using the result for \code{\link{consistence}} calculation. If you need
+#'   only the confidence measure, calculate it on the evaluation subset using
+#'   \code{\link{thresholds}} previously determined on the whole dataset (i.e.,
+#'   do not use the default value of parameter \code{thresholds}).
 #' @seealso \code{\link{thresholds}} for calculating the two thresholds,
 #'   \code{\link{consistence}} for calculating consistence
 confidence <- function(observations, predictions, thresholds = confcons::thresholds(observations = observations, predictions = predictions), type = "positive") {
