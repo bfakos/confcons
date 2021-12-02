@@ -2,26 +2,61 @@
 % Please edit documentation in R/consistence.r
 \name{consistence}
 \alias{consistence}
-\title{Calculate consistence of the predictive distribution model}
+\title{Consistence of the predictive distribution model}
 \usage{
 consistence(conf_train, conf_eval)
 }
 \arguments{
-\item{conf_train}{# TODO}
+\item{conf_train}{\strong{Conf}idence calculated on the \strong{train}ing
+subset: a numeric vector of length one, containing a number within the
+\code{[0, 1]} interval. Typically calculated by function
+\code{\link{confidence}()} using the training subset.}
 
-\item{conf_eval}{# TODO}
+\item{conf_eval}{\strong{Conf}idence calculated on the \strong{eval}uation
+subset: a numeric vector of length one, containing a number within the
+\code{[0, 1]} interval. Typically calculated by function
+\code{\link{confidence}()} using the evaluation subset.}
 }
 \value{
-# TODO
+A numeric vector of length one. It is either NA_real_ or a number
+  within the \code{[-1, 1]} interval. Typically, it falls within the
+  \code{[-1, 0]} interval. Greater value indicates more
+  consistent/transferable model. I.e, the closer the returned value is to -1,
+  the less consistence/transferable the model is. Value above 0 might be an
+  artifact or might indicate that the training and evaluation subsets were
+  accidentally swapped.
 }
 \description{
-# TODO
+Calculates consistence of the model as the difference of the confidence
+calculated on the evaluation and the confidence calculated on the training
+subset. Consistence serves as a proxy for model's transferability.
 }
 \examples{
+# Simple examples:
+consistence(conf_train = 0.93, conf_eval = 0.21) # -0.72 - hardly consistent/transferable model
+consistence(conf_train = 0.43, conf_eval = 0.35) # -0.08 - consistent/transferable model, although not so confident
+consistence(conf_train = 0.87, conf_eval = 0.71) # -0.16 - a consistent/transferable model that is confident as well
+consistence(conf_train = 0.67, conf_eval = 0.78) # 0.11 - positive value might be an artifact
+consistence(conf_train = 0.67, conf_eval = NA_real_) # NA
+
+# Real-life case:
 set.seed(12345)
-# TODO
+observations <- c(rep(x = FALSE, times = 500), rep(x = TRUE, times = 500))
+predictions <- c(runif(n = 500, min = 0, max = 0.7), runif(n = 500, min = 0.3, max = 1))
+dataset <- data.frame(
+	observations = observations,
+	predictions = predictions,
+	for_evaluation = c(rep(x = FALSE, times = 250), rep(x = TRUE, times = 250), rep(x = FALSE, times = 250), rep(x = TRUE, times = 250))
+)
+thresholds_whole <- thresholds(observations = dataset$observations, predictions = dataset$predictions)
+confidence_training <- confidence(observations = dataset$observations[!dataset$for_evaluation], predictions = dataset$predictions[!dataset$for_evaluation], thresholds = thresholds_whole) # 0.602
+confidence_evaluation <- confidence(observations = dataset$observations[dataset$for_evaluation], predictions = dataset$predictions[dataset$for_evaluation], thresholds = thresholds_whole) # 0.520
+consistence(conf_train = confidence_training, conf_eval = confidence_evaluation) # -0.083 - consistent/transferable model
+
+# Wrong parameterization:
 \dontrun{
-# TODO
+consistence(conf_train = 1.3, conf_eval = 0.5) # warning
+consistence(conf_train = 0.6, conf_eval = c(0.4, 0.5)) # warning
 }
 }
 \seealso{

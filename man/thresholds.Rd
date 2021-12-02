@@ -22,7 +22,9 @@ A named numeric vector of length 2. The first element
   locations distinguishing certain negatives (certain absences) from
   uncertain predictions. The second element ('\code{threshold2}') is the mean
   of probabilities predicted to the presence locations distinguishing certain
-  positives (certain presences) from uncertain predictions.
+  positives (certain presences) from uncertain predictions. For a typical
+  model better than the random guess, the first element is smaller than the
+  second one.
 }
 \description{
 Calculate the two thresholds distinguishing certain negatives/positives from
@@ -30,16 +32,30 @@ uncertain predictions. The thresholds are needed to create the extended
 confusion matrix and are further used for confidence calculation.
 }
 \note{
-Should be called using the full dataset containing both training and
-  evaluation locations.
+\code{thresholds()} should be called using the whole dataset containing
+  both training and evaluation locations.
 }
 \examples{
 set.seed(12345)
-thresholds(observations = c(rep(x = TRUE, times = 50), rep(x = FALSE, times = 50)), predictions = c(runif(n = 50, min = 0.3, max = 1), runif(n = 50, min = 0, max = 0.7)))
-thresholds(observations = c(rep(x = 0L, times = 300), rep(x = 1L, times = 100)), predictions = c(runif(n = 300, min = 0, max = 0.6), runif(n = 100, min = 0.4, max = 1)))
+
+# Using logical observations:
+observations_1000_logical <- c(rep(x = FALSE, times = 500), rep(x = TRUE, times = 500))
+predictions_1000 <- c(runif(n = 500, min = 0, max = 0.7), runif(n = 500, min = 0.3, max = 1))
+thresholds(observations = observations_1000_logical, predictions = predictions_1000) # 0.370 0.650
+
+# Using integer observations:
+observations_4000_integer <- c(rep(x = 0L, times = 3000), rep(x = 1L, times = 1000))
+predictions_4000 <- c(runif(n = 3000, min = 0, max = 0.8), runif(n = 1000, min = 0.2, max = 0.9))
+thresholds(observations = observations_4000_integer, predictions = predictions_4000) # 0.399 0.545
+
+# Wrong parameterization:
 \dontrun{
-thresholds(observations = c(rep(x = 0, times = 300), rep(x = 1, times = 100)), predictions = c(runif(n = 300, min = 0, max = 0.6), runif(n = 100, min = 0.4, max = 1))) # throw a warning
-thresholds(observations = c(FALSE, FALSE, TRUE, TRUE), predictions = c(0.2, 0.4, 0.7, 1.1)) # throw a warning
+thresholds(observations = observations_1000_logical, predictions = predictions_4000) # error
+set.seed(12345)
+observations_4000_numeric <- c(rep(x = 0, times = 3000), rep(x = 1, times = 1000))
+predictions_4000_strange <- c(runif(n = 3000, min = -0.3, max = 0.4), runif(n = 1000, min = 0.6, max = 1.5))
+thresholds(observations = observations_4000_numeric, predictions = predictions_4000_strange) # multiple warnings
+thresholds(observations = as.integer(observations_4000_numeric)[predictions_4000_strange >= 0 & predictions_4000_strange <= 1], predictions = predictions_4000_strange[predictions_4000_strange >= 0 & predictions_4000_strange <= 1]) # OK
 }
 }
 \seealso{
