@@ -24,7 +24,8 @@ A named numeric vector of length 2. The first element
   of probabilities predicted to the presence locations distinguishing certain
   positives (certain presences) from uncertain predictions. For a typical
   model better than the random guess, the first element is smaller than the
-  second one.
+  second one. The returned value might contain \code{NaN}(s) if the number of
+  observed presences and/or absences is 0.
 }
 \description{
 Calculate the two thresholds distinguishing certain negatives/positives from
