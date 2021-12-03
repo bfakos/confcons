@@ -33,30 +33,48 @@ subset. Consistence serves as a proxy for model's transferability.
 }
 \examples{
 # Simple examples:
-consistence(conf_train = 0.93, conf_eval = 0.21) # -0.72 - hardly consistent/transferable model
-consistence(conf_train = 0.43, conf_eval = 0.35) # -0.08 - consistent/transferable model, although not so confident
-consistence(conf_train = 0.87, conf_eval = 0.71) # -0.16 - a consistent/transferable model that is confident as well
-consistence(conf_train = 0.67, conf_eval = 0.78) # 0.11 - positive value might be an artifact
-consistence(conf_train = 0.67, conf_eval = NA_real_) # NA
+consistence(conf_train = 0.93,
+            conf_eval = 0.21) # -0.72 - hardly consistent/transferable model
+consistence(conf_train = 0.43,
+            conf_eval = 0.35) # -0.08 - consistent/transferable model, although not so confident
+consistence(conf_train = 0.87,
+            conf_eval = 0.71) # -0.16 - a consistent/transferable model that is confident as well
+consistence(conf_train = 0.67,
+            conf_eval = 0.78) # 0.11 - positive value might be an artifact
+consistence(conf_train = 0.67,
+            conf_eval = NA_real_) # NA
 
 # Real-life case:
 set.seed(12345)
-observations <- c(rep(x = FALSE, times = 500), rep(x = TRUE, times = 500))
-predictions <- c(runif(n = 500, min = 0, max = 0.7), runif(n = 500, min = 0.3, max = 1))
+observations <- c(rep(x = FALSE, times = 500),
+                 rep(x = TRUE, times = 500))
+predictions <- c(runif(n = 500, min = 0, max = 0.7),
+                 runif(n = 500, min = 0.3, max = 1))
 dataset <- data.frame(
 	observations = observations,
 	predictions = predictions,
-	for_evaluation = c(rep(x = FALSE, times = 250), rep(x = TRUE, times = 250), rep(x = FALSE, times = 250), rep(x = TRUE, times = 250))
+	for_evaluation = c(rep(x = FALSE, times = 250),
+	                   rep(x = TRUE, times = 250),
+	                   rep(x = FALSE, times = 250),
+	                   rep(x = TRUE, times = 250))
 )
-thresholds_whole <- thresholds(observations = dataset$observations, predictions = dataset$predictions)
-confidence_training <- confidence(observations = dataset$observations[!dataset$for_evaluation], predictions = dataset$predictions[!dataset$for_evaluation], thresholds = thresholds_whole) # 0.602
-confidence_evaluation <- confidence(observations = dataset$observations[dataset$for_evaluation], predictions = dataset$predictions[dataset$for_evaluation], thresholds = thresholds_whole) # 0.520
-consistence(conf_train = confidence_training, conf_eval = confidence_evaluation) # -0.083 - consistent/transferable model
+thresholds_whole <- thresholds(observations = dataset$observations,
+                               predictions = dataset$predictions)
+confidence_training <- confidence(observations = dataset$observations[!dataset$for_evaluation],
+                                  predictions = dataset$predictions[!dataset$for_evaluation],
+                                  thresholds = thresholds_whole) # 0.602
+confidence_evaluation <- confidence(observations = dataset$observations[dataset$for_evaluation],
+                                    predictions = dataset$predictions[dataset$for_evaluation],
+                                    thresholds = thresholds_whole) # 0.520
+consistence(conf_train = confidence_training,
+            conf_eval = confidence_evaluation) # -0.083 - consistent/transferable model
 
 # Wrong parameterization:
 \dontrun{
-consistence(conf_train = 1.3, conf_eval = 0.5) # warning
-consistence(conf_train = 0.6, conf_eval = c(0.4, 0.5)) # warning
+consistence(conf_train = 1.3,
+            conf_eval = 0.5) # warning
+consistence(conf_train = 0.6,
+            conf_eval = c(0.4, 0.5)) # warning
 }
 }
 \seealso{

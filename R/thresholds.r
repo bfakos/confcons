@@ -23,23 +23,35 @@
 #' set.seed(12345)
 #'
 #' # Using logical observations:
-#' observations_1000_logical <- c(rep(x = FALSE, times = 500), rep(x = TRUE, times = 500))
-#' predictions_1000 <- c(runif(n = 500, min = 0, max = 0.7), runif(n = 500, min = 0.3, max = 1))
-#' thresholds(observations = observations_1000_logical, predictions = predictions_1000) # 0.370 0.650
+#' observations_1000_logical <- c(rep(x = FALSE, times = 500),
+#'                                rep(x = TRUE, times = 500))
+#' predictions_1000 <- c(runif(n = 500, min = 0, max = 0.7),
+#'                       runif(n = 500, min = 0.3, max = 1))
+#' thresholds(observations = observations_1000_logical,
+#'            predictions = predictions_1000) # 0.370 0.650
 #'
 #' # Using integer observations:
-#' observations_4000_integer <- c(rep(x = 0L, times = 3000), rep(x = 1L, times = 1000))
-#' predictions_4000 <- c(runif(n = 3000, min = 0, max = 0.8), runif(n = 1000, min = 0.2, max = 0.9))
-#' thresholds(observations = observations_4000_integer, predictions = predictions_4000) # 0.399 0.545
+#' observations_4000_integer <- c(rep(x = 0L, times = 3000),
+#'                                rep(x = 1L, times = 1000))
+#' predictions_4000 <- c(runif(n = 3000, min = 0, max = 0.8),
+#'                       runif(n = 1000, min = 0.2, max = 0.9))
+#' thresholds(observations = observations_4000_integer,
+#'            predictions = predictions_4000) # 0.399 0.545
 #'
 #' # Wrong parameterization:
 #' \dontrun{
-#' thresholds(observations = observations_1000_logical, predictions = predictions_4000) # error
+#' thresholds(observations = observations_1000_logical,
+#'            predictions = predictions_4000) # error
 #' set.seed(12345)
-#' observations_4000_numeric <- c(rep(x = 0, times = 3000), rep(x = 1, times = 1000))
-#' predictions_4000_strange <- c(runif(n = 3000, min = -0.3, max = 0.4), runif(n = 1000, min = 0.6, max = 1.5))
-#' thresholds(observations = observations_4000_numeric, predictions = predictions_4000_strange) # multiple warnings
-#' thresholds(observations = as.integer(observations_4000_numeric)[predictions_4000_strange >= 0 & predictions_4000_strange <= 1], predictions = predictions_4000_strange[predictions_4000_strange >= 0 & predictions_4000_strange <= 1]) # OK
+#' observations_4000_numeric <- c(rep(x = 0, times = 3000),
+#'                                rep(x = 1, times = 1000))
+#' predictions_4000_strange <- c(runif(n = 3000, min = -0.3, max = 0.4),
+#'                               runif(n = 1000, min = 0.6, max = 1.5))
+#' thresholds(observations = observations_4000_numeric,
+#'            predictions = predictions_4000_strange) # multiple warnings
+#' mask_of_normal_predictions <- predictions_4000_strange >= 0 & predictions_4000_strange <= 1
+#' thresholds(observations = as.integer(observations_4000_numeric)[mask_of_normal_predictions],
+#'            predictions = predictions_4000_strange[mask_of_normal_predictions]) # OK
 #' }
 #' @note \code{thresholds()} should be called using the whole dataset containing
 #'   both training and evaluation locations.
