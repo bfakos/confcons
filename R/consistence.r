@@ -68,14 +68,19 @@
 #'   \code{\link{confidence}} for calculating confidence
 #' @export
 consistence <- function(conf_train, conf_eval) {
+
+	# Checking parameters
 	if (missing(conf_train) | missing(conf_eval)) stop("Both parameter 'conf_train' and 'conf_eval' should be set.")
 	if (!is.numeric(conf_train)) stop("Parameter 'conf_train' should be a numeric vector of length one.")
 	if (length(conf_train) < 1) stop("Parameter 'conf_train' should be a numeric vector of length one.")
 	if (length(conf_train) > 1) warning(paste0("Parameter 'conf_train' has more elements (", as.character(length(conf_train)), ") then expected (1). Only the first element is used."))
-	if (is.na(conf_train) | conf_train[1] < 0 | conf_train[1] > 1) warning(paste0("Parameter 'conf_train' is expected to fall within the [0, 1] interval, but found to be ", format(x = round(x = conf_train, digits = 3), nsmall = 3), "."))
+	if (is.na(conf_train[1]) | conf_train[1] < 0 | conf_train[1] > 1) warning(paste0("Parameter 'conf_train' is expected to fall within the [0, 1] interval, but found to be ", format(x = round(x = conf_train, digits = 3), nsmall = 3), "."))
 	if (!is.numeric(conf_eval)) stop("Parameter 'conf_eval' should be a numeric vector of length one.")
 	if (length(conf_eval) < 1) stop("Parameter 'conf_eval' should be a numeric vector of length one.")
 	if (length(conf_eval) > 1) warning(paste0("Parameter 'conf_eval' has more elements (", as.character(length(conf_eval)), ") then expected (1). Only the first element is used."))
-	if (is.na(conf_eval) | conf_eval[1] < 0 | conf_eval[1] > 1) warning(paste0("Parameter 'conf_eval' is expected to fall within the [0, 1] interval, but found to be ", format(x = round(x = conf_eval, digits = 3), nsmall = 3), "."))
+	if (is.na(conf_eval[1]) | conf_eval[1] < 0 | conf_eval[1] > 1) warning(paste0("Parameter 'conf_eval' is expected to fall within the [0, 1] interval, but found to be ", format(x = round(x = conf_eval, digits = 3), nsmall = 3), "."))
+
+	# Calculation
 	return(conf_eval[1] - conf_train[1])
+
 } # consistence()
