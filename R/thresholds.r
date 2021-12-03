@@ -18,7 +18,8 @@
 #'   of probabilities predicted to the presence locations distinguishing certain
 #'   positives (certain presences) from uncertain predictions. For a typical
 #'   model better than the random guess, the first element is smaller than the
-#'   second one.
+#'   second one. The returned value might contain \code{NaN}(s) if the number of
+#'   observed presences and/or absences is 0.
 #' @examples
 #' set.seed(12345)
 #'
@@ -59,6 +60,8 @@
 #'   \code{\link{consistence}} for calculating consistence
 #' @export
 thresholds <- function(observations, predictions) {
+
+	# Checking parameters
 	if (missing(observations) | missing(predictions)) stop("Both parameter 'observations' and 'predictions' should be set.")
 	if (is.logical(observations)) observations <- as.integer(observations)
 	if (!is.integer(observations)) {
@@ -70,9 +73,12 @@ thresholds <- function(observations, predictions) {
 		warning("I found that parameter 'predictions' is not a numeric vector. Coercion is done.")
 		predictions <- as.numeric(predictions)
 	}
-	if (any(predictions[is.finite(predictions)] < 0) | any(predictions[is.finite(predictions)] > 1)) warning("Strange predicted values found. Parameter 'predictions' preferably contain numbers falling within the [0,1] interval.")
+	if (any(predictions[is.finite(predictions)] < 0) | any(predictions[is.finite(predictions)] > 1)) warning("Strange predicted values found. Parameter 'predictions' preferably contains numbers falling within the [0,1] interval.")
 	if (length(observations) != length(predictions)) stop("The length of the two parameters should be the same.")
+
+	# Calculation
 	threshold1 <- mean(x = predictions[observations == 0], na.rm = TRUE)
 	threshold2 <- mean(x = predictions[observations == 1], na.rm = TRUE)
 	return(c(threshold1 = threshold1, threshold2 = threshold2))
+
 }
