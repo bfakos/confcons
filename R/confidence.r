@@ -136,7 +136,7 @@ confidence <- function(observations, predictions, thresholds = confcons::thresho
 		warning("I found that parameter 'predictions' is not a numeric vector. Coercion is done.")
 		predictions <- as.numeric(predictions)
 	}
-	if (any(predictions[is.finite(predictions)] < 0) | any(predictions[is.finite(predictions)] > 1)) warning("Strange predicted values found. Parameter 'predictions' preferably contain numbers falling within the [0,1] interval.")
+	if (any(predictions[is.finite(predictions)] < 0) | any(predictions[is.finite(predictions)] > 1)) warning("Strange predicted values found. Parameter 'predictions' preferably contains numbers falling within the [0,1] interval.")
 	if (length(observations) != length(predictions)) stop("The length of parameters 'observations' and 'predictions' should be the same.")
 	if (!is.numeric(thresholds)) {
 		warning("I found that parameter 'thresholds' is not a numeric vector. Coercion is done.")
