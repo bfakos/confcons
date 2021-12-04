@@ -10,11 +10,6 @@
 #' parameter \code{goodness}) \item maximum of the True Skill Statistic (maxTSS)
 #' - optional (see parameter \code{goodness})}
 #'
-#' If package \pkg{ROCR} is not available but parameter '\code{goodness}' is set
-#' to \code{TRUE}, the value of AUC and maxTSS will be \code{NA_real_} and a
-#' warning will be raised.
-#'
-#'
 #' @param observations An integer or logical vector containing the binary
 #'   observations where presences are encoded as \code{1}s/\code{TRUE}s and
 #'   absences as \code{0}s/\code{FALSE}s.
@@ -31,7 +26,7 @@
 #'   \code{observations[!evaluation_mask]} were the training subset.
 #' @param goodness Logical vector of length one, defaults to \code{FALSE}.
 #'   Indicates, whether goodness-of-fit measures (AUC and maxTSS) should be
-#'   calculated. If set to \code{TRUE}, external package '\pkg{ROCR}' is needed
+#'   calculated. If set to \code{TRUE}, external package \pkg{ROCR} is needed
 #'   for the calculation (see section 'Note').
 #' @param df Logical vector of length one, defaults to \code{FALSE}. Indicates,
 #'   whether the returned value should be a one-row \code{data.frame} that is
@@ -51,9 +46,17 @@
 #'   \item{CPP_eval}{confidence in positive predictions within known presences
 #'   (CPP) for the evaluation subset} \item{DCPP}{consistence of positive
 #'   predictions} \item{AUC}{Area Under the ROC Curve (Hanley and McNeil 1982;
-#'   calculated by \code{\link[ROCR]{prediction}})} \item{maxTSS}{Maximum of the
-#'   True Skill Statistic (Allouche et al. 2006; calculated by
-#'   \code{\link[ROCR]{prediction}})} }
+#'   calculated by \code{\link[ROCR:performance]{ROCR::performance()}}). This
+#'   element/column is available only if parameter '\code{goodness}' is set to
+#'   \code{TRUE}. If package \pkg{ROCR} is not available but parameter
+#'   '\code{goodness}' is set to \code{TRUE}, the value of AUC is
+#'   \code{NA_real_} and a warning is raised.} \item{maxTSS}{Maximum of the True
+#'   Skill Statistic (Allouche et al. 2006; calculated by
+#'   \code{\link[ROCR:performance]{ROCR::performance()}}). This element/column
+#'   is available only if parameter '\code{goodness}' is set to \code{TRUE}. If
+#'   package \pkg{ROCR} is not available but parameter '\code{goodness}' is set
+#'   to \code{TRUE}, the value of maxTSS is \code{NA_real_} and a warning is
+#'   raised.} }
 #' @examples
 #' set.seed(12345)
 #'
@@ -73,21 +76,86 @@
 #' @references \itemize{\item Allouche O, Tsoar A, Kadmon R (2006): Assessing
 #'   the accuracy of species distribution models: prevalence, kappa and the true
 #'   skill statistic (TSS). Journal of Applied Ecology 43(6): 1223-1232.
-#'   \link[=https://dx.doi.org/10.1111/j.1365-2664.2006.01214.x]{DOI:
+#'   \href{https://dx.doi.org/10.1111/j.1365-2664.2006.01214.x}{DOI:
 #'   10.1111/j.1365-2664.2006.01214.x}. \item Hanley JA, McNeil BJ (1982): The
 #'   meaning and use of the area under a receiver operating characteristic (ROC)
 #'   curve. Radiology 143(1): 29-36.
-#'   \link[=https://dx.doi.org/10.1148/radiology.143.1.7063747]{DOI:
+#'   \href{https://dx.doi.org/10.1148/radiology.143.1.7063747}{DOI:
 #'   10.1148/radiology.143.1.7063747}.}
 #' @seealso \code{\link{confidence}} for calculating confidence,
 #'   \code{\link{consistence}} for calculating consistence,
-#'   \code{\link[ROCR]{prediction}} for calculating AUC and TSS
+#'   \code{\link[ROCR:performance]{ROCR::performance()}} for calculating AUC and
+#'   TSS
 #' @export
 measures <- function(observations, predictions, evaluation_mask, goodness = FALSE, df = FALSE) {
 
 	# Checking parameters
+	if (missing(observations) | missing(predictions) | missing(evaluation_mask)) stop("Each of parameters 'observations', 'predictions' and 'evaluation_mask' should be set.")
+	if (is.logical(observations)) observations <- as.integer(observations)
+	if (!is.integer(observations)) {
+		warning("I found that parameter 'observations' is not an integer or logical vector. Coercion is done.")
+		observations <- as.integer(observations)
+	}
+	if (!all(observations[is.finite(observations)] %in% 0:1)) stop("Parameter 'observations' should contain 0s (absences) and 1s (presences).")
+	if (!is.numeric(predictions)) {
+		warning("I found that parameter 'predictions' is not a numeric vector. Coercion is done.")
+		predictions <- as.numeric(predictions)
+	}
+	if (length(observations) != length(predictions)) stop("The length of parameters 'observations' and 'predictions' should be the same.")
+	if (!is.logical(evaluation_mask)) {
+		warning("I found that parameter 'evaluation_mask' is not a logical vector. Coercion is done.")
+		evaluation_mask <- as.logical(evaluation_mask)
+	}
+	if (length(observations) != length(evaluation_mask)) stop("The length of parameters 'observations' and 'evaluation_mask' should be the same.")
+	if (!is.logical(goodness)) {
+		warning("I found that parameter 'goodness' is not a logical vector. Coercion is done.")
+		goodness <- as.logical(goodness)
+	}
+	if (length(goodness) < 1) stop("Parameter 'goodness' should be a logical vector of length one.")
+	if (length(goodness) > 1) warning(paste0("Parameter 'goodness' has more elements (", as.character(length(goodness)), ") then expected (1). Only the first element is used."))
+	if (is.na(goodness[1])) stop("Parameter 'goodness' must not be NA.")
+	if (!is.logical(df)) {
+		warning("I found that parameter 'df' is not a logical vector. Coercion is done.")
+		df <- as.logical(df)
+	}
+	if (length(df) < 1) stop("Parameter 'df' should be a logical vector of length one.")
+	if (length(df) > 1) warning(paste0("Parameter 'df' has more elements (", as.character(length(df)), ") then expected (1). Only the first element is used."))
+	if (is.na(df[1])) stop("Parameter 'df' must not be NA.")
 
 	# Calculation
-
+	goodness <- goodness[1]
+	df <- df[1]
+	if (goodness) {
+		if (requireNamespace(package = "ROCR", quietly = TRUE)) {
+			tpr <- ROCR::performance(prediction.obj = ROCR::prediction(predictions = predictions[evaluation_mask], labels = observations[evaluation_mask]), measure = "tpr")@y.values[[1]]
+			tnr <- ROCR::performance(prediction.obj = ROCR::prediction(predictions = predictions[evaluation_mask], labels = observations[evaluation_mask]), measure = "tnr")@y.values[[1]]
+			AUC_and_maxTSS <- c(
+				ROCR::performance(prediction.obj = ROCR::prediction(predictions = predictions[evaluation_mask], labels = observations[evaluation_mask]), measure = "auc")@y.values[[1]], # AUC
+				max(tpr + tnr - 1) # maxTSS
+			)
+		} else {
+			warning("Althought parameter 'goodness' is set to TRUE, the required package, ROCR, is not available. See help(measures) for further details.")
+			AUC_and_maxTSS <- rep(x = NA_real_, times = 2)
+		}
+	}
+	thresholds_whole <- thresholds(observations = observations, predictions = predictions)
+	measures <- c(
+		c(
+			CP_train <- confidence(observations = observations[!evaluation_mask], predictions = predictions[!evaluation_mask], thresholds = thresholds_whole, type = "neutral"),
+			CP_eval <- confidence(observations = observations[evaluation_mask], predictions = predictions[evaluation_mask], thresholds = thresholds_whole, type = "neutral"),
+			consistence(conf_train = CP_train, conf_eval = CP_eval),
+			CPP_train <- confidence(observations = observations[!evaluation_mask], predictions = predictions[!evaluation_mask], thresholds = thresholds_whole, type = "positive"),
+			CPP_eval <- confidence(observations = observations[evaluation_mask], predictions = predictions[evaluation_mask], thresholds = thresholds_whole, type = "positive"),
+			consistence(conf_train = CPP_train, conf_eval = CPP_eval)
+		), if (goodness) AUC_and_maxTSS else numeric(length = 0)
+	)
+	names <- c(c("CP_train", "CP_eval", "DCP", "CPP_train", "CPP_eval", "DCPP"), if (goodness) c("AUC", "maxTSS") else character(length = 0))
+	if (df) {
+		measures <- data.frame(matrix(data = measures, nrow = 1, ncol = length(measures), byrow = TRUE))
+		colnames(measures) <- names
+	} else {
+		names(measures) <- names
+	}
+	return(measures)
 
 }
