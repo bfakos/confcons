@@ -1,0 +1,10 @@
+pandoc: 2.7.3
+pkgdown: 2.0.1
+pkgdown_sha: ~
+articles:
+  introduction_to_confcons: introduction_to_confcons.html
+last_built: 2021-12-04T20:38Z
+urls:
+  reference: https://bfakos.github.io/confcons/reference
+  article: https://bfakos.github.io/confcons/articles
+
