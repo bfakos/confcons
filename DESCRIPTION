@@ -20,6 +20,7 @@ Suggests:
     rmarkdown,
     testthat (>= 3.0.0),
     vctrs,
-    withr
+    withr,
+    ROCR
 VignetteBuilder: knitr
 Config/testthat/edition: 3
