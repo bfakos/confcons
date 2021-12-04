@@ -125,6 +125,8 @@
 #'   \code{\link{consistence}} for calculating consistence
 #' @export
 confidence <- function(observations, predictions, thresholds = confcons::thresholds(observations = observations, predictions = predictions), type = "positive") {
+
+	# Checking parameters
 	if (missing(observations) | missing(predictions)) stop("Both parameter 'observations' and 'predictions' should be set.")
 	if (is.logical(observations)) observations <- as.integer(observations)
 	if (!is.integer(observations)) {
@@ -145,11 +147,13 @@ confidence <- function(observations, predictions, thresholds = confcons::thresho
 	if (length(thresholds) < 2) stop("Parameter 'thresholds' should be a vector of length two.")
 	if (length(thresholds) > 2) warning(paste0("Parameter 'thresholds' has more elements (", as.character(length(thresholds)), ") then expected (2). Only the first two elements are used."))
 	if (any(!is.finite(thresholds), thresholds < 0, thresholds > 1)) warning(paste0("Parameter 'thresholds' is expected to contain numbers falling within the [0, 1] interval, but found to contain ", format(x = round(x = thresholds[1], digits = 3), nsmall = 3), " and ", format(x = round(x = thresholds[2], digits = 3), nsmall = 3), "."))
-	if (all(is.finite(thresholds)) & thresholds[1] >= thresholds[2])  warning(paste0("Parameter 'thresholds' is expected to contain two numbers increasing strictly monotonously, i.e. thresholds[1] < thresholds[2], but found to contain ", format(x = round(x = thresholds[1], digits = 3), nsmall = 3), " and ", format(x = round(x = thresholds[2], digits = 3), nsmall = 3), ", respectively."))
+	if (all(is.finite(thresholds)) & thresholds[1] >= thresholds[2]) warning(paste0("Parameter 'thresholds' is expected to contain two numbers increasing strictly monotonously, i.e. thresholds[1] < thresholds[2], but found to contain ", format(x = round(x = thresholds[1], digits = 3), nsmall = 3), " and ", format(x = round(x = thresholds[2], digits = 3), nsmall = 3), ", respectively."))
 	if (!is.character(type)) stop("Parameter 'type' should be a character vector of length one.")
 	if (length(type) < 1) stop("Parameter 'type' should be a vector of length one.")
 	if (length(type) > 1) warning(paste0("Parameter 'type' has more elements (", as.character(length(type)), ") then expected (1). Only the first element is used."))
 	if (!type[1] %in% c("positive", "neutral")) stop("Parameter 'type' must be 'positive' or 'neutral'.")
+
+	# Calculation
 	occurrence_mask <- observations == 1
 	TP <- sum(as.integer(occurrence_mask & predictions > thresholds[2]), na.rm = TRUE)
 	if (type[1] == "positive") {
@@ -160,4 +164,5 @@ confidence <- function(observations, predictions, thresholds = confcons::thresho
 		FN <- sum(as.integer(occurrence_mask & predictions <= thresholds[1]), na.rm = TRUE)
 		return(if (P == 0) NA_real_ else (TP + FN) / P)
 	}
-} # confidence()
+
+}
