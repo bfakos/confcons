@@ -2,4 +2,5 @@
 
 export(confidence)
 export(consistence)
+export(measures)
 export(thresholds)
