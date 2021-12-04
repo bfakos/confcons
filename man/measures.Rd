@@ -32,7 +32,7 @@ i.e. \code{observations[evaluation_mask]} were the evaluation subset and
 
 \item{goodness}{Logical vector of length one, defaults to \code{FALSE}.
 Indicates, whether goodness-of-fit measures (AUC and maxTSS) should be
-calculated. If set to \code{TRUE}, external package '\pkg{ROCR}' is needed
+calculated. If set to \code{TRUE}, external package \pkg{ROCR} is needed
 for the calculation (see section 'Note').}
 
 \item{df}{Logical vector of length one, defaults to \code{FALSE}. Indicates,
@@ -55,9 +55,17 @@ A named numeric vector (if \code{df} is \code{FALSE}; the default) or
   \item{CPP_eval}{confidence in positive predictions within known presences
   (CPP) for the evaluation subset} \item{DCPP}{consistence of positive
   predictions} \item{AUC}{Area Under the ROC Curve (Hanley and McNeil 1982;
-  calculated by \code{\link[ROCR]{prediction}})} \item{maxTSS}{Maximum of the
-  True Skill Statistic (Allouche et al. 2006; calculated by
-  \code{\link[ROCR]{prediction}})} }
+  calculated by \code{\link[ROCR:performance]{ROCR::performance()}}). This
+  element/column is available only if parameter '\code{goodness}' is set to
+  \code{TRUE}. If package \pkg{ROCR} is not available but parameter
+  '\code{goodness}' is set to \code{TRUE}, the value of AUC is
+  \code{NA_real_} and a warning is raised.} \item{maxTSS}{Maximum of the True
+  Skill Statistic (Allouche et al. 2006; calculated by
+  \code{\link[ROCR:performance]{ROCR::performance()}}). This element/column
+  is available only if parameter '\code{goodness}' is set to \code{TRUE}. If
+  package \pkg{ROCR} is not available but parameter '\code{goodness}' is set
+  to \code{TRUE}, the value of maxTSS is \code{NA_real_} and a warning is
+  raised.} }
 }
 \description{
 Wrapper function for calculating the predictive distribution model's
@@ -69,11 +77,6 @@ evaluation subsets \item consistence of predictions (DCP) and positive
 predictions (DCPP) \item Area Under the ROC Curve (AUC) - optional (see
 parameter \code{goodness}) \item maximum of the True Skill Statistic (maxTSS)
 - optional (see parameter \code{goodness})}
-}
-\details{
-If package \pkg{ROCR} is not available but parameter '\code{goodness}' is set
-to \code{TRUE}, the value of AUC and maxTSS will be \code{NA_real_} and a
-warning will be raised.
 }
 \note{
 Since \pkg{confcons} is a light-weight, stand-alone packages, it does
@@ -98,15 +101,16 @@ set.seed(12345)
 \itemize{\item Allouche O, Tsoar A, Kadmon R (2006): Assessing
   the accuracy of species distribution models: prevalence, kappa and the true
   skill statistic (TSS). Journal of Applied Ecology 43(6): 1223-1232.
-  \link[=https://dx.doi.org/10.1111/j.1365-2664.2006.01214.x]{DOI:
+  \href{https://dx.doi.org/10.1111/j.1365-2664.2006.01214.x}{DOI:
   10.1111/j.1365-2664.2006.01214.x}. \item Hanley JA, McNeil BJ (1982): The
   meaning and use of the area under a receiver operating characteristic (ROC)
   curve. Radiology 143(1): 29-36.
-  \link[=https://dx.doi.org/10.1148/radiology.143.1.7063747]{DOI:
+  \href{https://dx.doi.org/10.1148/radiology.143.1.7063747}{DOI:
   10.1148/radiology.143.1.7063747}.}
 }
 \seealso{
 \code{\link{confidence}} for calculating confidence,
   \code{\link{consistence}} for calculating consistence,
-  \code{\link[ROCR]{prediction}} for calculating AUC and TSS
+  \code{\link[ROCR:performance]{ROCR::performance()}} for calculating AUC and
+  TSS
 }
