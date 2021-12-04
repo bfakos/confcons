@@ -83,4 +83,4 @@ consistence <- function(conf_train, conf_eval) {
 	# Calculation
 	return(conf_eval[1] - conf_train[1])
 
-} # consistence()
+}
