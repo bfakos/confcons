@@ -12,7 +12,8 @@ Description: Calculate confidence and consistence that measure the
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true
-URL: https://github.com/bfakos/confcons
+URL: https://github.com/bfakos/confcons,
+    https://bfakos.github.io/confcons
 BugReports: https://github.com/bfakos/confcons/issues
 RoxygenNote: 7.1.2
 Suggests: 
