@@ -41,18 +41,18 @@
 #' dataset <- data.frame(
 #' 	observations = observations,
 #' 	predictions = predictions,
-#' 	for_evaluation = c(rep(x = FALSE, times = 250),
-#' 	                   rep(x = TRUE, times = 250),
-#' 	                   rep(x = FALSE, times = 250),
-#' 	                   rep(x = TRUE, times = 250))
+#' 	evaluation_mask = c(rep(x = FALSE, times = 250),
+#' 	                    rep(x = TRUE, times = 250),
+#' 	                    rep(x = FALSE, times = 250),
+#' 	                    rep(x = TRUE, times = 250))
 #' )
 #' thresholds_whole <- thresholds(observations = dataset$observations,
 #'                                predictions = dataset$predictions)
-#' confidence_training <- confidence(observations = dataset$observations[!dataset$for_evaluation],
-#'                                   predictions = dataset$predictions[!dataset$for_evaluation],
+#' confidence_training <- confidence(observations = dataset$observations[!dataset$evaluation_mask],
+#'                                   predictions = dataset$predictions[!dataset$evaluation_mask],
 #'                                   thresholds = thresholds_whole) # 0.602
-#' confidence_evaluation <- confidence(observations = dataset$observations[dataset$for_evaluation],
-#'                                     predictions = dataset$predictions[dataset$for_evaluation],
+#' confidence_evaluation <- confidence(observations = dataset$observations[dataset$evaluation_mask],
+#'                                     predictions = dataset$predictions[dataset$evaluation_mask],
 #'                                     thresholds = thresholds_whole) # 0.520
 #' consistence(conf_train = confidence_training,
 #'             conf_eval = confidence_evaluation) # -0.083 - consistent/transferable model
