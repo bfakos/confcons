@@ -59,13 +59,67 @@
 #'   raised.} }
 #' @examples
 #' set.seed(12345)
+#' dataset <- data.frame(
+#' 	observations = c(rep(x = FALSE, times = 500),
+#'                   rep(x = TRUE, times = 500)),
+#' 	predictions_model1 = c(runif(n = 250, min = 0, max = 0.6),
+#'                         runif(n = 250, min = 0.1, max = 0.7),
+#'                         runif(n = 250, min = 0.4, max = 1),
+#'                         runif(n = 250, min = 0.3, max = 0.9)),
+#' 	predictions_model2 = c(runif(n = 250, min = 0.1, max = 0.55),
+#'                         runif(n = 250, min = 0.15, max = 0.6),
+#'                         runif(n = 250, min = 0.3, max = 0.9),
+#'                         runif(n = 250, min = 0.25, max = 0.8)),
+#' 	evaluation_mask = c(rep(x = FALSE, times = 250),
+#' 	                    rep(x = TRUE, times = 250),
+#' 	                    rep(x = FALSE, times = 250),
+#' 	                    rep(x = TRUE, times = 250))
+#' )
 #'
-#' # TODO
+#' # Default parameterization, return a vector without AUC and maxTSS:
+#' conf_and_cons <- measures(observations = dataset$observations,
+#'                           predictions = dataset$predictions_model1,
+#'                           evaluation_mask = dataset$evaluation_mask)
+#' print(conf_and_cons)
+#' names(conf_and_cons)
+#' conf_and_cons[c("CPP_eval", "DCPP")]
 #'
-#' # Wrong parameterization:
-#' \dontrun{
-#' # TODO
+#' # Calculate AUC and maxTSS as well if package ROCR is installed:
+#' if (requireNamespace(package = "ROCR", quietly = TRUE)) {
+#'   conf_and_cons_and_goodness <- measures(observations = dataset$observations,
+#'                                          predictions = dataset$predictions_model1,
+#'                                          evaluation_mask = dataset$evaluation_mask,
+#'                                          goodness = TRUE)
 #' }
+#'
+#' # Calculate the measures for multiple models in a for loop:
+#' model_IDs <- as.character(1:2)
+#' for (model_ID in model_IDs) {
+#'   column_name <- paste0("predictions_model", model_ID)
+#'   conf_and_cons <- measures(observations = dataset$observations,
+#'                             predictions = dataset[, column_name, drop = TRUE],
+#'                             evaluation_mask = dataset$evaluation_mask,
+#'                             df = TRUE)
+#'   if (model_ID == model_IDs[1]) {
+#'     conf_and_cons_df <- conf_and_cons
+#'   } else {
+#'     conf_and_cons_df <- rbind(conf_and_cons_df, conf_and_cons)
+#'   }
+#' }
+#' conf_and_cons_df
+#'
+#' # Calculate the measures for multiple models in a lapply():
+#' conf_and_cons_list <- lapply(X = model_IDs,
+#'                              FUN = function(model_ID) {
+#'                                column_name <- paste0("predictions_model", model_ID)
+#'                                measures(observations = dataset$observations,
+#'                                         predictions = dataset[, column_name, drop = TRUE],
+#'                                         evaluation_mask = dataset$evaluation_mask,
+#'                                         df = TRUE)
+#'                              })
+#' conf_and_cons_df <- do.call(what = rbind,
+#'                             args = conf_and_cons_list)
+#' conf_and_cons_df
 #' @note Since \pkg{confcons} is a light-weight, stand-alone packages, it does
 #'   not import package \pkg{ROCR}, i.e. installing \pkg{confcons} does not mean
 #'   installing \pkg{ROCR} automatically. If you need AUC and maxTSS (i.e.,
@@ -73,7 +127,7 @@
 #'   \pkg{ROCR} or install \pkg{confcons} along with its dependencies (i.e.,
 #'   \code{devtools::install_github(repo = "bfakos/confcons", dependencies =
 #'   TRUE)}).
-#' @references \itemize{\item Allouche O, Tsoar A, Kadmon R (2006): Assessing
+#' @references \itemize{ \item Allouche O, Tsoar A, Kadmon R (2006): Assessing
 #'   the accuracy of species distribution models: prevalence, kappa and the true
 #'   skill statistic (TSS). Journal of Applied Ecology 43(6): 1223-1232.
 #'   \href{https://dx.doi.org/10.1111/j.1365-2664.2006.01214.x}{DOI:
