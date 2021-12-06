@@ -103,15 +103,15 @@ confidence(observations = observations_4000_integer,
 dataset <- data.frame(
 	observations = observations_4000_integer,
 	predictions = predictions_4000,
-	for_evaluation = c(rep(x = FALSE, times = 250),
-	                   rep(x = TRUE, times = 250),
-	                   rep(x = FALSE, times = 250),
-	                   rep(x = TRUE, times = 250))
+	evaluation_mask = c(rep(x = FALSE, times = 250),
+	                    rep(x = TRUE, times = 250),
+	                    rep(x = FALSE, times = 250),
+	                    rep(x = TRUE, times = 250))
 )
 thresholds_whole <- thresholds(observations = dataset$observations,
                                predictions = dataset$predictions)
-(confidence_evaluation <- confidence(observations = dataset$observations[dataset$for_evaluation],
-                                     predictions = dataset$predictions[dataset$for_evaluation],
+(confidence_evaluation <- confidence(observations = dataset$observations[dataset$evaluation_mask],
+                                     predictions = dataset$predictions[dataset$evaluation_mask],
                                      thresholds = thresholds_whole)) # 0.671
 
 # Wrong parameterization:
