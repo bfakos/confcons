@@ -72,23 +72,66 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>TODO: A paragraph that describes the high-level purpose of the package.</p>
+<p>‘confcons’ (<strong>conf</strong>idence &amp; <strong>cons</strong>istence) is a light-weight, stand-alone R package designed to calculate the following two novel measures of predictive distribution models (incl. species distribution models):</p>
+<ul>
+<li>
+<em>confidence</em> that measures the proportion of predictions that the model is confident in;</li>
+<li>
+<em>consistence</em> that measures how consistent the model is if the confidence in the training and evaluation subsets are compared.</li>
+</ul>
+<p>While <em>confidence</em> serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, <em>consistence</em> is a proxy for model’s transferability (in space and time).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of confcons from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of ‘confcons’ from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"bfakos/confcons"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span><span class="op">)</span></code></pre></div>
-<p>TODO: install with vignette</p>
+<p>If you want to read the <a href="https://bfakos.github.io/confcons/articles/introduction_to_confcons.html">vignette</a> in R, install the package with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"bfakos/confcons"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>TODO: An example that shows how to use the package to solve a simple problem. TODO: An overview that describes the main components of the package. For more complex packages, this will point to vignettes for more details.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bfakos/confcons" class="external-link">confcons</a></span><span class="op">)</span>
-<span class="co"># TODO</span></code></pre></div>
+<p>Three small functions, <code><a href="reference/thresholds.html">thresholds()</a></code>, <code><a href="reference/confidence.html">confidence()</a></code> and <code><a href="reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="reference/measures.html">measures()</a></code> utilize these workhorse functions and calculates every measures for you along with some traditional measures, such as AUC and maxTSS.</p>
+<p>Let’s say we trained a predictive distribution model and made some predictions with it, and now we want to be sure if our model is both</p>
+<ul>
+<li>confident in the predictions, and</li>
+<li>this confidence is consistent between the training and evaluation subsets, i.e. we might later use the model for extrapolation (through space or time).</li>
+</ul>
+<p>Our example dataset is a <code>data.frame</code> containing both the training and the evaluation subset. It is organized in three columns:</p>
+<ul>
+<li>observations (<code>integer</code>): observed presences (<code>1</code>s) and absences (<code>0</code>s),</li>
+<li>predictions (<code>numeric</code>): predicted probability of occurrences (within the <code>[0, 1]</code> interval), and</li>
+<li>evaluation_mask (<code>logical</code>): indicates whether a certain row belongs to the evaluation subset (<code>TRUE</code>) or the training subset (<code>FALSE</code>).</li>
+</ul>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
+    observations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span><span class="op">)</span>,
+    predictions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.3</span>, <span class="fl">0.65</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span>,
+    evaluation_mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>Well, it is a really small dataset…</p>
+<p>Let’s attach the package to our R session:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bfakos/confcons" class="external-link">confcons</a></span><span class="op">)</span></code></pre></div>
+<p>Now we can calculate the measures:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">observations</span>,
+                 predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions</span>,
+                 evaluation_mask <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">evaluation_mask</span><span class="op">)</span>
+<span class="co">#&gt;    CP_train     CP_eval         DCP   CPP_train    CPP_eval        DCPP </span>
+<span class="co">#&gt;  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333</span></code></pre></div>
+<p>The model seems to be not superperfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since <code>CPP_train</code> is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., <code>DCPP</code> is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.</p>
+<p>A detailed description of the measures and the functions of ‘confcons’, and more examples can be found in <a href="https://bfakos.github.io/confcons/articles/introduction_to_confcons.html">this vignette</a>.</p>
+</div>
+<div class="section level2">
+<h2 id="package-lifecycle-and-contribution">Package lifecycle and contribution<a class="anchor" aria-label="anchor" href="#package-lifecycle-and-contribution"></a>
+</h2>
+<p>This GitHub version of the package is now in stable state and a manuscript about the novel measures, <em>confidence</em> and <em>consistence</em>, is submitted to a scientific journal. Upon acceptance we aims to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
+<p>If you find a bug or have a feature request, or also if you have some idea want to discuss with the authors of the package, please create a <a href="https://github.com/bfakos/confcons/issues" class="external-link">new issue</a>.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
