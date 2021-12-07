@@ -18,26 +18,29 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Confidence and consistence: what are they and why using them?
+## Confidence and consistence: what are they and why using them?
 
 'confcons' (**conf**idence & **cons**istence) is a light-weight, stand-alone R package designed to calculate the following two novel measures of predictive/potential distribution models (incl. species distribution models):
 
 - *confidence* that measures the proportion of predictions that the model is confident in;
 - *consistence* that measures how consistent the model is if the confidence in the training and evaluation subsets are compared.
 
-While *confidence* serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, *consistence* is a proxy for model's transferability (in space and time).
+While *confidence* serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, *consistence* is a proxy for model's transferability (in space and time). Both measures can be calculated
+
+- in a balanced way, when predicted presences and predicted absences are equally important. These measures are called *confidence in predictions* ('CP') and *consistence of* (or difference in confidences in) *predictions* ('DCP');
+- in a way weighted towards the predicted presences, when certain positive presences are more important for the selected modelling purpose. These measures are called *confidence in positive predictions* ('CPP') and *consistence of* (or difference in confidences in) *positive predictions* ('DCPP').
 
 A manuscript about the novel measures is submitted to a scientific journal. Once accepted, we'll cite it here, and you'll get much more information about the measures from that paper.
 
-# Functions for calculating confidence and consistence
+## Functions for calculating confidence and consistence
 
 Three small functions, `thresholds()`, `confidence()` and `consistence()`, belong to the core of the package. A wrapper function called `measures()` utilizes these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.
 
 In the example below we'll see how these function work and what are their parameters and returned value. For further details, please consult with the help page of the selected function and the examples given there.
 
-# Workflow
+## Workflow
 
-## Introduction
+### Introduction
 
 Here, we'll go through the main steps of a typical workflow by:
 
@@ -66,7 +69,7 @@ suppressWarnings(library(ROCR))
 suppressWarnings(library(confcons))
 ```
 
-## Data preparation
+### Data preparation
 
 Let's open the environmental raster that contains eight climatic and two topographic layers at 800 m resolution in UTM projection:
 
@@ -107,13 +110,13 @@ blocks_sf <- sf::st_as_sf(x = blocks$blocks)
 
 Let's see where are our presence and absence points and also which polygons will be used for training and which ones for evaluation:
 
-```{r}
+```{r, fig.height=18, fig.width=7}
 plot(x = environment[["bc01"]], axes = FALSE, col = cm.colors(255), colNA = "gray95")
 plot(x = occurrences[occurrences$Species == 1, ], pch = "+", col = "darkgreen", add = TRUE)
 plot(x = occurrences[occurrences$Species == 0, ], pch = "+", col = "orange", add = TRUE)
 plot(x = sf::st_geometry(blocks_sf[blocks_sf$folds == 1, ]), col = "transparent", border = "#2222DD66", lwd = 2, add = TRUE)
 plot(x = sf::st_geometry(blocks_sf[blocks_sf$folds == 2, ]), col = "transparent", border = "#DD222266", lwd = 2, add = TRUE)
-legend(x = 160000,
+legend(x = 140000,
        y = 8000000,
        legend = c("presence", "absence", "training", "evaluation"),
        col = c("darkgreen", "orange", NA, NA),
@@ -141,7 +144,7 @@ dataset$training_mask <- (1:nrow(occurrences)) %in% blocks$folds[[1]][[1]]
 str(dataset)
 ```
 
-## Training models and making predictions
+### Training models and making predictions
 
 Now the `data.frame` contains all of the information needed to train predictive distribution models. For the sake of this example, we will create two simple models:
 
@@ -176,17 +179,17 @@ dataset$predictions_rf <- predict(object = model_rf,
 str(dataset[, c("occurrences", "training_mask", "predictions_glm", "predictions_rf")])
 ```
 
-# Evaluation and interpretation
+### Evaluation and interpretation
 
 Models are trained, predictions are done, so one step is missing: the evaluation. This is where package 'confcons' will become useful...
 
 Let's take a look at the lower (mean predicted value in the absence locations) and upper (mean predicted value in the presence locations) thresholds below/above which we interpret the predicted values as certain negatives and certain positives, respectively. We use function `thresholds()` for this purpose, which needs the integer/logical vector of the observed predictions (called 'observations') and the numeric vector of the predicted probabilities of occurrence (called 'predictions') as input parameters. The function returns two values (i.e., a named numeric vector of length 2).
 
 ```{r}
-(thresholds_glm <- confcons::thresholds(observations = dataset$occurrences,
-                                        predictions = dataset$predictions_glm))
-(thresholds_rf <- confcons::thresholds(observations = dataset$occurrences,
-                                       predictions = dataset$predictions_rf))
+(thresholds_glm <- thresholds(observations = dataset$occurrences,
+                              predictions = dataset$predictions_glm))
+(thresholds_rf <- thresholds(observations = dataset$occurrences,
+                             predictions = dataset$predictions_rf))
 ```
 
 Between 0.14 and 0.82, the predictions of the GLM model can be treated as uncertain predictions. The same holds for the RF model between 0.18 and 0.77.
@@ -250,7 +253,7 @@ measures(observations = dataset$occurrences,
 
 The result is a named `numeric` vector containing all of the measures. It is more than needed. I recommend you to use 'CPP_eval' + 'DCPP', or, if predicted absences are as important as predicted presences in your research, use 'CP_eval' + 'DCP'.
 
-We can see that RF model is really condident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so if I were you, I would select that one!
+We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so if I were you, I would select that one for extrapolation, e.g. in a climate change impact study!
 
 If you have installed package 'ROCR', `measures()` can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for you. You should simply switch the parameter 'goodness' from its default value (`FALSE`) to `TRUE`. 
 
@@ -261,7 +264,7 @@ measures(observations = dataset$occurrences,
          goodness = TRUE)
 ```
 
-## Evaluating multiple models
+### Evaluating multiple models
 
 There is one another `logical` parameter, called 'df', by which you can decide whether a one-row `data.frame` is more suited for your analysis purposes.
 
