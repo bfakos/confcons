@@ -95,7 +95,7 @@
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>Three small functions, <code><a href="reference/thresholds.html">thresholds()</a></code>, <code><a href="reference/confidence.html">confidence()</a></code> and <code><a href="reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="reference/measures.html">measures()</a></code> utilize these workhorse functions and calculates every measures for you along with some traditional measures, such as AUC and maxTSS.</p>
+<p>Three small functions, <code><a href="reference/thresholds.html">thresholds()</a></code>, <code><a href="reference/confidence.html">confidence()</a></code> and <code><a href="reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="reference/measures.html">measures()</a></code> utilize these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.</p>
 <p>Let’s say we trained a predictive distribution model and made some predictions with it, and now we want to be sure if our model is both</p>
 <ul>
 <li>confident in the predictions, and</li>
@@ -124,13 +124,13 @@
                  evaluation_mask <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">evaluation_mask</span><span class="op">)</span>
 <span class="co">#&gt;    CP_train     CP_eval         DCP   CPP_train    CPP_eval        DCPP </span>
 <span class="co">#&gt;  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333</span></code></pre></div>
-<p>The model seems to be not superperfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since <code>CPP_train</code> is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., <code>DCPP</code> is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.</p>
+<p>The model seems to be not super perfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since <code>CPP_train</code> is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., <code>DCPP</code> is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.</p>
 <p>A detailed description of the measures and the functions of ‘confcons’, and more examples can be found in <a href="https://bfakos.github.io/confcons/articles/introduction_to_confcons.html">this vignette</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="package-lifecycle-and-contribution">Package lifecycle and contribution<a class="anchor" aria-label="anchor" href="#package-lifecycle-and-contribution"></a>
 </h2>
-<p>This GitHub version of the package is now in stable state and a manuscript about the novel measures, <em>confidence</em> and <em>consistence</em>, is submitted to a scientific journal. Upon acceptance we aims to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
+<p>This GitHub version of the package is now in stable state. A manuscript about the novel measures, <em>confidence</em> and <em>consistence</em>, is submitted to a scientific journal. Upon acceptance we aims to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
 <p>If you find a bug or have a feature request, or also if you have some idea want to discuss with the authors of the package, please create a <a href="https://github.com/bfakos/confcons/issues" class="external-link">new issue</a>.</p>
 </div>
 </div>
