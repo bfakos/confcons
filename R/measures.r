@@ -26,8 +26,8 @@
 #'   \code{observations[!evaluation_mask]} were the training subset.
 #' @param goodness Logical vector of length one, defaults to \code{FALSE}.
 #'   Indicates, whether goodness-of-fit measures (AUC and maxTSS) should be
-#'   calculated. If set to \code{TRUE}, external package \pkg{ROCR} is needed
-#'   for the calculation (see section 'Note').
+#'   calculated. If set to \code{TRUE}, external package \pkg{ROCR} (Sing et al.
+#'   2005) is needed for the calculation (see section 'Note').
 #' @param df Logical vector of length one, defaults to \code{FALSE}. Indicates,
 #'   whether the returned value should be a one-row \code{data.frame} that is
 #'   \code{rbind()}able if \code{measures()} is called on multiple models in a
@@ -121,12 +121,12 @@
 #'                             args = conf_and_cons_list)
 #' conf_and_cons_df
 #' @note Since \pkg{confcons} is a light-weight, stand-alone packages, it does
-#'   not import package \pkg{ROCR}, i.e. installing \pkg{confcons} does not mean
-#'   installing \pkg{ROCR} automatically. If you need AUC and maxTSS (i.e.,
-#'   parameter '\code{goodness}' is set to \code{TRUE}), you should install
-#'   \pkg{ROCR} or install \pkg{confcons} along with its dependencies (i.e.,
-#'   \code{devtools::install_github(repo = "bfakos/confcons", dependencies =
-#'   TRUE)}).
+#'   not import package \pkg{ROCR} (Sing et al. 2005), i.e. installing
+#'   \pkg{confcons} does not mean installing \pkg{ROCR} automatically. If you
+#'   need AUC and maxTSS (i.e., parameter '\code{goodness}' is set to
+#'   \code{TRUE}), you should install \pkg{ROCR} or install \pkg{confcons} along
+#'   with its dependencies (i.e., \code{devtools::install_github(repo =
+#'   "bfakos/confcons", dependencies = TRUE)}).
 #' @references \itemize{ \item Allouche O, Tsoar A, Kadmon R (2006): Assessing
 #'   the accuracy of species distribution models: prevalence, kappa and the true
 #'   skill statistic (TSS). Journal of Applied Ecology 43(6): 1223-1232.
@@ -135,7 +135,11 @@
 #'   meaning and use of the area under a receiver operating characteristic (ROC)
 #'   curve. Radiology 143(1): 29-36.
 #'   \href{https://dx.doi.org/10.1148/radiology.143.1.7063747}{DOI:
-#'   10.1148/radiology.143.1.7063747}.}
+#'   10.1148/radiology.143.1.7063747}. \item Sing T, Sander O, Beerenwinkel N,
+#'   Lengauer T. (2005): ROCR: visualizing classifier performance in R.
+#'   Bioinformatics 21(20): 3940-3941.
+#'   \href{https://doi.org/10.1093/bioinformatics/bti623}{DOI:
+#'   10.1093/bioinformatics/bti623}. }
 #' @seealso \code{\link{confidence}} for calculating confidence,
 #'   \code{\link{consistence}} for calculating consistence,
 #'   \code{\link[ROCR:performance]{ROCR::performance()}} for calculating AUC and
