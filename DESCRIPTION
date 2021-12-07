@@ -24,6 +24,10 @@ Suggests:
     vctrs,
     withr,
     ROCR,
-    covr
+    covr,
+    raster,
+    sf,
+    blockCV,
+    ranger
 VignetteBuilder: knitr
 Config/testthat/edition: 3
