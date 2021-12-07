@@ -9,6 +9,7 @@
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
 coverage](https://codecov.io/gh/bfakos/confcons/branch/master/graph/badge.svg)](https://app.codecov.io/gh/bfakos/confcons?branch=master)
+[![License](https://img.shields.io/badge/license-GPL%20%28%3E=%203%29-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
 <!-- badges: end -->
 
 ‘confcons’ (**conf**idence & **cons**istence) is a light-weight,
@@ -48,7 +49,7 @@ devtools::install_github(repo = "bfakos/confcons", upgrade = "never", build_vign
 
 Three small functions, `thresholds()`, `confidence()` and
 `consistence()`, belong to the core of the package. A wrapper function
-called `measures()` utilize these workhorse functions and calculates
+called `measures()` utilizes these workhorse functions and calculates
 every measures for you optionally along with some traditional measures,
 such as AUC and maxTSS.
 
