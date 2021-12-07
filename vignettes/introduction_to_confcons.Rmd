@@ -48,8 +48,8 @@ Here, we'll go through the main steps of a typical workflow by:
 - splitting the dataset to training and evaluation subset using spatial blocks;
 - training some simple models on the training subset;
 - making predictions to the whole dataset;
-- evaluating our models and
-- interpreting the measures returned by `confcons::measures()`.
+- evaluating our models; and
+- interpreting the measures.
 
 First, we install package 'confcons' and their dependencies needed for this tutorial (incl. 'raster', 'sf', 'blockCV', 'ranger' and 'ROCR'):
 
