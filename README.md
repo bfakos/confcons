@@ -49,8 +49,8 @@ devtools::install_github(repo = "bfakos/confcons", upgrade = "never", build_vign
 Three small functions, `thresholds()`, `confidence()` and
 `consistence()`, belong to the core of the package. A wrapper function
 called `measures()` utilize these workhorse functions and calculates
-every measures for you along with some traditional measures, such as AUC
-and maxTSS.
+every measures for you optionally along with some traditional measures,
+such as AUC and maxTSS.
 
 Let’s say we trained a predictive distribution model and made some
 predictions with it, and now we want to be sure if our model is both
@@ -96,8 +96,8 @@ measures(observations = dataset$observations,
 #>  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333
 ```
 
-The model seems to be not superperfect, but it is more or less confident
-in the positive predictions (i.e. predicted presences), since
+The model seems to be not super perfect, but it is more or less
+confident in the positive predictions (i.e. predicted presences), since
 `CPP_train` is closer to 1 than to 0. Even if not absolutely confident,
 it is really consistent (i.e., `DCPP` is close to 0), so we might not
 afraid of transferability issues if used for spatial or temporal
@@ -109,10 +109,10 @@ vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.ht
 
 ## Package lifecycle and contribution
 
-This GitHub version of the package is now in stable state and a
-manuscript about the novel measures, *confidence* and *consistence*, is
-submitted to a scientific journal. Upon acceptance we aims to publish
-‘confcons’ to [CRAN](https://cran.r-project.org/).
+This GitHub version of the package is now in stable state. A manuscript
+about the novel measures, *confidence* and *consistence*, is submitted
+to a scientific journal. Upon acceptance we aims to publish ‘confcons’
+to [CRAN](https://cran.r-project.org/).
 
 If you find a bug or have a feature request, or also if you have some
 idea want to discuss with the authors of the package, please create a
