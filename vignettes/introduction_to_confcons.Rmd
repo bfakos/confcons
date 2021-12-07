@@ -110,7 +110,7 @@ blocks_sf <- sf::st_as_sf(x = blocks$blocks)
 
 Let's see where are our presence and absence points and also which polygons will be used for training and which ones for evaluation:
 
-```{r, fig.height=18, fig.width=7}
+```{r, fig.height=7, fig.width=7}
 plot(x = environment[["bc01"]], axes = FALSE, col = cm.colors(255), colNA = "gray95")
 plot(x = occurrences[occurrences$Species == 1, ], pch = "+", col = "darkgreen", add = TRUE)
 plot(x = occurrences[occurrences$Species == 0, ], pch = "+", col = "orange", add = TRUE)
