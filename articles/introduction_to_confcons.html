@@ -75,9 +75,9 @@
 
     
     
-<div class="section level1">
-<h1 id="confidence-and-consistence-what-are-they-and-why-using-them">Confidence and consistence: what are they and why using them?<a class="anchor" aria-label="anchor" href="#confidence-and-consistence-what-are-they-and-why-using-them"></a>
-</h1>
+<div class="section level2">
+<h2 id="confidence-and-consistence-what-are-they-and-why-using-them">Confidence and consistence: what are they and why using them?<a class="anchor" aria-label="anchor" href="#confidence-and-consistence-what-are-they-and-why-using-them"></a>
+</h2>
 <p>‘confcons’ (<strong>conf</strong>idence &amp; <strong>cons</strong>istence) is a light-weight, stand-alone R package designed to calculate the following two novel measures of predictive/potential distribution models (incl. species distribution models):</p>
 <ul>
 <li>
@@ -85,21 +85,25 @@
 <li>
 <em>consistence</em> that measures how consistent the model is if the confidence in the training and evaluation subsets are compared.</li>
 </ul>
-<p>While <em>confidence</em> serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, <em>consistence</em> is a proxy for model’s transferability (in space and time).</p>
+<p>While <em>confidence</em> serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, <em>consistence</em> is a proxy for model’s transferability (in space and time). Both measures can be calculated</p>
+<ul>
+<li>in a balanced way, when predicted presences and predicted absences are equally important. These measures are called <em>confidence in predictions</em> (‘CP’) and <em>consistence of</em> (or difference in confidences in) <em>predictions</em> (‘DCP’);</li>
+<li>in a way weighted towards the predicted presences, when certain positive presences are more important for the selected modelling purpose. These measures are called <em>confidence in positive predictions</em> (‘CPP’) and <em>consistence of</em> (or difference in confidences in) <em>positive predictions</em> (‘DCPP’).</li>
+</ul>
 <p>A manuscript about the novel measures is submitted to a scientific journal. Once accepted, we’ll cite it here, and you’ll get much more information about the measures from that paper.</p>
 </div>
-<div class="section level1">
-<h1 id="functions-for-calculating-confidence-and-consistence">Functions for calculating confidence and consistence<a class="anchor" aria-label="anchor" href="#functions-for-calculating-confidence-and-consistence"></a>
-</h1>
+<div class="section level2">
+<h2 id="functions-for-calculating-confidence-and-consistence">Functions for calculating confidence and consistence<a class="anchor" aria-label="anchor" href="#functions-for-calculating-confidence-and-consistence"></a>
+</h2>
 <p>Three small functions, <code><a href="../reference/thresholds.html">thresholds()</a></code>, <code><a href="../reference/confidence.html">confidence()</a></code> and <code><a href="../reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="../reference/measures.html">measures()</a></code> utilizes these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.</p>
 <p>In the example below we’ll see how these function work and what are their parameters and returned value. For further details, please consult with the help page of the selected function and the examples given there.</p>
 </div>
-<div class="section level1">
-<h1 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
-</h1>
 <div class="section level2">
-<h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<h2 id="workflow">Workflow<a class="anchor" aria-label="anchor" href="#workflow"></a>
 </h2>
+<div class="section level3">
+<h3 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h3>
 <p>Here, we’ll go through the main steps of a typical workflow by:</p>
 <ul>
 <li>loading some environmental and presence-absence data using the example dataset of package ‘blockCV’;</li>
@@ -124,9 +128,9 @@
 <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ipa-tys.github.io/ROCR/" class="external-link">ROCR</a></span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bfakos/confcons" class="external-link">confcons</a></span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
-</h2>
+<div class="section level3">
+<h3 id="data-preparation">Data preparation<a class="anchor" aria-label="anchor" href="#data-preparation"></a>
+</h3>
 <p>Let’s open the environmental raster that contains eight climatic and two topographic layers at 800 m resolution in UTM projection:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">environment</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/brick.html" class="external-link">brick</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"awt.grd"</span>, package <span class="op">=</span> <span class="st">"blockCV"</span><span class="op">)</span><span class="op">)</span>
@@ -166,14 +170,14 @@
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">occurrences</span><span class="op">[</span><span class="va">occurrences</span><span class="op">$</span><span class="va">Species</span> <span class="op">==</span> <span class="fl">0</span>, <span class="op">]</span>, pch <span class="op">=</span> <span class="st">"+"</span>, col <span class="op">=</span> <span class="st">"orange"</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">blocks_sf</span><span class="op">[</span><span class="va">blocks_sf</span><span class="op">$</span><span class="va">folds</span> <span class="op">==</span> <span class="fl">1</span>, <span class="op">]</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"transparent"</span>, border <span class="op">=</span> <span class="st">"#2222DD66"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/pkg/raster/man/plot.html" class="external-link">plot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fu">sf</span><span class="fu">::</span><span class="fu"><a href="https://r-spatial.github.io/sf/reference/st_geometry.html" class="external-link">st_geometry</a></span><span class="op">(</span><span class="va">blocks_sf</span><span class="op">[</span><span class="va">blocks_sf</span><span class="op">$</span><span class="va">folds</span> <span class="op">==</span> <span class="fl">2</span>, <span class="op">]</span><span class="op">)</span>, col <span class="op">=</span> <span class="st">"transparent"</span>, border <span class="op">=</span> <span class="st">"#DD222266"</span>, lwd <span class="op">=</span> <span class="fl">2</span>, add <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">160000</span>,
+<span class="fu"><a href="https://rdrr.io/r/graphics/legend.html" class="external-link">legend</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">140000</span>,
        y <span class="op">=</span> <span class="fl">8000000</span>,
        legend <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"presence"</span>, <span class="st">"absence"</span>, <span class="st">"training"</span>, <span class="st">"evaluation"</span><span class="op">)</span>,
        col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"darkgreen"</span>, <span class="st">"orange"</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>,
        pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"+"</span>, <span class="st">"+"</span>, <span class="cn">NA</span>, <span class="cn">NA</span><span class="op">)</span>,
        border <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"#2222DD66"</span>, <span class="st">"#DD222266"</span><span class="op">)</span>,
        fill <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"transparent"</span>, <span class="st">"transparent"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
-<p><img src="introduction_to_confcons_files/figure-html/unnamed-chunk-7-1.png" width="700"></p>
+<p><img src="introduction_to_confcons_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 <p>We start to build a <code>data.frame</code> that will contain</p>
 <ul>
 <li>the predictor values in the presence and absence locations,</li>
@@ -204,9 +208,9 @@
 <span class="co">#&gt;  $ occurrences  : int  1 1 1 1 1 1 1 1 1 1 ...</span>
 <span class="co">#&gt;  $ training_mask: logi  FALSE FALSE TRUE FALSE FALSE FALSE ...</span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="training-models-and-making-predictions">Training models and making predictions<a class="anchor" aria-label="anchor" href="#training-models-and-making-predictions"></a>
-</h2>
+<div class="section level3">
+<h3 id="training-models-and-making-predictions">Training models and making predictions<a class="anchor" aria-label="anchor" href="#training-models-and-making-predictions"></a>
+</h3>
 <p>Now the <code>data.frame</code> contains all of the information needed to train predictive distribution models. For the sake of this example, we will create two simple models:</p>
 <ul>
 <li>a Generalized Linear Model (GLM) with a linear formula (i.e., without interactions) and stepwise predictor selection, and</li>
@@ -241,19 +245,18 @@
 <span class="co">#&gt;  $ predictions_glm: num  0.934 0.981 0.916 0.996 0.908 ...</span>
 <span class="co">#&gt;  $ predictions_rf : num  0.875 0.918 0.856 0.902 0.905 ...</span></code></pre></div>
 </div>
-</div>
-<div class="section level1">
-<h1 id="evaluation-and-interpretation">Evaluation and interpretation<a class="anchor" aria-label="anchor" href="#evaluation-and-interpretation"></a>
-</h1>
+<div class="section level3">
+<h3 id="evaluation-and-interpretation">Evaluation and interpretation<a class="anchor" aria-label="anchor" href="#evaluation-and-interpretation"></a>
+</h3>
 <p>Models are trained, predictions are done, so one step is missing: the evaluation. This is where package ‘confcons’ will become useful…</p>
 <p>Let’s take a look at the lower (mean predicted value in the absence locations) and upper (mean predicted value in the presence locations) thresholds below/above which we interpret the predicted values as certain negatives and certain positives, respectively. We use function <code><a href="../reference/thresholds.html">thresholds()</a></code> for this purpose, which needs the integer/logical vector of the observed predictions (called ‘observations’) and the numeric vector of the predicted probabilities of occurrence (called ‘predictions’) as input parameters. The function returns two values (i.e., a named numeric vector of length 2).</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="op">(</span><span class="va">thresholds_glm</span> <span class="op">&lt;-</span> <span class="fu">confcons</span><span class="fu">::</span><span class="fu"><a href="../reference/thresholds.html">thresholds</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
-                                        predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_glm</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="op">(</span><span class="va">thresholds_glm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thresholds.html">thresholds</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
+                              predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_glm</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; threshold1 threshold2 </span>
 <span class="co">#&gt;  0.1438731  0.8179655</span>
-<span class="op">(</span><span class="va">thresholds_rf</span> <span class="op">&lt;-</span> <span class="fu">confcons</span><span class="fu">::</span><span class="fu"><a href="../reference/thresholds.html">thresholds</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
-                                       predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_rf</span><span class="op">)</span><span class="op">)</span>
+<span class="op">(</span><span class="va">thresholds_rf</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/thresholds.html">thresholds</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
+                             predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_rf</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; threshold1 threshold2 </span>
 <span class="co">#&gt;  0.1823275  0.7732901</span></code></pre></div>
 <p>Between 0.14 and 0.82, the predictions of the GLM model can be treated as uncertain predictions. The same holds for the RF model between 0.18 and 0.77.</p>
@@ -307,7 +310,7 @@
 <span class="co">#&gt;   CP_train    CP_eval        DCP  CPP_train   CPP_eval       DCPP </span>
 <span class="co">#&gt;  0.8620690  0.6724138 -0.1896552  0.8620690  0.6415094 -0.2205595</span></code></pre></div>
 <p>The result is a named <code>numeric</code> vector containing all of the measures. It is more than needed. I recommend you to use ‘CPP_eval’ + ‘DCPP’, or, if predicted absences are as important as predicted presences in your research, use ‘CP_eval’ + ‘DCP’.</p>
-<p>We can see that RF model is really condident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so if I were you, I would select that one!</p>
+<p>We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so if I were you, I would select that one for extrapolation, e.g. in a climate change impact study!</p>
 <p>If you have installed package ‘ROCR’, <code><a href="../reference/measures.html">measures()</a></code> can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for you. You should simply switch the parameter ‘goodness’ from its default value (<code>FALSE</code>) to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
@@ -318,9 +321,10 @@
 <span class="co">#&gt;  0.77586207  0.75862069 -0.01724138  0.77192982  0.74074074 -0.03118908 </span>
 <span class="co">#&gt;         AUC      maxTSS </span>
 <span class="co">#&gt;  0.90517241  0.72515213</span></code></pre></div>
-<div class="section level2">
-<h2 id="evaluating-multiple-models">Evaluating multiple models<a class="anchor" aria-label="anchor" href="#evaluating-multiple-models"></a>
-</h2>
+</div>
+<div class="section level3">
+<h3 id="evaluating-multiple-models">Evaluating multiple models<a class="anchor" aria-label="anchor" href="#evaluating-multiple-models"></a>
+</h3>
 <p>There is one another <code>logical</code> parameter, called ‘df’, by which you can decide whether a one-row <code>data.frame</code> is more suited for your analysis purposes.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
