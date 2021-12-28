@@ -4,7 +4,7 @@
 #' uncertain predictions. The thresholds are needed to create the extended
 #' confusion matrix and are further used for confidence calculation.
 #'
-#' @param observations An integer or logical vector containing the binary
+#' @param observations Either an integer or logical vector containing the binary
 #'   observations where presences are encoded as \code{1}s/\code{TRUE}s and
 #'   absences as \code{0}s/\code{FALSE}s.
 #' @param predictions A numeric vector containing the predicted probabilities of

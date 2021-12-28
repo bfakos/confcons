@@ -1,8 +1,8 @@
 #' Consistence of the predictive distribution model
 #'
-#' Calculates consistence of the model as the difference of the confidence
-#' calculated on the evaluation and the confidence calculated on the training
-#' subset. Consistence serves as a proxy for model's transferability.
+#' Calculate consistence (DCPP, DCP) of the model as the difference of the
+#' confidence calculated on the evaluation and the confidence calculated on the
+#' training subset. Consistence serves as a proxy for model's transferability.
 #'
 #' @param conf_train \strong{Conf}idence calculated on the \strong{train}ing
 #'   subset: a numeric vector of length one, containing a number within the

@@ -7,14 +7,14 @@
 #' \code{thresholds} distinguishing certain negatives/positives from uncertain
 #' predictions.
 #'
-#' @param observations An integer or logical vector containing the binary
+#' @param observations Either an integer or logical vector containing the binary
 #'   observations where presences are encoded as \code{1}s/\code{TRUE}s and
 #'   absences as \code{0}s/\code{FALSE}s.
 #' @param predictions A numeric vector containing the predicted probabilities of
 #'   occurrence typically within the \code{[0, 1]} interval.
 #'   \code{length(predictions)} should be equal to \code{length(observations)}
 #'   and the order of the elements should match.
-#' @param thresholds A numeric vector of length 2, typically calculated by
+#' @param thresholds A numeric vector of length two, typically calculated by
 #'   \code{\link{thresholds}()}. The first element distinguishes certain
 #'   negatives (certain absences) from uncertain predictions. The second element
 #'   distinguishes certain positives (certain presences) from uncertain
