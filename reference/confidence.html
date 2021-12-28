@@ -81,7 +81,7 @@ predictions.</p>
     <div class="section level2">
     <h2 id="arguments">Arguments<a class="anchor" aria-label="anchor" href="#arguments"></a></h2>
     <dl><dt>observations</dt>
-<dd><p>An integer or logical vector containing the binary
+<dd><p>Either an integer or logical vector containing the binary
 observations where presences are encoded as <code>1</code>s/<code>TRUE</code>s and
 absences as <code>0</code>s/<code>FALSE</code>s.</p></dd>
 <dt>predictions</dt>
@@ -90,7 +90,7 @@ occurrence typically within the <code>[0, 1]</code> interval.
 <code>length(predictions)</code> should be equal to <code>length(observations)</code>
 and the order of the elements should match.</p></dd>
 <dt>thresholds</dt>
-<dd><p>A numeric vector of length 2, typically calculated by
+<dd><p>A numeric vector of length two, typically calculated by
 <code><a href="thresholds.html">thresholds</a>()</code>. The first element distinguishes certain
 negatives (certain absences) from uncertain predictions. The second element
 distinguishes certain positives (certain presences) from uncertain
