@@ -27,9 +27,9 @@ A numeric vector of length one. It is either NA_real_ or a number
   accidentally swapped.
 }
 \description{
-Calculates consistence of the model as the difference of the confidence
-calculated on the evaluation and the confidence calculated on the training
-subset. Consistence serves as a proxy for model's transferability.
+Calculate consistence (DCPP, DCP) of the model as the difference of the
+confidence calculated on the evaluation and the confidence calculated on the
+training subset. Consistence serves as a proxy for model's transferability.
 }
 \examples{
 # Simple examples:

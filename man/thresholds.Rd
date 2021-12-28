@@ -7,7 +7,7 @@
 thresholds(observations, predictions)
 }
 \arguments{
-\item{observations}{An integer or logical vector containing the binary
+\item{observations}{Either an integer or logical vector containing the binary
 observations where presences are encoded as \code{1}s/\code{TRUE}s and
 absences as \code{0}s/\code{FALSE}s.}
 

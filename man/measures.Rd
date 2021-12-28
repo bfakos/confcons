@@ -13,7 +13,7 @@ measures(
 )
 }
 \arguments{
-\item{observations}{An integer or logical vector containing the binary
+\item{observations}{Either an integer or logical vector containing the binary
 observations where presences are encoded as \code{1}s/\code{TRUE}s and
 absences as \code{0}s/\code{FALSE}s.}
 
@@ -50,11 +50,11 @@ A named numeric vector (if \code{df} is \code{FALSE}; the default) or
   follows: \describe{ \item{CP_train}{confidence in predictions within known
   presences (CP) for the training subset} \item{CP_eval}{confidence in
   predictions within known presences (CP) for the evaluation subset}
-  \item{DCP}{consistence of predictions} \item{CPP_train}{confidence in
+  \item{DCP}{consistence of predictions (difference of CPs)} \item{CPP_train}{confidence in
   positive predictions within known presences (CPP) for the training subset}
   \item{CPP_eval}{confidence in positive predictions within known presences
   (CPP) for the evaluation subset} \item{DCPP}{consistence of positive
-  predictions} \item{AUC}{Area Under the ROC Curve (Hanley and McNeil 1982;
+  predictions (difference of CPPs)} \item{AUC}{Area Under the ROC Curve (Hanley and McNeil 1982;
   calculated by \code{\link[ROCR:performance]{ROCR::performance()}}). This
   element/column is available only if parameter '\code{goodness}' is set to
   \code{TRUE}. If package \pkg{ROCR} is not available but parameter
@@ -73,10 +73,10 @@ Wrapper function for calculating the predictive distribution model's
 well-known goodness-of-fit measures as well. The calculated measures are as
 follows: \itemize{ \item confidence in predictions (CP) and confidence in
 positive predictions (CPP) within known presences for the training and
-evaluation subsets \item consistence of predictions (DCP) and positive
-predictions (DCPP) \item Area Under the ROC Curve (AUC) - optional (see
-parameter \code{goodness}) \item maximum of the True Skill Statistic (maxTSS)
-- optional (see parameter \code{goodness})}
+evaluation subsets \item consistence of predictions (difference of CPs; DCP)
+and positive predictions (difference of CPPs; DCPP) \item Area Under the ROC
+Curve (AUC) - optional (see parameter \code{goodness}) \item maximum of the
+True Skill Statistic (maxTSS) - optional (see parameter \code{goodness})}
 }
 \note{
 Since \pkg{confcons} is a light-weight, stand-alone packages, it does
