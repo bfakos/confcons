@@ -34,7 +34,7 @@ A manuscript about the novel measures is submitted to a scientific journal. Once
 
 ## Functions for calculating confidence and consistence
 
-Three small functions, `thresholds()`, `confidence()` and `consistence()`, belong to the core of the package. A wrapper function called `measures()` utilizes these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.
+Three small functions, `thresholds()`, `confidence()` and `consistence()`, belong to the core of the package. A wrapper function called `measures()` utilizes these workhorse functions and calculates every measures for us optionally along with some traditional measures, such as AUC and maxTSS.
 
 In the example below we'll see how these function work and what are their parameters and returned value. For further details, please consult with the help page of the selected function and the examples given there.
 
@@ -131,9 +131,9 @@ We start to build a `data.frame` that will contain
 - the predictor values in the presence and absence locations,
 - the observed occurrences,
 - the training mask (`TRUE` for the location later used for model training, `FALSE` for evaluation locations), and
-- the predicted probabilities of occurrence (latter appended).
+- the predicted probabilities of occurrence (later appended).
 
-`raster::extraxt()` gathers the predictors from the studied locations for us. `blocks$folds[[1]]` contains two vectors of indices. We'll use the first vector for training (and the second one for evaluation).
+`raster::extract()` gathers the predictors from the studied locations for us. `blocks$folds[[1]]` contains two vectors of indices. We'll use the first vector for training (and the second one for evaluation).
 
 ```{r}
 dataset <- raster::extract(x = environment,
@@ -162,7 +162,7 @@ dataset$predictions_glm <- predict(object = model_glm,
                                    type = "response")
 ```
 
-The GLM model was trained on the training subset (`dataset[dataset$training_mask, ]`) but all of the studied locations were used for prediction (i.e. training and evaluation subsets). A new column called 'predictions_glm' was append to the `data.frame`. We repeat the same procedure, now training the RF model:
+The GLM model was trained on the training subset (`dataset[dataset$training_mask, ]`) but all of the studied locations were used for prediction (i.e. training and evaluation subsets). A new column called 'predictions_glm' was appended to the `data.frame`. We repeat the same procedure, now training the RF model:
 
 ```{r}
 model_rf <- ranger::ranger(formula = linear_formula,
@@ -194,7 +194,7 @@ Let's take a look at the lower (mean predicted value in the absence locations) a
 
 Between 0.14 and 0.82, the predictions of the GLM model can be treated as uncertain predictions. The same holds for the RF model between 0.18 and 0.77.
 
-Now we calculate two of the proposed evaluation measures, confidence in positive predictions (CPP) and confidence in predictions (CP). Both should be calculated using the evaluation subset. Function `confidence()` can calculate both measures, depending on the value of its parameter 'type'. If it's 'positive', we'll get CPP, if it's 'neutral', we'll get CP that is not weighted towards the positive predictions. Beyond 'type' and the two previously mentioned parameters ('observations' and 'predictions') one more parameter is needed: 'thresholds'. Of course, the previously calculated thresholds will perfectly suits for this purpose.
+Now we calculate two of the proposed evaluation measures, confidence in positive predictions (CPP) and confidence in predictions (CP). Both should be calculated using the evaluation subset. Function `confidence()` can calculate any of these measures, depending on the value of its parameter 'type'. If it's 'positive', we'll get CPP, if it's 'neutral', we'll get CP that is not weighted towards the positive predictions. Beyond 'type' and the two previously mentioned parameters ('observations' and 'predictions') one more parameter is needed: 'thresholds'. Of course, the previously calculated thresholds will perfectly suit for this purpose.
 
 
 ```{r}
@@ -212,7 +212,7 @@ conf_N_eval
 
 There is not so much difference between the two measures. Whether we should use CPP or CP for describing the confidence of our model depends on the main aim of our model. Confidence should be between `0` and `1`; the higher value indicates more confidence. Our GLM is not super confident, but the value is closer to `1`, so it seems more or less OK.
 
-We are a bit curios whether the confidence of the model is higher or lower if is calculated for the training subset.
+We are a bit curious whether the confidence of the model is higher or lower if is calculated for the training subset.
 
 
 ```{r}
@@ -224,7 +224,7 @@ conf_P_train
 conf_P_eval < conf_P_train
 ```
 
-Of course, the model is more confident in the training subset than in the evaluation subset. This is absolutely normal (and would be strange if the opposite occurs). Which is not evident is the difference between the two and its interpretation. `consistence()` is the function that do the magic for us: a simple subtraction... It needs one of the two confidence measures (CPP or CP) for the training and the evaluation dataset, and returns their difference.
+Of course, the model is more confident in the training subset than in the evaluation subset. This is absolutely normal (and would be strange if the opposite occurs). Which is not evident is the difference between the two and its interpretation. `consistence()` is the function that does the magic for us: a simple subtraction... It needs one of the two confidence measures (CPP or CP) for the training and the evaluation dataset, and returns their difference.
 
 ```{r}
 consistence(conf_train = conf_P_train, conf_eval = conf_P_eval)
@@ -232,7 +232,7 @@ consistence(conf_train = conf_P_train, conf_eval = conf_P_eval)
 
 A negative value between `-1` and `0` is normal. The higher the consistence is (i.e., the closer to `0`), the more consistent the model is. Positive value might be an artifact or indicates that the training and evaluation subsets were accidentally swapped.
 
-Now we get familiar with the three core functions of the package: `thresholds()`, `confidence()` and `consistence()`. Your question is right if you ask: *why should I call three different functions several times if I want to get all the measures for my model?*. Well, you don't have to. There is a wrapper function called `measures()` that calculates everything for you.
+Now we get familiar with the three core functions of the package: `thresholds()`, `confidence()` and `consistence()`. The question is right if we ask: *why should we call three different functions several times if we want to get all the measures for our model?*. Well, we don't have to. There is a wrapper function called `measures()` that calculates everything for us.
 
 It needs three vectors:
 
@@ -251,11 +251,11 @@ measures(observations = dataset$occurrences,
          evaluation_mask = !dataset$training_mask)
 ```
 
-The result is a named `numeric` vector containing all of the measures. It is more than needed. I recommend you to use 'CPP_eval' + 'DCPP', or, if predicted absences are as important as predicted presences in your research, use 'CP_eval' + 'DCP'.
+The result is a named `numeric` vector containing all of the measures. It is more than needed. It is recommended to use 'CPP_eval' + 'DCPP', or, if predicted absences are as important as predicted presences in our research, 'CP_eval' + 'DCP'.
 
-We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so if I were you, I would select that one for extrapolation, e.g. in a climate change impact study!
+We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so we should select that one for extrapolation, e.g. in a climate change impact study.
 
-If you have installed package 'ROCR', `measures()` can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for you. You should simply switch the parameter 'goodness' from its default value (`FALSE`) to `TRUE`. 
+If we have installed package 'ROCR', `measures()` can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for us. We should simply switch the parameter 'goodness' from its default value (`FALSE`) to `TRUE`. 
 
 ```{r}
 measures(observations = dataset$occurrences,
@@ -266,7 +266,7 @@ measures(observations = dataset$occurrences,
 
 ### Evaluating multiple models
 
-There is one another `logical` parameter, called 'df', by which you can decide whether a one-row `data.frame` is more suited for your analysis purposes.
+There is one another `logical` parameter, called 'df', by which we can decide whether a one-row `data.frame` is more suited for our analysis purposes.
 
 ```{r}
 measures(observations = dataset$occurrences,
@@ -277,7 +277,7 @@ measures(observations = dataset$occurrences,
 
 ```
 
-For example, if you have several models (i.e., two in this example), you can simply `rbind()` these rows in a `for` loop or a `lapply()`:
+For example, if we have several models (i.e., two in this example), we can simply `rbind()` these rows in a `for` loop or a `lapply()`:
 
 
 ```{r}
