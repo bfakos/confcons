@@ -67,7 +67,7 @@
       <img src="" class="logo" alt=""><h1>Introduction to package 'confcons'</h1>
                         <h4 data-toc-skip class="author">Ákos Bede-Fazekas, Imelda Somodi</h4>
             
-            <h4 data-toc-skip class="date">2021-12-07</h4>
+            <h4 data-toc-skip class="date">2021-12-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/bfakos/confcons/blob/HEAD/vignettes/introduction_to_confcons.Rmd" class="external-link"><code>vignettes/introduction_to_confcons.Rmd</code></a></small>
       <div class="d-none name"><code>introduction_to_confcons.Rmd</code></div>
@@ -95,7 +95,7 @@
 <div class="section level2">
 <h2 id="functions-for-calculating-confidence-and-consistence">Functions for calculating confidence and consistence<a class="anchor" aria-label="anchor" href="#functions-for-calculating-confidence-and-consistence"></a>
 </h2>
-<p>Three small functions, <code><a href="../reference/thresholds.html">thresholds()</a></code>, <code><a href="../reference/confidence.html">confidence()</a></code> and <code><a href="../reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="../reference/measures.html">measures()</a></code> utilizes these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.</p>
+<p>Three small functions, <code><a href="../reference/thresholds.html">thresholds()</a></code>, <code><a href="../reference/confidence.html">confidence()</a></code> and <code><a href="../reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="../reference/measures.html">measures()</a></code> utilizes these workhorse functions and calculates every measures for us optionally along with some traditional measures, such as AUC and maxTSS.</p>
 <p>In the example below we’ll see how these function work and what are their parameters and returned value. For further details, please consult with the help page of the selected function and the examples given there.</p>
 </div>
 <div class="section level2">
@@ -122,7 +122,7 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rspatial.org/raster" class="external-link">raster</a></span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Loading required package: sp</span>
 <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://r-spatial.github.io/sf/" class="external-link">sf</a></span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1</span>
+<span class="co">#&gt; Linking to GEOS 3.8.0, GDAL 3.0.4, PROJ 6.3.1; sf_use_s2() is TRUE</span>
 <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/rvalavi/blockCV" class="external-link">blockCV</a></span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/imbs-hl/ranger" class="external-link">ranger</a></span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ipa-tys.github.io/ROCR/" class="external-link">ROCR</a></span><span class="op">)</span><span class="op">)</span>
@@ -183,9 +183,9 @@
 <li>the predictor values in the presence and absence locations,</li>
 <li>the observed occurrences,</li>
 <li>the training mask (<code>TRUE</code> for the location later used for model training, <code>FALSE</code> for evaluation locations), and</li>
-<li>the predicted probabilities of occurrence (latter appended).</li>
+<li>the predicted probabilities of occurrence (later appended).</li>
 </ul>
-<p><code>raster::extraxt()</code> gathers the predictors from the studied locations for us. <code>blocks$folds[[1]]</code> contains two vectors of indices. We’ll use the first vector for training (and the second one for evaluation).</p>
+<p><code><a href="https://rdrr.io/pkg/raster/man/extract.html" class="external-link">raster::extract()</a></code> gathers the predictors from the studied locations for us. <code>blocks$folds[[1]]</code> contains two vectors of indices. We’ll use the first vector for training (and the second one for evaluation).</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu">raster</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/raster/man/extract.html" class="external-link">extract</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">environment</span>,
                            y <span class="op">=</span> <span class="va">occurrences</span>,
@@ -225,7 +225,7 @@
 <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_glm</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/raster/man/predict.html" class="external-link">predict</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">model_glm</span>,
                                    newdata <span class="op">=</span> <span class="va">dataset</span>,
                                    type <span class="op">=</span> <span class="st">"response"</span><span class="op">)</span></code></pre></div>
-<p>The GLM model was trained on the training subset (<code>dataset[dataset$training_mask, ]</code>) but all of the studied locations were used for prediction (i.e. training and evaluation subsets). A new column called ‘predictions_glm’ was append to the <code>data.frame</code>. We repeat the same procedure, now training the RF model:</p>
+<p>The GLM model was trained on the training subset (<code>dataset[dataset$training_mask, ]</code>) but all of the studied locations were used for prediction (i.e. training and evaluation subsets). A new column called ‘predictions_glm’ was appended to the <code>data.frame</code>. We repeat the same procedure, now training the RF model:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_rf</span> <span class="op">&lt;-</span> <span class="fu">ranger</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/ranger/man/ranger.html" class="external-link">ranger</a></span><span class="op">(</span>formula <span class="op">=</span> <span class="va">linear_formula</span>,
                            data <span class="op">=</span> <span class="va">dataset</span><span class="op">[</span><span class="va">dataset</span><span class="op">$</span><span class="va">training_mask</span>, <span class="op">]</span>,
@@ -260,7 +260,7 @@
 <span class="co">#&gt; threshold1 threshold2 </span>
 <span class="co">#&gt;  0.1823275  0.7732901</span></code></pre></div>
 <p>Between 0.14 and 0.82, the predictions of the GLM model can be treated as uncertain predictions. The same holds for the RF model between 0.18 and 0.77.</p>
-<p>Now we calculate two of the proposed evaluation measures, confidence in positive predictions (CPP) and confidence in predictions (CP). Both should be calculated using the evaluation subset. Function <code><a href="../reference/confidence.html">confidence()</a></code> can calculate both measures, depending on the value of its parameter ‘type’. If it’s ‘positive’, we’ll get CPP, if it’s ‘neutral’, we’ll get CP that is not weighted towards the positive predictions. Beyond ‘type’ and the two previously mentioned parameters (‘observations’ and ‘predictions’) one more parameter is needed: ‘thresholds’. Of course, the previously calculated thresholds will perfectly suits for this purpose.</p>
+<p>Now we calculate two of the proposed evaluation measures, confidence in positive predictions (CPP) and confidence in predictions (CP). Both should be calculated using the evaluation subset. Function <code><a href="../reference/confidence.html">confidence()</a></code> can calculate any of these measures, depending on the value of its parameter ‘type’. If it’s ‘positive’, we’ll get CPP, if it’s ‘neutral’, we’ll get CP that is not weighted towards the positive predictions. Beyond ‘type’ and the two previously mentioned parameters (‘observations’ and ‘predictions’) one more parameter is needed: ‘thresholds’. Of course, the previously calculated thresholds will perfectly suit for this purpose.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">conf_P_eval</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confidence.html">confidence</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span><span class="op">[</span><span class="op">!</span><span class="va">dataset</span><span class="op">$</span><span class="va">training_mask</span><span class="op">]</span>,
                           predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_glm</span><span class="op">[</span><span class="op">!</span><span class="va">dataset</span><span class="op">$</span><span class="va">training_mask</span><span class="op">]</span>,
@@ -275,7 +275,7 @@
 <span class="va">conf_N_eval</span>
 <span class="co">#&gt; [1] 0.7586207</span></code></pre></div>
 <p>There is not so much difference between the two measures. Whether we should use CPP or CP for describing the confidence of our model depends on the main aim of our model. Confidence should be between <code>0</code> and <code>1</code>; the higher value indicates more confidence. Our GLM is not super confident, but the value is closer to <code>1</code>, so it seems more or less OK.</p>
-<p>We are a bit curios whether the confidence of the model is higher or lower if is calculated for the training subset.</p>
+<p>We are a bit curious whether the confidence of the model is higher or lower if is calculated for the training subset.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">conf_P_train</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/confidence.html">confidence</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span><span class="op">[</span><span class="va">dataset</span><span class="op">$</span><span class="va">training_mask</span><span class="op">]</span>,
                            predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_glm</span><span class="op">[</span><span class="va">dataset</span><span class="op">$</span><span class="va">training_mask</span><span class="op">]</span>,
@@ -285,12 +285,12 @@
 <span class="co">#&gt; [1] 0.7719298</span>
 <span class="va">conf_P_eval</span> <span class="op">&lt;</span> <span class="va">conf_P_train</span>
 <span class="co">#&gt; [1] TRUE</span></code></pre></div>
-<p>Of course, the model is more confident in the training subset than in the evaluation subset. This is absolutely normal (and would be strange if the opposite occurs). Which is not evident is the difference between the two and its interpretation. <code><a href="../reference/consistence.html">consistence()</a></code> is the function that do the magic for us: a simple subtraction… It needs one of the two confidence measures (CPP or CP) for the training and the evaluation dataset, and returns their difference.</p>
+<p>Of course, the model is more confident in the training subset than in the evaluation subset. This is absolutely normal (and would be strange if the opposite occurs). Which is not evident is the difference between the two and its interpretation. <code><a href="../reference/consistence.html">consistence()</a></code> is the function that does the magic for us: a simple subtraction… It needs one of the two confidence measures (CPP or CP) for the training and the evaluation dataset, and returns their difference.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/consistence.html">consistence</a></span><span class="op">(</span>conf_train <span class="op">=</span> <span class="va">conf_P_train</span>, conf_eval <span class="op">=</span> <span class="va">conf_P_eval</span><span class="op">)</span>
 <span class="co">#&gt; [1] -0.03118908</span></code></pre></div>
 <p>A negative value between <code>-1</code> and <code>0</code> is normal. The higher the consistence is (i.e., the closer to <code>0</code>), the more consistent the model is. Positive value might be an artifact or indicates that the training and evaluation subsets were accidentally swapped.</p>
-<p>Now we get familiar with the three core functions of the package: <code><a href="../reference/thresholds.html">thresholds()</a></code>, <code><a href="../reference/confidence.html">confidence()</a></code> and <code><a href="../reference/consistence.html">consistence()</a></code>. Your question is right if you ask: <em>why should I call three different functions several times if I want to get all the measures for my model?</em>. Well, you don’t have to. There is a wrapper function called <code><a href="../reference/measures.html">measures()</a></code> that calculates everything for you.</p>
+<p>Now we get familiar with the three core functions of the package: <code><a href="../reference/thresholds.html">thresholds()</a></code>, <code><a href="../reference/confidence.html">confidence()</a></code> and <code><a href="../reference/consistence.html">consistence()</a></code>. The question is right if we ask: <em>why should we call three different functions several times if we want to get all the measures for our model?</em>. Well, we don’t have to. There is a wrapper function called <code><a href="../reference/measures.html">measures()</a></code> that calculates everything for us.</p>
 <p>It needs three vectors:</p>
 <ul>
 <li>the <code>integer</code>/<code>logical</code> vector of observed occurrences (‘observations’),</li>
@@ -309,9 +309,9 @@
          evaluation_mask <span class="op">=</span> <span class="op">!</span><span class="va">dataset</span><span class="op">$</span><span class="va">training_mask</span><span class="op">)</span>
 <span class="co">#&gt;   CP_train    CP_eval        DCP  CPP_train   CPP_eval       DCPP </span>
 <span class="co">#&gt;  0.8620690  0.6724138 -0.1896552  0.8620690  0.6415094 -0.2205595</span></code></pre></div>
-<p>The result is a named <code>numeric</code> vector containing all of the measures. It is more than needed. I recommend you to use ‘CPP_eval’ + ‘DCPP’, or, if predicted absences are as important as predicted presences in your research, use ‘CP_eval’ + ‘DCP’.</p>
-<p>We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so if I were you, I would select that one for extrapolation, e.g. in a climate change impact study!</p>
-<p>If you have installed package ‘ROCR’, <code><a href="../reference/measures.html">measures()</a></code> can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for you. You should simply switch the parameter ‘goodness’ from its default value (<code>FALSE</code>) to <code>TRUE</code>.</p>
+<p>The result is a named <code>numeric</code> vector containing all of the measures. It is more than needed. It is recommended to use ‘CPP_eval’ + ‘DCPP’, or, if predicted absences are as important as predicted presences in our research, ‘CP_eval’ + ‘DCP’.</p>
+<p>We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so we should select that one for extrapolation, e.g. in a climate change impact study.</p>
+<p>If we have installed package ‘ROCR’, <code><a href="../reference/measures.html">measures()</a></code> can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for us. We should simply switch the parameter ‘goodness’ from its default value (<code>FALSE</code>) to <code>TRUE</code>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
          predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_glm</span>,
@@ -325,7 +325,7 @@
 <div class="section level3">
 <h3 id="evaluating-multiple-models">Evaluating multiple models<a class="anchor" aria-label="anchor" href="#evaluating-multiple-models"></a>
 </h3>
-<p>There is one another <code>logical</code> parameter, called ‘df’, by which you can decide whether a one-row <code>data.frame</code> is more suited for your analysis purposes.</p>
+<p>There is one another <code>logical</code> parameter, called ‘df’, by which we can decide whether a one-row <code>data.frame</code> is more suited for our analysis purposes.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">occurrences</span>,
          predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions_rf</span>,
@@ -336,7 +336,7 @@
 <span class="co">#&gt; 1 0.862069 0.6724138 -0.1896552  0.862069 0.6415094 -0.2205595 0.8602941</span>
 <span class="co">#&gt;      maxTSS</span>
 <span class="co">#&gt; 1 0.7003043</span></code></pre></div>
-<p>For example, if you have several models (i.e., two in this example), you can simply <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code> these rows in a <code>for</code> loop or a <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>:</p>
+<p>For example, if we have several models (i.e., two in this example), we can simply <code><a href="https://rdrr.io/r/base/cbind.html" class="external-link">rbind()</a></code> these rows in a <code>for</code> loop or a <code><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply()</a></code>:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">model_IDs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"glm"</span>, <span class="st">"rf"</span><span class="op">)</span>
 <span class="kw">for</span> <span class="op">(</span><span class="va">model_ID</span> <span class="kw">in</span> <span class="va">model_IDs</span><span class="op">)</span> <span class="op">{</span>

@@ -124,13 +124,20 @@
                  evaluation_mask <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">evaluation_mask</span><span class="op">)</span>
 <span class="co">#&gt;    CP_train     CP_eval         DCP   CPP_train    CPP_eval        DCPP </span>
 <span class="co">#&gt;  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333</span></code></pre></div>
-<p>The model seems to be not super perfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since <code>CPP_train</code> is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., <code>DCPP</code> is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.</p>
+<p>The function returns</p>
+<ul>
+<li>a pair of confidence values for the training subset (<code>CP_train</code>, <code>CPP_train</code>) just for our information;</li>
+<li>a pair of confidence values for the evaluation subset (<code>CP_eval</code>, <code>CPP_eval</code>), both describing the confidence of our model;</li>
+<li>a pair of consistence values (<code>DCP</code>, <code>DCPP</code>) that serve as proxies for transferability of our model.</li>
+</ul>
+<p>The difference between the two values forming the pairs is described in <em>this scientific publication (TBD)</em>.</p>
+<p>Our model seems to be not super perfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since <code>CPP_eval</code> is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., <code>DCPP</code> is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.</p>
 <p>A detailed description of the measures and the functions of ‘confcons’, and more examples can be found in <a href="https://bfakos.github.io/confcons/articles/introduction_to_confcons.html">this vignette</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="package-lifecycle-and-contribution">Package lifecycle and contribution<a class="anchor" aria-label="anchor" href="#package-lifecycle-and-contribution"></a>
 </h2>
-<p>This GitHub version of the package is now in stable state. A manuscript about the novel measures, <em>confidence</em> and <em>consistence</em>, is submitted to a scientific journal. Upon acceptance we aims to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
+<p>This GitHub version of the package is now in stable state. A manuscript about the novel measures, <em>confidence</em> and <em>consistence</em>, is submitted to a scientific journal. Upon acceptance we aim to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
 <p>If you find a bug or have a feature request, or also if you have some idea want to discuss with the authors of the package, please create a <a href="https://github.com/bfakos/confcons/issues" class="external-link">new issue</a>.</p>
 </div>
 </div>
