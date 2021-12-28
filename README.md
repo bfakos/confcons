@@ -97,9 +97,21 @@ measures(observations = dataset$observations,
 #>  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333
 ```
 
-The model seems to be not super perfect, but it is more or less
+The function returns
+
+-   a pair of confidence values for the training subset (`CP_train`,
+    `CPP_train`) just for our information;
+-   a pair of confidence values for the evaluation subset (`CP_eval`,
+    `CPP_eval`), both describing the confidence of our model;
+-   a pair of consistence values (`DCP`, `DCPP`) that serve as proxies
+    for transferability of our model.
+
+The difference between the two values forming the pairs is described in
+*this scientific publication (TBD)*.
+
+Our model seems to be not super perfect, but it is more or less
 confident in the positive predictions (i.e. predicted presences), since
-`CPP_train` is closer to 1 than to 0. Even if not absolutely confident,
+`CPP_eval` is closer to 1 than to 0. Even if not absolutely confident,
 it is really consistent (i.e., `DCPP` is close to 0), so we might not
 afraid of transferability issues if used for spatial or temporal
 extrapolation.
@@ -112,8 +124,8 @@ vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.ht
 
 This GitHub version of the package is now in stable state. A manuscript
 about the novel measures, *confidence* and *consistence*, is submitted
-to a scientific journal. Upon acceptance we aims to publish ‘confcons’
-to [CRAN](https://cran.r-project.org/).
+to a scientific journal. Upon acceptance we aim to publish ‘confcons’ to
+[CRAN](https://cran.r-project.org/).
 
 If you find a bug or have a feature request, or also if you have some
 idea want to discuss with the authors of the package, please create a
