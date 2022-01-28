@@ -1,6 +1,6 @@
 # confcons 0.2.0
 
-* `thresholds()` can now calculate entropy-based thresholds besides the mean-based thresholds. Two new parameters are added to the function.
+* `thresholds()` can now calculate information-based thresholds besides the mean-based thresholds. Two new parameters (`type` and `range`) are added to the function.
 
 # confcons 0.1.0
 
