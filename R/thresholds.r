@@ -10,7 +10,17 @@
 #' @param predictions A numeric vector containing the predicted probabilities of
 #'   occurrence typically within the \code{[0, 1]} interval.
 #'   \code{length(predictions)} should be equal to \code{length(observations)}
-#'   and the order of the elements should match.
+#'   and the order of the elements should match. \code{predictions} is optional:
+#'   needed and used only if \code{type} is 'mean' and ignored otherwise.
+#' @param type A character vector of length one containing the value 'mean' (for
+#'   calculating mean of the predictions within known presences and absences) or
+#'   'information' (for calculating thresholds based on relative information
+#'   gain) . Defaults to 'mean'.
+#' @param range A numeric vector of length one containing a value from the
+#'   \code{]0, 0.5]} interval. It is the parameter of the information-based
+#'   method and is used only if \code{type} is 'information'. The larger the
+#'   \code{range} is, the more predictions are treated as uncertain. Defaults to
+#'   0.5.
 #' @return A named numeric vector of length 2. The first element
 #'   ('\code{threshold1}') is the mean of probabilities predicted to the absence
 #'   locations distinguishing certain negatives (certain absences) from
@@ -59,26 +69,51 @@
 #' @seealso \code{\link{confidence}} for calculating confidence,
 #'   \code{\link{consistence}} for calculating consistence
 #' @export
-thresholds <- function(observations, predictions) {
+thresholds <- function(observations, predictions = NULL, type = "mean", range = 0.5) {
 
 	# Checking parameters
-	if (missing(observations) | missing(predictions)) stop("Both parameter 'observations' and 'predictions' should be set.")
+
+	if (missing(observations)) stop("Parameter 'observations' should be set.")
 	if (is.logical(observations)) observations <- as.integer(observations)
 	if (!is.integer(observations)) {
 		warning("I found that parameter 'observations' is not an integer or logical vector. Coercion is done.")
 		observations <- as.integer(observations)
 	}
 	if (!all(observations[is.finite(observations)] %in% 0:1)) stop("Parameter 'observations' should contain 0s (absences) and 1s (presences).")
-	if (!is.numeric(predictions)) {
-		warning("I found that parameter 'predictions' is not a numeric vector. Coercion is done.")
-		predictions <- as.numeric(predictions)
+	if (!is.character(type)) stop("Parameter 'type' should be a character vector of length one.")
+	if (length(type) < 1) stop("Parameter 'type' should be a vector of length one.")
+	if (length(type) > 1) warning(paste0("Parameter 'type' has more elements (", as.character(length(type)), ") then expected (1). Only the first element is used."))
+	if (!type[1] %in% c("mean", "information")) stop("Parameter 'type' must be 'mean' or 'information'.")
+	if (!is.numeric(range)) {
+		warning("I found that parameter 'range' is not a numeric vector. Coercion is done.")
+		range <- as.numeric(range)
 	}
-	if (any(predictions[is.finite(predictions)] < 0) | any(predictions[is.finite(predictions)] > 1)) warning("Strange predicted values found. Parameter 'predictions' preferably contains numbers falling within the [0,1] interval.")
-	if (length(observations) != length(predictions)) stop("The length of the two parameters should be the same.")
+	if (length(range) < 1) stop("Parameter 'range' should be a vector of length one.")
+	if (length(range) > 1) warning(paste0("Parameter 'range' has more elements (", as.character(length(range)), ") then expected (1). Only the first element is used."))
+	if (is.na(range[1]) | range[1] <= 0 | range[1] > 0.5) stop(paste0("Parameter 'range' is expected to fall within the ]0, 0.5] interval, but found to be ", format(x = round(x = range, digits = 3), nsmall = 3), "."))
+	if (type[1] == "mean") {
+		if (missing(predictions)) stop("Parameter 'predictions' should be set if parameter 'type' is 'mean'.")
+		if (!is.numeric(predictions)) {
+			warning("I found that parameter 'predictions' is not a numeric vector. Coercion is done.")
+			predictions <- as.numeric(predictions)
+		}
+		if (any(predictions[is.finite(predictions)] < 0) | any(predictions[is.finite(predictions)] > 1)) warning("Strange predicted values found. Parameter 'predictions' preferably contains numbers falling within the [0,1] interval.")
+		if (length(observations) != length(predictions)) stop("The length of the two parameters ('observations' and 'predictions') should be the same.")
+	}
 
 	# Calculation
-	threshold1 <- mean(x = predictions[observations == 0], na.rm = TRUE)
-	threshold2 <- mean(x = predictions[observations == 1], na.rm = TRUE)
+
+	if (type[1] == "mean") {
+		threshold1 <- mean(x = predictions[observations == 0], na.rm = TRUE)
+		threshold2 <- mean(x = predictions[observations == 1], na.rm = TRUE)
+	} else {
+		prevalence <- sum(observations) / length(observations)
+		predictions <- seq(from = 0, to = 1, by = getOption("confcons_information_resolution"))
+		rel_information_gain <- predictions * log(predictions / prevalence) + (1 - predictions) * log((1 - predictions) / (1 - prevalence))
+		rel_information_gain <- rel_information_gain / log(ifelse(test = predictions < prevalence, yes = 1 - prevalence, no = 1 / prevalence))
+		threshold1 <- max(predictions[rel_information_gain < (-1) * range])
+		threshold2 <- max(predictions[rel_information_gain < range])
+	}
 	return(c(threshold1 = threshold1, threshold2 = threshold2))
 
 }
