@@ -108,7 +108,8 @@ thresholds <- function(observations, predictions = NULL, type = "mean", range = 
 		threshold2 <- mean(x = predictions[observations == 1], na.rm = TRUE)
 	} else {
 		prevalence <- sum(observations) / length(observations)
-		predictions <- seq(from = 0, to = 1, by = getOption("confcons_information_resolution"))
+		resolution <- getOption("confcons_information_resolution")
+		predictions <- seq(from = 0 + resolution, to = 1 - resolution, by = resolution)
 		rel_information_gain <- predictions * log(predictions / prevalence) + (1 - predictions) * log((1 - predictions) / (1 - prevalence))
 		rel_information_gain <- rel_information_gain / log(ifelse(test = predictions < prevalence, yes = 1 - prevalence, no = 1 / prevalence))
 		threshold1 <- max(predictions[rel_information_gain < (-1) * range])
