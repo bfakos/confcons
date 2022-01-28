@@ -84,13 +84,15 @@ thresholds <- function(observations, predictions = NULL, type = "mean", range = 
 	if (length(type) < 1) stop("Parameter 'type' should be a vector of length one.")
 	if (length(type) > 1) warning(paste0("Parameter 'type' has more elements (", as.character(length(type)), ") then expected (1). Only the first element is used."))
 	if (!type[1] %in% c("mean", "information")) stop("Parameter 'type' must be 'mean' or 'information'.")
-	if (!is.numeric(range)) {
-		warning("I found that parameter 'range' is not a numeric vector. Coercion is done.")
-		range <- as.numeric(range)
+	if (type[1] == "information") {
+		if (!is.numeric(range)) {
+			warning("I found that parameter 'range' is not a numeric vector. Coercion is done.")
+			range <- as.numeric(range)
+		}
+		if (length(range) < 1) stop("Parameter 'range' should be a vector of length one.")
+		if (length(range) > 1) warning(paste0("Parameter 'range' has more elements (", as.character(length(range)), ") then expected (1). Only the first element is used."))
+		if (is.na(range[1]) | range[1] <= 0 | range[1] > 0.5) stop(paste0("Parameter 'range' is expected to fall within the ]0, 0.5] interval, but found to be ", format(x = round(x = range, digits = 3), nsmall = 3), "."))
 	}
-	if (length(range) < 1) stop("Parameter 'range' should be a vector of length one.")
-	if (length(range) > 1) warning(paste0("Parameter 'range' has more elements (", as.character(length(range)), ") then expected (1). Only the first element is used."))
-	if (is.na(range[1]) | range[1] <= 0 | range[1] > 0.5) stop(paste0("Parameter 'range' is expected to fall within the ]0, 0.5] interval, but found to be ", format(x = round(x = range, digits = 3), nsmall = 3), "."))
 	if (type[1] == "mean") {
 		if (missing(predictions)) stop("Parameter 'predictions' should be set if parameter 'type' is 'mean'.")
 		if (!is.numeric(predictions)) {
