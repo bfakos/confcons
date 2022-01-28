@@ -4,7 +4,7 @@
 \alias{thresholds}
 \title{Thresholds needed to create the extended confusion matrix}
 \usage{
-thresholds(observations, predictions)
+thresholds(observations, predictions = NULL, type = "mean", range = 0.5)
 }
 \arguments{
 \item{observations}{Either an integer or logical vector containing the binary
@@ -14,7 +14,19 @@ absences as \code{0}s/\code{FALSE}s.}
 \item{predictions}{A numeric vector containing the predicted probabilities of
 occurrence typically within the \code{[0, 1]} interval.
 \code{length(predictions)} should be equal to \code{length(observations)}
-and the order of the elements should match.}
+and the order of the elements should match. \code{predictions} is optional:
+needed and used only if \code{type} is 'mean' and ignored otherwise.}
+
+\item{type}{A character vector of length one containing the value 'mean' (for
+calculating mean of the predictions within known presences and absences) or
+'information' (for calculating thresholds based on relative information
+gain) . Defaults to 'mean'.}
+
+\item{range}{A numeric vector of length one containing a value from the
+\code{]0, 0.5]} interval. It is the parameter of the information-based
+method and is used only if \code{type} is 'information'. The larger the
+\code{range} is, the more predictions are treated as uncertain. Defaults to
+0.5.}
 }
 \value{
 A named numeric vector of length 2. The first element
