@@ -63,7 +63,7 @@ confusion matrix and are further used for confidence calculation.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">thresholds</span><span class="op">(</span><span class="va">observations</span>, <span class="va">predictions</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">thresholds</span><span class="op">(</span><span class="va">observations</span>, predictions <span class="op">=</span> <span class="cn">NULL</span>, type <span class="op">=</span> <span class="st">"mean"</span>, range <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -76,7 +76,19 @@ absences as <code>0</code>s/<code>FALSE</code>s.</p></dd>
 <dd><p>A numeric vector containing the predicted probabilities of
 occurrence typically within the <code>[0, 1]</code> interval.
 <code>length(predictions)</code> should be equal to <code>length(observations)</code>
-and the order of the elements should match.</p></dd>
+and the order of the elements should match. <code>predictions</code> is optional:
+needed and used only if <code>type</code> is 'mean' and ignored otherwise.</p></dd>
+<dt>type</dt>
+<dd><p>A character vector of length one containing the value 'mean' (for
+calculating mean of the predictions within known presences and absences) or
+'information' (for calculating thresholds based on relative information
+gain) . Defaults to 'mean'.</p></dd>
+<dt>range</dt>
+<dd><p>A numeric vector of length one containing a value from the
+<code>]0, 0.5]</code> interval. It is the parameter of the information-based
+method and is used only if <code>type</code> is 'information'. The larger the
+<code>range</code> is, the more predictions are treated as uncertain. Defaults to
+0.5.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
