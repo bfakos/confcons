@@ -5,16 +5,16 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Calculate confidence and consistence that measure the
+<meta name="description" content="Calculate confidence and consistency that measure the
     goodness-of-fit and transferability of predictive/potential distribution
     models (including species distribution models).">
-<title>Confidence and Consistence of Predictive Distribution Models • confcons</title>
+<title>Confidence and Consistency of Predictive Distribution Models • confcons</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Confidence and Consistence of Predictive Distribution Models">
-<meta property="og:description" content="Calculate confidence and consistence that measure the
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Confidence and Consistency of Predictive Distribution Models">
+<meta property="og:description" content="Calculate confidence and consistency that measure the
     goodness-of-fit and transferability of predictive/potential distribution
     models (including species distribution models).">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -80,25 +80,25 @@
 <li>
 <em>confidence</em> that measures the proportion of predictions that the model is confident in;</li>
 <li>
-<em>consistence</em> that measures how consistent the model is if the confidence in the training and evaluation subsets are compared.</li>
+<em>consistency</em> that measures how consistent the model is if the confidence in the training and evaluation subsets are compared.</li>
 </ul>
-<p>While <em>confidence</em> serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, <em>consistence</em> is a proxy for model’s transferability (in space and time).</p>
+<p>While <em>confidence</em> serves as a replacement for the widely criticized goodness-of-fit measures, such as AUC, <em>consistency</em> is a proxy for model’s transferability (in space and time).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of ‘confcons’ from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"bfakos/confcons"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"bfakos/confcons"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span><span class="op">)</span></span></code></pre></div>
 <p>If you want to read the <a href="https://bfakos.github.io/confcons/articles/introduction_to_confcons.html">vignette</a> in R, install the package with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("devtools")</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"bfakos/confcons"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span>repo <span class="op">=</span> <span class="st">"bfakos/confcons"</span>, upgrade <span class="op">=</span> <span class="st">"never"</span>, build_vignettes <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a>
 </h2>
-<p>Three small functions, <code><a href="reference/thresholds.html">thresholds()</a></code>, <code><a href="reference/confidence.html">confidence()</a></code> and <code><a href="reference/consistence.html">consistence()</a></code>, belong to the core of the package. A wrapper function called <code><a href="reference/measures.html">measures()</a></code> utilizes these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.</p>
+<p>Three small functions, <code><a href="reference/thresholds.html">thresholds()</a></code>, <code><a href="reference/confidence.html">confidence()</a></code> and <code><a href="reference/consistency.html">consistency()</a></code>, belong to the core of the package. A wrapper function called <code><a href="reference/measures.html">measures()</a></code> utilizes these workhorse functions and calculates every measures for you optionally along with some traditional measures, such as AUC and maxTSS.</p>
 <p>Let’s say we trained a predictive distribution model and made some predictions with it, and now we want to be sure if our model is both</p>
 <ul>
 <li>confident in the predictions, and</li>
@@ -111,27 +111,27 @@
 <li>evaluation_mask (<code>logical</code>): indicates whether a certain row belongs to the evaluation subset (<code>TRUE</code>) or the training subset (<code>FALSE</code>).</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>
-    observations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span><span class="op">)</span>,
-    predictions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.3</span>, <span class="fl">0.65</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span>,
-    evaluation_mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>    observations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">0L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span>, <span class="fl">1L</span><span class="op">)</span>,</span>
+<span>    predictions <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.1</span>, <span class="fl">0.2</span>, <span class="fl">0.4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>, <span class="fl">0.2</span>, <span class="fl">0.3</span>, <span class="fl">0.3</span>, <span class="fl">0.4</span>, <span class="fl">0.3</span>, <span class="fl">0.65</span>, <span class="fl">0.9</span>, <span class="fl">0.9</span>, <span class="fl">1</span>, <span class="fl">0.1</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span>, <span class="fl">0.8</span><span class="op">)</span>,</span>
+<span>    evaluation_mask <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">FALSE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span>, <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>Well, it is a really small dataset…</p>
 <p>Let’s attach the package to our R session:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bfakos/confcons" class="external-link">confcons</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/bfakos/confcons" class="external-link">confcons</a></span><span class="op">)</span></span></code></pre></div>
 <p>Now we can calculate the measures:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">observations</span>,
-                 predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions</span>,
-                 evaluation_mask <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">evaluation_mask</span><span class="op">)</span>
-<span class="co">#&gt;    CP_train     CP_eval         DCP   CPP_train    CPP_eval        DCPP </span>
-<span class="co">#&gt;  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/measures.html">measures</a></span><span class="op">(</span>observations <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">observations</span>,</span>
+<span>                 predictions <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">predictions</span>,</span>
+<span>                 evaluation_mask <span class="op">=</span> <span class="va">dataset</span><span class="op">$</span><span class="va">evaluation_mask</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    CP_train     CP_eval         DCP   CPP_train    CPP_eval        DCPP </span></span>
+<span><span class="co">#&gt;  0.80000000  0.75000000 -0.05000000  0.75000000  0.66666667 -0.08333333</span></span></code></pre></div>
 <p>The function returns</p>
 <ul>
 <li>a pair of confidence values for the training subset (<code>CP_train</code>, <code>CPP_train</code>) just for our information;</li>
 <li>a pair of confidence values for the evaluation subset (<code>CP_eval</code>, <code>CPP_eval</code>), both describing the confidence of our model;</li>
-<li>a pair of consistence values (<code>DCP</code>, <code>DCPP</code>) that serve as proxies for transferability of our model.</li>
+<li>a pair of consistency values (<code>DCP</code>, <code>DCPP</code>) that serve as proxies for transferability of our model.</li>
 </ul>
 <p>The difference between the two values forming the pairs is described in <em>this scientific publication (TBD)</em>.</p>
 <p>Our model seems to be not super perfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since <code>CPP_eval</code> is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., <code>DCPP</code> is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.</p>
@@ -140,7 +140,7 @@
 <div class="section level2">
 <h2 id="package-lifecycle-and-contribution">Package lifecycle and contribution<a class="anchor" aria-label="anchor" href="#package-lifecycle-and-contribution"></a>
 </h2>
-<p>This GitHub version of the package is now in stable state. A manuscript about the novel measures, <em>confidence</em> and <em>consistence</em>, is submitted to a scientific journal. Upon acceptance we aim to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
+<p>This GitHub version of the package is now in stable state. A manuscript about the novel measures, <em>confidence</em> and <em>consistency</em>, is in press at the scientific journal “Ecological Modelling”. Upon acceptance we aim to publish ‘confcons’ to <a href="https://cran.r-project.org/" class="external-link">CRAN</a>.</p>
 <p>If you find a bug or have a feature request, or also if you have some idea want to discuss with the authors of the package, please create a <a href="https://github.com/bfakos/confcons/issues" class="external-link">new issue</a>.</p>
 </div>
 </div>
@@ -197,7 +197,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
     </footer>
