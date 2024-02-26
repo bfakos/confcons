@@ -116,13 +116,13 @@
 #' @note Technically, confidence can be calculated for the training subset, the
 #'   evaluation subset, or the whole dataset as well. Note, however, that there
 #'   is not so much sense to calculate confidence in the training subset, except
-#'   for using the result for \code{\link{consistence}} calculation. If you need
+#'   for using the result for \code{\link{consistency}} calculation. If you need
 #'   only the confidence measure, calculate it on the evaluation subset using
 #'   \code{\link{thresholds}} previously determined on the whole dataset (i.e.,
 #'   do not use the default value of parameter \code{thresholds}). See the last
 #'   example below and the vignette.
 #' @seealso \code{\link{thresholds}} for calculating the two thresholds,
-#'   \code{\link{consistence}} for calculating consistence
+#'   \code{\link{consistency}} for calculating consistency
 #' @export
 confidence <- function(observations, predictions, thresholds = confcons::thresholds(observations = observations, predictions = predictions), type = "positive") {
 

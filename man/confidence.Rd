@@ -52,7 +52,7 @@ predictions.
 Technically, confidence can be calculated for the training subset, the
   evaluation subset, or the whole dataset as well. Note, however, that there
   is not so much sense to calculate confidence in the training subset, except
-  for using the result for \code{\link{consistence}} calculation. If you need
+  for using the result for \code{\link{consistency}} calculation. If you need
   only the confidence measure, calculate it on the evaluation subset using
   \code{\link{thresholds}} previously determined on the whole dataset (i.e.,
   do not use the default value of parameter \code{thresholds}). See the last
@@ -146,5 +146,5 @@ confidence(observations = as.integer(observations_4000_numeric)[mask_of_normal_p
 }
 \seealso{
 \code{\link{thresholds}} for calculating the two thresholds,
-  \code{\link{consistence}} for calculating consistence
+  \code{\link{consistency}} for calculating consistency
 }

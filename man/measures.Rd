@@ -2,7 +2,7 @@
 % Please edit documentation in R/measures.r
 \name{measures}
 \alias{measures}
-\title{Goodness-of-fit, confidence and consistence measures}
+\title{Goodness-of-fit, confidence and consistency measures}
 \usage{
 measures(
   observations,
@@ -50,10 +50,10 @@ A named numeric vector (if \code{df} is \code{FALSE}; the default) or
   follows: \describe{ \item{CP_train}{confidence in predictions within known
   presences (CP) for the training subset} \item{CP_eval}{confidence in
   predictions within known presences (CP) for the evaluation subset}
-  \item{DCP}{consistence of predictions (difference of CPs)} \item{CPP_train}{confidence in
+  \item{DCP}{consistency of predictions (difference of CPs)} \item{CPP_train}{confidence in
   positive predictions within known presences (CPP) for the training subset}
   \item{CPP_eval}{confidence in positive predictions within known presences
-  (CPP) for the evaluation subset} \item{DCPP}{consistence of positive
+  (CPP) for the evaluation subset} \item{DCPP}{consistency of positive
   predictions (difference of CPPs)} \item{AUC}{Area Under the ROC Curve (Hanley and McNeil 1982;
   calculated by \code{\link[ROCR:performance]{ROCR::performance()}}). This
   element/column is available only if parameter '\code{goodness}' is set to
@@ -69,11 +69,11 @@ A named numeric vector (if \code{df} is \code{FALSE}; the default) or
 }
 \description{
 Wrapper function for calculating the predictive distribution model's
-\code{\link{confidence}}s, \code{\link{consistence}}s, and optionally some
+\code{\link{confidence}}, \code{\link{consistency}}, and optionally some
 well-known goodness-of-fit measures as well. The calculated measures are as
 follows: \itemize{ \item confidence in predictions (CP) and confidence in
 positive predictions (CPP) within known presences for the training and
-evaluation subsets \item consistence of predictions (difference of CPs; DCP)
+evaluation subsets \item consistency of predictions (difference of CPs; DCP)
 and positive predictions (difference of CPPs; DCPP) \item Area Under the ROC
 Curve (AUC) - optional (see parameter \code{goodness}) \item maximum of the
 True Skill Statistic (maxTSS) - optional (see parameter \code{goodness})}
@@ -168,7 +168,7 @@ conf_and_cons_df
 }
 \seealso{
 \code{\link{confidence}} for calculating confidence,
-  \code{\link{consistence}} for calculating consistence,
+  \code{\link{consistency}} for calculating consistency,
   \code{\link[ROCR:performance]{ROCR::performance()}} for calculating AUC and
   TSS
 }

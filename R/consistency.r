@@ -1,8 +1,8 @@
-#' Consistence of the predictive distribution model
+#' Consistency of the predictive distribution model
 #'
-#' Calculate consistence (DCPP, DCP) of the model as the difference of the
+#' Calculate consistency (DCPP, DCP) of the model as the difference of the
 #' confidence calculated on the evaluation and the confidence calculated on the
-#' training subset. Consistence serves as a proxy for model's transferability.
+#' training subset. Consistency serves as a proxy for model's transferability.
 #'
 #' @param conf_train \strong{Conf}idence calculated on the \strong{train}ing
 #'   subset: a numeric vector of length one, containing a number within the
@@ -21,15 +21,15 @@
 #'   accidentally swapped.
 #' @examples
 #' # Simple examples:
-#' consistence(conf_train = 0.93,
+#' consistency(conf_train = 0.93,
 #'             conf_eval = 0.21) # -0.72 - hardly consistent/transferable model
-#' consistence(conf_train = 0.43,
+#' consistency(conf_train = 0.43,
 #'             conf_eval = 0.35) # -0.08 - consistent/transferable model, although not so confident
-#' consistence(conf_train = 0.87,
+#' consistency(conf_train = 0.87,
 #'             conf_eval = 0.71) # -0.16 - a consistent/transferable model that is confident as well
-#' consistence(conf_train = 0.67,
+#' consistency(conf_train = 0.67,
 #'             conf_eval = 0.78) # 0.11 - positive value might be an artifact
-#' consistence(conf_train = 0.67,
+#' consistency(conf_train = 0.67,
 #'             conf_eval = NA_real_) # NA
 #'
 #' # Real-life case:
@@ -54,20 +54,20 @@
 #' confidence_evaluation <- confidence(observations = dataset$observations[dataset$evaluation_mask],
 #'                                     predictions = dataset$predictions[dataset$evaluation_mask],
 #'                                     thresholds = thresholds_whole) # 0.520
-#' consistence(conf_train = confidence_training,
+#' consistency(conf_train = confidence_training,
 #'             conf_eval = confidence_evaluation) # -0.083 - consistent/transferable model
 #'
 #' # Wrong parameterization:
 #' \dontrun{
-#' consistence(conf_train = 1.3,
+#' consistency(conf_train = 1.3,
 #'             conf_eval = 0.5) # warning
-#' consistence(conf_train = 0.6,
+#' consistency(conf_train = 0.6,
 #'             conf_eval = c(0.4, 0.5)) # warning
 #' }
 #' @seealso \code{\link{thresholds}} for calculating the two thresholds,
 #'   \code{\link{confidence}} for calculating confidence
 #' @export
-consistence <- function(conf_train, conf_eval) {
+consistency <- function(conf_train, conf_eval) {
 
 	# Checking parameters
 	if (missing(conf_train) | missing(conf_eval)) stop("Both parameter 'conf_train' and 'conf_eval' should be set.")

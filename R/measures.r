@@ -1,11 +1,11 @@
-#' Goodness-of-fit, confidence and consistence measures
+#' Goodness-of-fit, confidence and consistency measures
 #'
 #' Wrapper function for calculating the predictive distribution model's
-#' \code{\link{confidence}}s, \code{\link{consistence}}s, and optionally some
+#' \code{\link{confidence}}, \code{\link{consistency}}, and optionally some
 #' well-known goodness-of-fit measures as well. The calculated measures are as
 #' follows: \itemize{ \item confidence in predictions (CP) and confidence in
 #' positive predictions (CPP) within known presences for the training and
-#' evaluation subsets \item consistence of predictions (difference of CPs; DCP)
+#' evaluation subsets \item consistency of predictions (difference of CPs; DCP)
 #' and positive predictions (difference of CPPs; DCPP) \item Area Under the ROC
 #' Curve (AUC) - optional (see parameter \code{goodness}) \item maximum of the
 #' True Skill Statistic (maxTSS) - optional (see parameter \code{goodness})}
@@ -41,10 +41,10 @@
 #'   follows: \describe{ \item{CP_train}{confidence in predictions within known
 #'   presences (CP) for the training subset} \item{CP_eval}{confidence in
 #'   predictions within known presences (CP) for the evaluation subset}
-#'   \item{DCP}{consistence of predictions (difference of CPs)} \item{CPP_train}{confidence in
+#'   \item{DCP}{consistency of predictions (difference of CPs)} \item{CPP_train}{confidence in
 #'   positive predictions within known presences (CPP) for the training subset}
 #'   \item{CPP_eval}{confidence in positive predictions within known presences
-#'   (CPP) for the evaluation subset} \item{DCPP}{consistence of positive
+#'   (CPP) for the evaluation subset} \item{DCPP}{consistency of positive
 #'   predictions (difference of CPPs)} \item{AUC}{Area Under the ROC Curve (Hanley and McNeil 1982;
 #'   calculated by \code{\link[ROCR:performance]{ROCR::performance()}}). This
 #'   element/column is available only if parameter '\code{goodness}' is set to
@@ -141,7 +141,7 @@
 #'   \href{https://doi.org/10.1093/bioinformatics/bti623}{DOI:
 #'   10.1093/bioinformatics/bti623}. }
 #' @seealso \code{\link{confidence}} for calculating confidence,
-#'   \code{\link{consistence}} for calculating consistence,
+#'   \code{\link{consistency}} for calculating consistency,
 #'   \code{\link[ROCR:performance]{ROCR::performance()}} for calculating AUC and
 #'   TSS
 #' @export
@@ -201,10 +201,10 @@ measures <- function(observations, predictions, evaluation_mask, goodness = FALS
 		c(
 			CP_train <- confidence(observations = observations[!evaluation_mask], predictions = predictions[!evaluation_mask], thresholds = thresholds_whole, type = "neutral"),
 			CP_eval <- confidence(observations = observations[evaluation_mask], predictions = predictions[evaluation_mask], thresholds = thresholds_whole, type = "neutral"),
-			consistence(conf_train = CP_train, conf_eval = CP_eval),
+			consistency(conf_train = CP_train, conf_eval = CP_eval),
 			CPP_train <- confidence(observations = observations[!evaluation_mask], predictions = predictions[!evaluation_mask], thresholds = thresholds_whole, type = "positive"),
 			CPP_eval <- confidence(observations = observations[evaluation_mask], predictions = predictions[evaluation_mask], thresholds = thresholds_whole, type = "positive"),
-			consistence(conf_train = CPP_train, conf_eval = CPP_eval)
+			consistency(conf_train = CPP_train, conf_eval = CPP_eval)
 		), if (goodness) AUC_and_maxTSS else numeric(length = 0)
 	)
 	names <- c(c("CP_train", "CP_eval", "DCP", "CPP_train", "CPP_eval", "DCPP"), if (goodness) c("AUC", "maxTSS") else character(length = 0))

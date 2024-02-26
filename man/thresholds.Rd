@@ -85,5 +85,5 @@ thresholds(observations = as.integer(observations_4000_numeric)[mask_of_normal_p
 }
 \seealso{
 \code{\link{confidence}} for calculating confidence,
-  \code{\link{consistence}} for calculating consistence
+  \code{\link{consistency}} for calculating consistency
 }

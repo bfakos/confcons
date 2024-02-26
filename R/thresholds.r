@@ -67,7 +67,7 @@
 #' @note \code{thresholds()} should be called using the whole dataset containing
 #'   both training and evaluation locations.
 #' @seealso \code{\link{confidence}} for calculating confidence,
-#'   \code{\link{consistence}} for calculating consistence
+#'   \code{\link{consistency}} for calculating consistency
 #' @export
 thresholds <- function(observations, predictions = NULL, type = "mean", range = 0.5) {
 

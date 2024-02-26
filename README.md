@@ -17,13 +17,13 @@ stand-alone R package designed to calculate the following two novel
 measures of predictive distribution models (incl. species distribution
 models):
 
--   *confidence* that measures the proportion of predictions that the
-    model is confident in;
--   *consistence* that measures how consistent the model is if the
-    confidence in the training and evaluation subsets are compared.
+- *confidence* that measures the proportion of predictions that the
+  model is confident in;
+- *consistency* that measures how consistent the model is if the
+  confidence in the training and evaluation subsets are compared.
 
 While *confidence* serves as a replacement for the widely criticized
-goodness-of-fit measures, such as AUC, *consistence* is a proxy for
+goodness-of-fit measures, such as AUC, *consistency* is a proxy for
 model’s transferability (in space and time).
 
 ## Installation
@@ -48,7 +48,7 @@ devtools::install_github(repo = "bfakos/confcons", upgrade = "never", build_vign
 ## Examples
 
 Three small functions, `thresholds()`, `confidence()` and
-`consistence()`, belong to the core of the package. A wrapper function
+`consistency()`, belong to the core of the package. A wrapper function
 called `measures()` utilizes these workhorse functions and calculates
 every measures for you optionally along with some traditional measures,
 such as AUC and maxTSS.
@@ -56,20 +56,20 @@ such as AUC and maxTSS.
 Let’s say we trained a predictive distribution model and made some
 predictions with it, and now we want to be sure if our model is both
 
--   confident in the predictions, and
--   this confidence is consistent between the training and evaluation
-    subsets, i.e. we might later use the model for extrapolation
-    (through space or time).
+- confident in the predictions, and
+- this confidence is consistent between the training and evaluation
+  subsets, i.e. we might later use the model for extrapolation (through
+  space or time).
 
 Our example dataset is a `data.frame` containing both the training and
 the evaluation subset. It is organized in three columns:
 
--   observations (`integer`): observed presences (`1`s) and absences
-    (`0`s),
--   predictions (`numeric`): predicted probability of occurrences
-    (within the `[0, 1]` interval), and
--   evaluation_mask (`logical`): indicates whether a certain row belongs
-    to the evaluation subset (`TRUE`) or the training subset (`FALSE`).
+- observations (`integer`): observed presences (`1`s) and absences
+  (`0`s),
+- predictions (`numeric`): predicted probability of occurrences (within
+  the `[0, 1]` interval), and
+- evaluation_mask (`logical`): indicates whether a certain row belongs
+  to the evaluation subset (`TRUE`) or the training subset (`FALSE`).
 
 ``` r
 dataset <- data.frame(
@@ -99,12 +99,12 @@ measures(observations = dataset$observations,
 
 The function returns
 
--   a pair of confidence values for the training subset (`CP_train`,
-    `CPP_train`) just for our information;
--   a pair of confidence values for the evaluation subset (`CP_eval`,
-    `CPP_eval`), both describing the confidence of our model;
--   a pair of consistence values (`DCP`, `DCPP`) that serve as proxies
-    for transferability of our model.
+- a pair of confidence values for the training subset (`CP_train`,
+  `CPP_train`) just for our information;
+- a pair of confidence values for the evaluation subset (`CP_eval`,
+  `CPP_eval`), both describing the confidence of our model;
+- a pair of consistency values (`DCP`, `DCPP`) that serve as proxies for
+  transferability of our model.
 
 The difference between the two values forming the pairs is described in
 *this scientific publication (TBD)*.
@@ -123,9 +123,9 @@ vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.ht
 ## Package lifecycle and contribution
 
 This GitHub version of the package is now in stable state. A manuscript
-about the novel measures, *confidence* and *consistence*, is submitted
-to a scientific journal. Upon acceptance we aim to publish ‘confcons’ to
-[CRAN](https://cran.r-project.org/).
+about the novel measures, *confidence* and *consistency*, is in press at
+the scientific journal “Ecological Modelling”. Upon acceptance we aim to
+publish ‘confcons’ to [CRAN](https://cran.r-project.org/).
 
 If you find a bug or have a feature request, or also if you have some
 idea want to discuss with the authors of the package, please create a
