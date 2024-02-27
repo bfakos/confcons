@@ -155,16 +155,12 @@ conf_and_cons_df
 \itemize{ \item Allouche O, Tsoar A, Kadmon R (2006): Assessing
   the accuracy of species distribution models: prevalence, kappa and the true
   skill statistic (TSS). Journal of Applied Ecology 43(6): 1223-1232.
-  \href{https://dx.doi.org/10.1111/j.1365-2664.2006.01214.x}{DOI:
-  10.1111/j.1365-2664.2006.01214.x}. \item Hanley JA, McNeil BJ (1982): The
-  meaning and use of the area under a receiver operating characteristic (ROC)
-  curve. Radiology 143(1): 29-36.
-  \href{https://dx.doi.org/10.1148/radiology.143.1.7063747}{DOI:
-  10.1148/radiology.143.1.7063747}. \item Sing T, Sander O, Beerenwinkel N,
-  Lengauer T. (2005): ROCR: visualizing classifier performance in R.
-  Bioinformatics 21(20): 3940-3941.
-  \href{https://doi.org/10.1093/bioinformatics/bti623}{DOI:
-  10.1093/bioinformatics/bti623}. }
+  \doi{10.1111/j.1365-2664.2006.01214.x}. \item Hanley JA, McNeil BJ (1982):
+  The meaning and use of the area under a receiver operating characteristic
+  (ROC) curve. Radiology 143(1): 29-36.
+  \doi{10.1148/radiology.143.1.7063747}. \item Sing T, Sander O, Beerenwinkel
+  N, Lengauer T. (2005): ROCR: visualizing classifier performance in R.
+  Bioinformatics 21(20): 3940-3941. \doi{10.1093/bioinformatics/bti623}. }
 }
 \seealso{
 \code{\link{confidence}} for calculating confidence,
