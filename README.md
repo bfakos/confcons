@@ -10,6 +10,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-lightgreen.svg)](https://l
 [![Codecov test
 coverage](https://codecov.io/gh/bfakos/confcons/branch/master/graph/badge.svg)](https://app.codecov.io/gh/bfakos/confcons?branch=master)
 [![License](https://img.shields.io/badge/license-GPL%20%28%3E=%203%29-lightgrey.svg?style=flat)](http://www.gnu.org/licenses/gpl-3.0.html)
+[![R-CMD-check](https://github.com/bfakos/confcons/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bfakos/confcons/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ‘confcons’ (**conf**idence & **cons**istence) is a light-weight,
