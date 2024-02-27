@@ -121,13 +121,15 @@ test_that(desc = "type = \"information\"",
 													n = 2)
 						expect_warning(object = thresholds(observations = observations, predictions = predictions, type = "information", range = "0.3"),
 												 regexp = NULL)
-						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = "aaa"),
+						expect_warning(expect_warning(expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = "aaa"),
+																											 regexp = NULL),
+																					regexp = NULL),
 													 regexp = NULL)
 						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = numeric(length = 0)),
 												 regexp = NULL)
 						expect_warning(object = thresholds(observations = observations, predictions = predictions, type = "information", range = c(0.4, 0.3)),
 												 regexp = NULL)
-						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = NA),
+						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = NA_real_),
 												 regexp = NULL)
 						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = 0),
 												 regexp = NULL)
