@@ -71,7 +71,7 @@ suppressWarnings(library(confcons))
 
 ### Data preparation
 
-Let's open the environmental raster that contains four climatic layers at 800 m resolution in UTM projection:
+Let's open the environmental raster that contains four climatic layers at 5' resolution in GDA2020 (Geocentric Datum of Australia) projection:
 
 ```{r}
 environment <- terra::rast(list.files(system.file("extdata/au/", package = "blockCV"), full.names = TRUE))
@@ -105,28 +105,28 @@ blocks <- blockCV::cv_spatial(x = occurrences,
                               size = 350000,
                               k = 2,
                               selection = "random",
-															iteration = 50,
+                              iteration = 50,
                               seed = 12345,
                               progress = FALSE,
                               report = FALSE,
-															plot = TRUE)
+                              plot = TRUE)
 blocks_sf <- sf::st_as_sf(x = blocks$blocks)
 ```
 
 Let's see where are our presence and absence points and also which polygons will be used for training and which ones for evaluation:
 
 ```{r, fig.height=10, fig.width=10}
-plot(x = environment[["bio_5"]], axes = FALSE, col = cm.colors(255), colNA = "gray95")
+plot(x = environment[["bio_5"]], axes = FALSE, col = colorRampPalette(c("lightskyblue2", "lightyellow1", "rosybrown2"))(255), colNA = "gray95")
 plot(x = occurrences[occurrences$occ == 1, ], pch = "+", col = "darkgreen", add = TRUE)
 plot(x = occurrences[occurrences$occ == 0, ], pch = "+", col = "orange", add = TRUE)
-plot(x = sf::st_geometry(blocks_sf[blocks_sf$folds == 1, ]), col = "transparent", border = "#2222DD66", lwd = 2, add = TRUE)
-plot(x = sf::st_geometry(blocks_sf[blocks_sf$folds == 2, ]), col = "transparent", border = "#DD222266", lwd = 2, add = TRUE)
+plot(x = sf::st_geometry(blocks_sf[blocks_sf$folds == 1, ]), col = "transparent", border = "royalblue1", lwd = 2, add = TRUE)
+plot(x = sf::st_geometry(blocks_sf[blocks_sf$folds == 2, ]), col = "transparent", border = "palevioletred1", lwd = 2, add = TRUE)
 legend(x = -2100000,
        y = -1300000,
        legend = c("presence", "absence", "training", "evaluation"),
        col = c("darkgreen", "orange", NA, NA),
        pch = c("+", "+", NA, NA),
-       border = c(NA, NA, "#2222DD66", "#DD222266"),
+       border = c(NA, NA, "royalblue1", "palevioletred1"),
        fill = c(NA, NA, "transparent", "transparent"))
 ```
 
@@ -141,8 +141,8 @@ We start to build a `data.frame` that will contain
 
 ```{r}
 dataset <- as.data.frame(terra::extract(x = environment,
-																				y = occurrences,
-																				ID = FALSE))
+                                        y = occurrences,
+                                        ID = FALSE))
 dataset$occurrences <- occurrences$occ
 dataset$training_mask <- (1:nrow(occurrences)) %in% blocks$folds_list[[1]][[1]]
 str(dataset)
@@ -153,7 +153,7 @@ str(dataset)
 Now the `data.frame` contains all of the information needed to train predictive distribution models. For the sake of this example, we will create two simple models:
 
 - a Generalized Linear Model (GLM) with a linear formula (i.e., without interactions) and stepwise predictor selection, and
-- a Random Forest (RF) model with 1000, 3-level trees.
+- a Random Forest (RF) model with 10000, 8-level trees (the parameters were deliberately set to obtain an overfitted model).
 
 ```{r}
 linear_formula <- as.formula(paste0("occurrences ~ ", paste(predictors, collapse = " + ")))
@@ -171,9 +171,10 @@ The GLM model was trained on the training subset (`dataset[dataset$training_mask
 ```{r}
 model_rf <- ranger::ranger(formula = linear_formula,
                            data = dataset[dataset$training_mask, ],
-                           num.trees = 1000,
+                           num.trees = 10000,
                            min.node.size = 10,
-                           max.depth = 3,
+                           max.depth = 8,
+                           seed = 12345,
                            verbose = FALSE,
                            classification = FALSE)
 dataset$predictions_rf <- predict(object = model_rf,
@@ -196,7 +197,7 @@ Let's take a look at the lower (mean predicted value in the absence locations) a
                              predictions = dataset$predictions_rf))
 ```
 
-Between 0.14 and 0.82, the predictions of the GLM model can be treated as uncertain predictions. The same holds for the RF model between 0.18 and 0.77.
+Between 0.30 and 0.60, the predictions of the GLM model can be treated as uncertain predictions. The same holds for the RF model between 0.13 and 0.75.
 
 Now we calculate two of the proposed evaluation measures, confidence in positive predictions (CPP) and confidence in predictions (CP). Both should be calculated using the evaluation subset. Function `confidence()` can calculate any of these measures, depending on the value of its parameter 'type'. If it's 'positive', we'll get CPP, if it's 'neutral', we'll get CP that is not weighted towards the positive predictions. Beyond 'type' and the two previously mentioned parameters ('observations' and 'predictions') one more parameter is needed: 'thresholds'. Of course, the previously calculated thresholds will perfectly suit for this purpose.
 
@@ -214,7 +215,7 @@ conf_N_eval <- confidence(observations = dataset$occurrences[!dataset$training_m
 conf_N_eval
 ```
 
-There is not so much difference between the two measures. Whether we should use CPP or CP for describing the confidence of our model depends on the main aim of our model. Confidence should be between `0` and `1`; the higher value indicates more confidence. Our GLM is not super confident, but the value is closer to `1`, so it seems more or less OK.
+There is not so much difference between the two measures. Whether we should use CPP or CP for describing the confidence of our model depends on the main aim of our model. Confidence should be between `0` and `1`; the higher value indicates more confidence. Our GLM is not super confident, since both CPP and CP are relatively far from `1`.
 
 We are a bit curious whether the confidence of the model is higher or lower if is calculated for the training subset.
 
@@ -236,7 +237,7 @@ consistency(conf_train = conf_P_train, conf_eval = conf_P_eval)
 
 A negative value between `-1` and `0` is normal. The higher the consistency is (i.e., the closer to `0`), the more consistent the model is. Positive value might be an artifact or indicates that the training and evaluation subsets were accidentally swapped.
 
-Now we get familiar with the three core functions of the package: `thresholds()`, `confidence()` and `consistency()`. The question is right if we ask: *why should we call three different functions several times if we want to get all the measures for our model?*. Well, we don't have to. There is a wrapper function called `measures()` that calculates everything for us.
+We have got familiar with the three core functions of the package: `thresholds()`, `confidence()` and `consistency()`. The question is right if we ask: *why should we call three different functions several times if we want to get all the measures for our model?*. Well, we don't have to. There is a wrapper function called `measures()` that calculates everything for us.
 
 It needs three vectors:
 
@@ -257,7 +258,7 @@ measures(observations = dataset$occurrences,
 
 The result is a named `numeric` vector containing all of the measures. It is more than needed. It is recommended to use 'CPP_eval' + 'DCPP', or, if predicted absences are as important as predicted presences in our research, 'CP_eval' + 'DCP'.
 
-We can see that RF model is really confident in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset. Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent, so we should select that one for extrapolation, e.g. in a climate change impact study.
+We can see that RF model is really confident (0.84) in its predictions if the training subset is studied, but this confidence sharply drops when switching to the evaluation subset (to 0.47). Hence, the RF model is not too consistent, which warns us that transferability issues might potentially occurs if used for extrapolation. The GLM model is much more consistent (-0.19 vs. -0.37), so we should select that one for extrapolation, e.g. in a climate change impact study.
 
 If we have installed package 'ROCR', `measures()` can provide the Area Under the ROC Curve (AUC) and the maximum of True Skill Statistic (maxTSS) for us. We should simply switch the parameter 'goodness' from its default value (`FALSE`) to `TRUE`. 
 
