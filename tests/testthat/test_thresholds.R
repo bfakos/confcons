@@ -97,6 +97,43 @@ test_that(desc = "returns errors/warnings if needed - both parameters",
 					}
 )
 
+test_that(desc = "type = \"information\"",
+					code = {
+						withr::local_seed(seed = 12345,
+															.rng_kind = "Mersenne-Twister",
+															.rng_normal_kind = "Inversion",
+															.rng_sample_kind = "Rejection")
+						observations <- c(rep(x = 0L, times = 3000),
+															rep(x = 1L, times = 1000))
+						predictions <- c(runif(n = 3000, min = 0, max = 0.8),
+														 runif(n = 1000, min = 0.2, max = 0.9))
+						expect_type(object = thresholds(observations = observations, predictions = predictions, type = "information"),
+												type = "double")
+						expect_vector(object= thresholds(observations = observations, predictions = predictions, type = "information"),
+													ptype = numeric(length = 0))
+						expect_length(object = thresholds(observations = observations, predictions = predictions, type = "information"),
+													n = 2)
+						expect_type(object = thresholds(observations = observations, predictions = predictions, type = "information", range = 0.4),
+												type = "double")
+						expect_vector(object= thresholds(observations = observations, predictions = predictions, type = "information", range = 0.4),
+													ptype = numeric(length = 0))
+						expect_length(object = thresholds(observations = observations, predictions = predictions, type = "information", range = 0.4),
+													n = 2)
+						expect_warning(object = thresholds(observations = observations, predictions = predictions, type = "information", range = "0.3"),
+												 regexp = NULL)
+						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = numeric(length = 0)),
+												 regexp = NULL)
+						expect_warning(object = thresholds(observations = observations, predictions = predictions, type = "information", range = c(0.4, 0.3)),
+												 regexp = NULL)
+						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = 0),
+												 regexp = NULL)
+						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = -0.1),
+												 regexp = NULL)
+						expect_error(object = thresholds(observations = observations, predictions = predictions, type = "information", range = 0.6),
+												 regexp = NULL)
+					}
+)
+
 test_that(desc = "returns errors/warnings if needed - complex examples",
 					code = {
 						withr::local_seed(seed = 12345,
