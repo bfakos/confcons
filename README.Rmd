@@ -23,7 +23,7 @@ stable](https://img.shields.io/badge/lifecycle-stable-lightgreen.svg)](https://l
 [![R-CMD-check](https://github.com/bfakos/confcons/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bfakos/confcons/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-'confcons' (**conf**idence & **cons**istence) is a light-weight, stand-alone R package designed to calculate the following two novel measures of predictive distribution models (incl. species distribution models):
+'confcons' (**conf**idence & **cons**istency) is a light-weight, stand-alone R package designed to calculate the following two novel measures of predictive distribution models (incl. species distribution models):
 
 - *confidence* that measures the proportion of predictions that the model is confident in;
 - *consistency* that measures how consistent the model is if the confidence in the training and evaluation subsets are compared.

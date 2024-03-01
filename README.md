@@ -13,7 +13,7 @@ coverage](https://codecov.io/gh/bfakos/confcons/branch/master/graph/badge.svg)](
 [![R-CMD-check](https://github.com/bfakos/confcons/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/bfakos/confcons/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-‘confcons’ (**conf**idence & **cons**istence) is a light-weight,
+‘confcons’ (**conf**idence & **cons**istency) is a light-weight,
 stand-alone R package designed to calculate the following two novel
 measures of predictive distribution models (incl. species distribution
 models):
