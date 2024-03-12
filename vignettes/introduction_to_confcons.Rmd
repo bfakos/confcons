@@ -30,7 +30,9 @@ While *confidence* serves as a replacement for the widely criticized goodness-of
 - in a balanced way, when predicted presences and predicted absences are equally important. These measures are called *confidence in predictions* ('CP') and *consistency of* (or difference in confidences in) *predictions* ('DCP');
 - in a way weighted towards the predicted presences, when certain positive presences are more important for the selected modelling purpose. These measures are called *confidence in positive predictions* ('CPP') and *consistency of* (or difference in confidences in) *positive predictions* ('DCPP').
 
-A manuscript about the novel measures is in press at the scientific journal "Ecological Modelling". Once published, we'll cite it here, and you'll get much more information about the measures from that paper.
+Much more information about the measures can be read in this scientific paper:
+
+Somodi I, Bede-Fazekas Á, Botta-Dukát Z, Molnár Z (2024): *Confidence and consistency in discrimination: A new family of evaluation metrics for potential distribution models*. Ecological Modelling 491: 110667. DOI: [10.1016/j.ecolmodel.2024.110667](https://doi.org/10.1016/j.ecolmodel.2024.110667).
 
 ## Functions for calculating confidence and consistency
 

@@ -99,11 +99,15 @@ Our model seems to be not super perfect, but it is more or less confident in the
 
 A detailed description of the measures and the functions of 'confcons', and more examples can be found in [this vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.html).
 
+## Citation
+
+When you use this package, please cite the following scientific paper:
+
+Somodi I, Bede-Fazekas Á, Botta-Dukát Z, Molnár Z (2024): *Confidence and consistency in discrimination: A new family of evaluation metrics for potential distribution models*. Ecological Modelling 491: 110667. DOI: [10.1016/j.ecolmodel.2024.110667](https://doi.org/10.1016/j.ecolmodel.2024.110667).
+
 ## Package lifecycle and contribution
 
-This GitHub version of the package is now in stable state. A manuscript about the novel measures, *confidence* and *consistency*, is in press at the scientific journal "Ecological Modelling". Upon acceptance we aim to publish 'confcons' to [CRAN](https://cran.r-project.org/).
-
-If you find a bug or have a feature request, or also if you have some idea want to discuss with the authors of the package, please create a [new issue](https://github.com/bfakos/confcons/issues).
+This GitHub version of the package is now in stable state. If you find a bug or have a feature request, or also if you have some idea want to discuss with the authors of the package, please create a [new issue](https://github.com/bfakos/confcons/issues).
 
 
 
