@@ -1,3 +1,7 @@
+# confcons 0.3.1
+
+* published on CRAN, installation guideline (readme, vignette) updated
+
 # confcons 0.3.0
 
 * scientific article about the measures is published. The citation, the readme and the vignette are updated

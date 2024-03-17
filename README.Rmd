@@ -32,18 +32,22 @@ While *confidence* serves as a replacement for the widely criticized goodness-of
 
 ## Installation
 
-You can install the development version of 'confcons' from [GitHub](https://github.com/) with:
+You can install the latest stable version of 'confcons' from CRAN with:
 
-``` r
+``` {r, eval = FALSE}
+install.packages("confcons")
+```
+
+You can install the development version of 'confcons' from [GitHub](https://github.com/bfakos/confcons) with:
+
+``` {r, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github(repo = "bfakos/confcons", upgrade = "never")
 ```
 
-If you want to read the [vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.html) in R, install the package with:
+If you want to read the [vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.html) of the development version in R, install the package with:
 
-
-``` r
-# install.packages("devtools")
+``` {r, eval = FALSE}
 devtools::install_github(repo = "bfakos/confcons", upgrade = "never", build_vignettes = TRUE)
 ```
 

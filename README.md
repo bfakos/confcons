@@ -29,8 +29,14 @@ model’s transferability (in space and time).
 
 ## Installation
 
+You can install the latest stable version of ‘confcons’ from CRAN with:
+
+``` r
+install.packages("confcons")
+```
+
 You can install the development version of ‘confcons’ from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/bfakos/confcons) with:
 
 ``` r
 # install.packages("devtools")
@@ -39,10 +45,9 @@ devtools::install_github(repo = "bfakos/confcons", upgrade = "never")
 
 If you want to read the
 [vignette](https://bfakos.github.io/confcons/articles/introduction_to_confcons.html)
-in R, install the package with:
+of the development version in R, install the package with:
 
 ``` r
-# install.packages("devtools")
 devtools::install_github(repo = "bfakos/confcons", upgrade = "never", build_vignettes = TRUE)
 ```
 

@@ -56,8 +56,7 @@ Here, we'll go through the main steps of a typical workflow by:
 First, we install package 'confcons' and their dependencies needed for this tutorial (incl. 'terra', 'sf', 'blockCV', 'ranger' and 'ROCR'):
 
 ```{r eval = FALSE}
-# install.packages("devtools")
-devtools::install_github(repo = "bfakos/confcons", upgrade = "never", dependencies = TRUE)
+install.packages("confcons", dependencies = TRUE)
 ```
 
 If installed, we can attach these packages to the R session (and suppress the not too important warnings about the R version under the packages were built):
