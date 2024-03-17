@@ -14,7 +14,7 @@ confusion matrix and are further used for confidence calculation."><!-- mathjax 
     
     <a class="navbar-brand me-2" href="../index.html">confcons</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -147,20 +147,26 @@ method and is used only if <code>type</code> is 'information'. The larger the
 <span class="r-out co"><span class="r-pr">#&gt;</span>  0.3988011  0.5445960 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Wrong parameterization:</span></span></span>
-<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="cn">FALSE</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span><span class="fu">thresholds</span><span class="op">(</span>observations <span class="op">=</span> <span class="va">observations_1000_logical</span>,</span></span>
-<span class="r-in"><span>           predictions <span class="op">=</span> <span class="va">predictions_4000</span><span class="op">)</span> <span class="co"># error</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">thresholds</span><span class="op">(</span>observations <span class="op">=</span> <span class="va">observations_1000_logical</span>,</span></span>
+<span class="r-in"><span>               predictions <span class="op">=</span> <span class="va">predictions_4000</span><span class="op">)</span><span class="op">)</span> <span class="co"># error</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in thresholds(observations = observations_1000_logical, predictions = predictions_4000) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   The length of the two parameters ('observations' and 'predictions') should be the same.</span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">12345</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">observations_4000_numeric</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, times <span class="op">=</span> <span class="fl">3000</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                               <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, times <span class="op">=</span> <span class="fl">1000</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">predictions_4000_strange</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">3000</span>, min <span class="op">=</span> <span class="op">-</span><span class="fl">0.3</span>, max <span class="op">=</span> <span class="fl">0.4</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>                              <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html" class="external-link">runif</a></span><span class="op">(</span>n <span class="op">=</span> <span class="fl">1000</span>, min <span class="op">=</span> <span class="fl">0.6</span>, max <span class="op">=</span> <span class="fl">1.5</span><span class="op">)</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">thresholds</span><span class="op">(</span>observations <span class="op">=</span> <span class="va">observations_4000_numeric</span>,</span></span>
-<span class="r-in"><span>           predictions <span class="op">=</span> <span class="va">predictions_4000_strange</span><span class="op">)</span> <span class="co"># multiple warnings</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">thresholds</span><span class="op">(</span>observations <span class="op">=</span> <span class="va">observations_4000_numeric</span>,</span></span>
+<span class="r-in"><span>               predictions <span class="op">=</span> <span class="va">predictions_4000_strange</span><span class="op">)</span><span class="op">)</span> <span class="co"># multiple warnings</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>I found that parameter 'observations' is not an integer or logical vector. Coercion is done.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Strange predicted values found. Parameter 'predictions' preferably contains numbers falling within the [0,1] interval.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> threshold1 threshold2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 0.05447816 1.04132376 </span>
 <span class="r-in"><span><span class="va">mask_of_normal_predictions</span> <span class="op">&lt;-</span> <span class="va">predictions_4000_strange</span> <span class="op">&gt;=</span> <span class="fl">0</span> <span class="op">&amp;</span> <span class="va">predictions_4000_strange</span> <span class="op">&lt;=</span> <span class="fl">1</span></span></span>
 <span class="r-in"><span><span class="fu">thresholds</span><span class="op">(</span>observations <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/integer.html" class="external-link">as.integer</a></span><span class="op">(</span><span class="va">observations_4000_numeric</span><span class="op">)</span><span class="op">[</span><span class="va">mask_of_normal_predictions</span><span class="op">]</span>,</span></span>
 <span class="r-in"><span>           predictions <span class="op">=</span> <span class="va">predictions_4000_strange</span><span class="op">[</span><span class="va">mask_of_normal_predictions</span><span class="op">]</span><span class="op">)</span> <span class="co"># OK</span></span></span>
-<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> threshold1 threshold2 </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  0.2006408  0.7979505 </span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
