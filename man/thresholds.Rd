@@ -68,20 +68,18 @@ thresholds(observations = observations_4000_integer,
            predictions = predictions_4000) # 0.399 0.545
 
 # Wrong parameterization:
-\dontrun{
-thresholds(observations = observations_1000_logical,
-           predictions = predictions_4000) # error
+try(thresholds(observations = observations_1000_logical,
+               predictions = predictions_4000)) # error
 set.seed(12345)
 observations_4000_numeric <- c(rep(x = 0, times = 3000),
                                rep(x = 1, times = 1000))
 predictions_4000_strange <- c(runif(n = 3000, min = -0.3, max = 0.4),
                               runif(n = 1000, min = 0.6, max = 1.5))
-thresholds(observations = observations_4000_numeric,
-           predictions = predictions_4000_strange) # multiple warnings
+try(thresholds(observations = observations_4000_numeric,
+               predictions = predictions_4000_strange)) # multiple warnings
 mask_of_normal_predictions <- predictions_4000_strange >= 0 & predictions_4000_strange <= 1
 thresholds(observations = as.integer(observations_4000_numeric)[mask_of_normal_predictions],
            predictions = predictions_4000_strange[mask_of_normal_predictions]) # OK
-}
 }
 \seealso{
 \code{\link{confidence}} for calculating confidence,

@@ -58,12 +58,10 @@
 #'             conf_eval = confidence_evaluation) # -0.083 - consistent/transferable model
 #'
 #' # Wrong parameterization:
-#' \dontrun{
-#' consistency(conf_train = 1.3,
-#'             conf_eval = 0.5) # warning
-#' consistency(conf_train = 0.6,
-#'             conf_eval = c(0.4, 0.5)) # warning
-#' }
+#' try(consistency(conf_train = 1.3,
+#'                 conf_eval = 0.5)) # warning
+#' try(consistency(conf_train = 0.6,
+#'                 conf_eval = c(0.4, 0.5))) # warning
 #' @seealso \code{\link{thresholds}} for calculating the two thresholds,
 #'   \code{\link{confidence}} for calculating confidence
 #' @export
