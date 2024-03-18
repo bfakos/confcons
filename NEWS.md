@@ -1,7 +1,5 @@
 # confcons (development version)
 
-* TBD
-
 # confcons 0.3.1
 
 * published on CRAN, installation guideline (readme, vignette) updated
