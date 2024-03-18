@@ -1,5 +1,7 @@
 # confcons (development version)
 
+* to be filled
+
 # confcons 0.3.1
 
 * published on CRAN, installation guideline (readme, vignette) updated
