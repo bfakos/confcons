@@ -32,6 +32,7 @@ Suggests:
     ggplot2,
     ranger,
     ecospat,
+    
     ENMeval
 VignetteBuilder: knitr
 Config/testthat/edition: 3
