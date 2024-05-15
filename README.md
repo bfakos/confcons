@@ -5,6 +5,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+version](https://www.r-pkg.org/badges/version/confcons)](https://CRAN.R-project.org/package=confcons)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-lightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Codecov test
@@ -113,7 +115,8 @@ The function returns
   transferability of our model.
 
 The difference between the two values forming the pairs is described in
-*this scientific publication (TBD)*.
+[this](https://doi.org/10.1016/j.ecolmodel.2024.110667) scientific
+publication.
 
 Our model seems to be not super perfect, but it is more or less
 confident in the positive predictions (i.e. predicted presences), since
