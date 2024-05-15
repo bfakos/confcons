@@ -172,6 +172,7 @@ packages were built):</p>
 <span><span class="co">#&gt; blockCV 3.1.3</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://imbs-hl.github.io/ranger/" class="external-link">ranger</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://ipa-tys.github.io/ROCR/" class="external-link">ROCR</a></span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="http://www.unil.ch/ecospat/home/menuguid/ecospat-resources/tools.html" class="external-link">ecospat</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/warning.html" class="external-link">suppressWarnings</a></span><span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://jamiemkass.github.io/ENMeval/" class="external-link">ENMeval</a></span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Loading required package: magrittr</span></span>
 <span><span class="co">#&gt; </span></span>
@@ -560,18 +561,17 @@ cross-validation folds).</p>
 <span>  user.eval <span class="op">=</span> <span class="va">calculate_conf_and_cons</span>,</span>
 <span>  quiet <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  progbar <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Package ecospat is not installed, so Continuous Boyce Index (CBI) cannot be calculated.</span></span>
 <span><span class="va">hyperparameter_evaluation</span><span class="op">@</span><span class="va">results</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"fc"</span>, <span class="st">"rm"</span>, <span class="st">"cbi.val.avg"</span>, <span class="st">"confidence.avg"</span>, <span class="st">"consistency.avg"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt;    fc  rm cbi.val.avg confidence.avg consistency.avg</span></span>
-<span><span class="co">#&gt; 1   L 0.5          NA      0.5116402     -0.07994573</span></span>
-<span><span class="co">#&gt; 2  LQ 0.5          NA      0.5892474     -0.06643251</span></span>
-<span><span class="co">#&gt; 3 LQH 0.5          NA      0.6967532     -0.00937990</span></span>
-<span><span class="co">#&gt; 4   L   1          NA      0.5182068     -0.07728052</span></span>
-<span><span class="co">#&gt; 5  LQ   1          NA      0.6196672     -0.03829850</span></span>
-<span><span class="co">#&gt; 6 LQH   1          NA      0.7610432      0.04924178</span></span>
-<span><span class="co">#&gt; 7   L 1.5          NA      0.4966821     -0.10146804</span></span>
-<span><span class="co">#&gt; 8  LQ 1.5          NA      0.5824163     -0.07255878</span></span>
-<span><span class="co">#&gt; 9 LQH 1.5          NA      0.7334252      0.02739568</span></span></code></pre></div>
+<span><span class="co">#&gt; 1   L 0.5     0.44900      0.5116402     -0.07994573</span></span>
+<span><span class="co">#&gt; 2  LQ 0.5     0.94000      0.5892474     -0.06643251</span></span>
+<span><span class="co">#&gt; 3 LQH 0.5     0.87450      0.6967532     -0.00937990</span></span>
+<span><span class="co">#&gt; 4   L   1     0.48625      0.5182068     -0.07728052</span></span>
+<span><span class="co">#&gt; 5  LQ   1     0.93325      0.6196672     -0.03829850</span></span>
+<span><span class="co">#&gt; 6 LQH   1     0.91825      0.7610432      0.04924178</span></span>
+<span><span class="co">#&gt; 7   L 1.5     0.50100      0.4966821     -0.10146804</span></span>
+<span><span class="co">#&gt; 8  LQ 1.5     0.95125      0.5824163     -0.07255878</span></span>
+<span><span class="co">#&gt; 9 LQH 1.5     0.89850      0.7334252      0.02739568</span></span></code></pre></div>
 <p>According to the CBI values, the linear + quadratic features (LQ)
 with regularization multiplier set to 1.5 seems to be the best
 hyperparameter combination. However, confidence and consistency
