@@ -16,6 +16,8 @@ knitr::opts_chunk$set(
 # confcons
 
 <!-- badges: start -->
+[![CRAN
+version](https://www.r-pkg.org/badges/version/confcons)](https://CRAN.R-project.org/package=confcons)
 [![Lifecycle:
 stable](https://img.shields.io/badge/lifecycle-stable-lightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html#stable)
 [![Codecov test coverage](https://codecov.io/gh/bfakos/confcons/branch/master/graph/badge.svg)](https://app.codecov.io/gh/bfakos/confcons?branch=master)
@@ -97,7 +99,7 @@ The function returns
 - a pair of confidence values for the evaluation subset (`CP_eval`, `CPP_eval`), both describing the confidence of our model;
 - a pair of consistency values (`DCP`, `DCPP`) that serve as proxies for transferability of our model.
 
-The difference between the two values forming the pairs is described in *this scientific publication (TBD)*.
+The difference between the two values forming the pairs is described in [this](https://doi.org/10.1016/j.ecolmodel.2024.110667) scientific publication.
 
 Our model seems to be not super perfect, but it is more or less confident in the positive predictions (i.e. predicted presences), since `CPP_eval` is closer to 1 than to 0. Even if not absolutely confident, it is really consistent (i.e., `DCPP` is close to 0), so we might not afraid of transferability issues if used for spatial or temporal extrapolation.
 

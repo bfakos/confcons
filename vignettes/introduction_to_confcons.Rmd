@@ -40,6 +40,8 @@ Three small functions, `thresholds()`, `confidence()` and `consistency()`, belon
 
 In the example below we'll see how these function work and what are their parameters and returned value. For further details, please consult with the help page of the selected function and the examples given there.
 
+Also, in the last section, we'll see how multiple models can be evaluated in a `for` loop, `lapply()`, or the package 'ENMeval'.
+
 ## Workflow
 
 ### Introduction
@@ -67,6 +69,7 @@ suppressWarnings(library(sf))
 suppressWarnings(library(blockCV))
 suppressWarnings(library(ranger))
 suppressWarnings(library(ROCR))
+suppressWarnings(library(ENMeval))
 suppressWarnings(library(confcons))
 ```
 
@@ -133,17 +136,21 @@ legend(x = -2100000,
 
 We start to build a `data.frame` that will contain
 
+- coordinates (longitude and latitude) of the presence and absence locations,
 - the predictor values in the presence and absence locations,
-- the observed occurrences,
+- the observed occurrences (i.e. 1 or 0),
 - the training mask (`TRUE` for the location later used for model training, `FALSE` for evaluation locations), and
 - the predicted probabilities of occurrence (later appended).
 
-`raster::extract()` gathers the predictors from the studied locations for us. `blocks$folds[[1]]` contains two vectors of indices. We'll use the first vector for training (and the second one for evaluation).
+`sf::st_coordinates()` provides the coordinates and `raster::extract()` gathers the predictors from the studied locations for us. `blocks$folds[[1]]` contains two vectors of indices. We'll use the first vector for training (and the second one for evaluation).
 
 ```{r}
-dataset <- as.data.frame(terra::extract(x = environment,
-                                        y = occurrences,
-                                        ID = FALSE))
+coordinates <- sf::st_coordinates(occurrences)
+colnames(coordinates) <- c("longitude", "latitude")
+dataset <- cbind(coordinates,
+                 as.data.frame(terra::extract(x = environment,
+                                              y = occurrences,
+                                              ID = FALSE)))
 dataset$occurrences <- occurrences$occ
 dataset$training_mask <- (1:nrow(occurrences)) %in% blocks$folds_list[[1]][[1]]
 str(dataset)
@@ -321,3 +328,41 @@ rownames(conf_and_cons_df) <- model_IDs
 conf_and_cons_df
 ```
 
+One may want to evaluate several MaxEnt models (e.g. during the hyperparameter tuning) using several goodness-of-fit and transferability measures. In this case, we recommend using function `ENMevaluate()` from package `ENMeval`. It calculates AUC and the continuous Boyce index (CBI) automatically, but the list of the calculated measures can be complemented with any user-defined measures. For this, first, we define a function that calculates *confidence in positive predictions* and *consistency of positive predictions* from the argument `ENMevaluate()` provides to the user-defined functions.
+
+```{r}
+calculate_conf_and_cons <- function(vars) {
+  observations <- c(
+    rep(x = 1L, times = length(vars$occs.train.pred)),
+    rep(x = 0L, times = length(vars$bg.train.pred)),
+    rep(x = 1L, times = length(vars$occs.val.pred)),
+    rep(x = 0L, times = length(vars$bg.val.pred))
+  )
+  predictions <- c(vars$occs.train.pred, vars$bg.train.pred, vars$occs.val.pred, vars$bg.val.pred)
+  evaluation_mask <- c(
+    rep(x = FALSE, times = length(vars$occs.train.pred) + length(vars$bg.train.pred)),
+    rep(x = TRUE, times = length(vars$occs.val.pred) + length(vars$bg.val.pred))
+  )
+  measures <- confcons::measures(observations = observations, predictions = predictions, evaluation_mask = evaluation_mask, df = TRUE)[, c("CPP_eval", "DCPP")] # select two measures
+  colnames(measures) <- c("confidence", "consistency")
+  return(measures)
+}
+```
+
+Now, we perform a hyperparameter tuning (with varying feature classes and regularization multipliers) using spatial block cross-validation and display the CBI, the confidence and the consistency for each feature class × regularization multiplier combinations (averaged for the cross-validation folds).
+
+```{r}
+hyperparameter_evaluation <- ENMeval::ENMevaluate(
+  occs = dataset[dataset$occurrences == 1, c("longitude", "latitude", predictors)],
+  bg = dataset[dataset$occurrences == 0, c("longitude", "latitude", predictors)], 
+  tune.args = list(fc = c("L", "LQ", "LQH"),
+                   rm = seq(from = 0.5, to = 1.5, by = 0.5)), 
+  algorithm = "maxnet",
+  partitions = "block",
+  user.eval = calculate_conf_and_cons,
+  quiet = TRUE,
+  progbar = FALSE)
+hyperparameter_evaluation@results[, c("fc", "rm", "cbi.val.avg", "confidence.avg", "consistency.avg")]
+```
+
+According to the CBI values, the linear + quadratic features (LQ) with regularization multiplier set to 1.5 seems to be the best hyperparameter combination. However, confidence and consistency disagrees with CBI. According to the confidence measure, the best hyperparameter combinations are the LQH×1 and LQH×1.5 combinations, but their consistencies are suspiciously high, i.e., greater than 0, which suggests an artifact. Therefore we skip these combinations and find that the model with linear + quadratic + hinge features (LQH) with regularization multiplier set to 0.5 has the highest confidence and also the highest (but negative) consistency, so we select this hyperparameter combination for training the final MaxEnt model.

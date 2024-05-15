@@ -1,6 +1,6 @@
 # confcons (development version)
 
-* to be filled
+* ENMeval example added to the vignette
 
 # confcons 0.3.1
 
