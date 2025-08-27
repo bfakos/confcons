@@ -1,39 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://bfakos.github.io/confcons/404.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/articles/introduction_to_confcons.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/news/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/reference/confidence.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/reference/consistency.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/reference/measures.html</loc>
-  </url>
-  <url>
-    <loc>https://bfakos.github.io/confcons/reference/thresholds.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://bfakos.github.io/confcons/404.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/LICENSE.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/articles/index.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/articles/introduction_to_confcons.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/authors.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/index.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/news/index.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/reference/confidence.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/reference/consistency.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/reference/index.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/reference/measures.html</loc></url>
+<url><loc>https://bfakos.github.io/confcons/reference/thresholds.html</loc></url>
 </urlset>
+
