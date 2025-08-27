@@ -1,19 +1,13 @@
-## Resubmission (#2)
+## Resubmission
 
-This is a resubmission. In this version I have:
+This is a resubmission of the package after it was archived on CRAN.
 
--   Removed all \dontrun{}s and \donttest{}s from the examples and embraced with try() those codes that intentionally throw error or warning.
-
-## Resubmission (#1)
-
-This is a resubmission. In this version I have:
-
--   Added citation with DOI to Description part of the DESCRIPTION file.
-
--   Switched from \dontrun{} to \donttest{} where possible. Please note that some of the examples intentionally cause errors. These remained within \dontrun{}.
+### Changes
+- Fixed the issue that caused archival (improper handling of packages in Suggests).
+- Now all suggested packages are used conditionally, as required by 'Writing R Extensions'.
+- In the meanwhile, package "blockCV" (which suggested package originally caused the issue in my vignette) was also updated.
 
 ## R CMD check results
 
 0 errors \| 0 warnings \| 1 note
 
--   This is a new release.

@@ -63,6 +63,23 @@ install.packages("confcons", dependencies = TRUE)
 
 If installed, we can attach these packages to the R session (and suppress the not too important warnings about the R version under the packages were built):
 
+```{r, echo = FALSE}
+needed_packages <- c("terra", "sf", "blockCV", "ranger", "ROCR", "ecospat", "ENMeval")
+
+missing_packages <- needed_packages[!vapply(X = needed_packages, 
+                                    FUN = requireNamespace, 
+                                    quietly = TRUE, 
+                                    FUN.VALUE = logical(1))]
+
+if (length(missing_packages) > 0) {
+  writeLines(
+    paste0("The rest of the vignette cannot be loaded because the following package(s) is/are missing: ",
+    paste(missing_packages, collapse = ", "))
+  )
+  knitr::knit_exit()
+}
+```
+
 ```{r}
 suppressWarnings(library(terra))
 suppressWarnings(library(sf))
@@ -362,7 +379,7 @@ hyperparameter_evaluation <- ENMeval::ENMevaluate(
   partitions = "block",
   user.eval = calculate_conf_and_cons,
   quiet = TRUE,
-  progbar = FALSE)
+  updateProgress = FALSE)
 hyperparameter_evaluation@results[, c("fc", "rm", "cbi.val.avg", "confidence.avg", "consistency.avg")]
 ```
 
