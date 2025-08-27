@@ -1,6 +1,7 @@
-# confcons (development version)
+# confcons 0.3.2
 
 * ENMeval example added to the vignette
+* vignette and tests don't fail if sggested packages are missing
 
 # confcons 0.3.1
 

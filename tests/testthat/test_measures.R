@@ -29,71 +29,75 @@ test_that(desc = "returns expexted value for normal parameters - default paramet
 					}
 )
 
-test_that(desc = "returns expexted value for normal parameters - goodness = TRUE, ROCR available",
-					code = {
-						observations <- c(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L)
-						predictions <- c(0.1, 0.2, 0.4, 0.5, 0.5, 0.2, 0.3, 0.3, 0.4,    0.3, 0.65, 0.9, 0.9, 1, 0.1, 0.5, 0.8, 0.8)
-						evaluation_mask <- c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
-						expect_silent(object = measures(observations = observations,
-																						predictions = predictions,
-																						evaluation_mask = evaluation_mask,
-																						goodness = TRUE))
-						expect_equal(object = unname(is.na(measures(observations = observations,
-																					              predictions = predictions,
-																												evaluation_mask = evaluation_mask,
-																												goodness = TRUE)[c("AUC", "maxTSS")])),
-												 expected = c(FALSE, FALSE))
-						expect_type(object = measures(observations = observations,
-																					predictions = predictions,
-																					evaluation_mask = evaluation_mask,
-																					goodness = TRUE),
-												type = "double")
-						expect_vector(object = measures(observations = observations,
+if (requireNamespace("ROCR", quietly = TRUE)) {
+	test_that(desc = "returns expexted value for normal parameters - goodness = TRUE, ROCR available",
+						code = {
+							observations <- c(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L)
+							predictions <- c(0.1, 0.2, 0.4, 0.5, 0.5, 0.2, 0.3, 0.3, 0.4,    0.3, 0.65, 0.9, 0.9, 1, 0.1, 0.5, 0.8, 0.8)
+							evaluation_mask <- c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+							expect_silent(object = measures(observations = observations,
+																							predictions = predictions,
+																							evaluation_mask = evaluation_mask,
+																							goodness = TRUE))
+							expect_equal(object = unname(is.na(measures(observations = observations,
+																						              predictions = predictions,
+																													evaluation_mask = evaluation_mask,
+																													goodness = TRUE)[c("AUC", "maxTSS")])),
+													 expected = c(FALSE, FALSE))
+							expect_type(object = measures(observations = observations,
 																						predictions = predictions,
 																						evaluation_mask = evaluation_mask,
 																						goodness = TRUE),
-													ptype = numeric(length = 0))
-						expect_length(object = measures(observations = observations,
-																						predictions = predictions,
-																						evaluation_mask = evaluation_mask,
-																						goodness = TRUE),
-													n = 8)
-					}
-)
+													type = "double")
+							expect_vector(object = measures(observations = observations,
+																							predictions = predictions,
+																							evaluation_mask = evaluation_mask,
+																							goodness = TRUE),
+														ptype = numeric(length = 0))
+							expect_length(object = measures(observations = observations,
+																							predictions = predictions,
+																							evaluation_mask = evaluation_mask,
+																							goodness = TRUE),
+														n = 8)
+						}
+	)
+}
 
-test_that(desc = "returns expexted value for normal parameters - goodness = TRUE, ROCR unavailable",
-					code = {
-						mockery::stub(measures, "requireNamespace", FALSE)
-						observations <- c(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L)
-						predictions <- c(0.1, 0.2, 0.4, 0.5, 0.5, 0.2, 0.3, 0.3, 0.4,    0.3, 0.65, 0.9, 0.9, 1, 0.1, 0.5, 0.8, 0.8)
-						evaluation_mask <- c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
-						expect_warning(object = measures(observations = observations,
-																					   predictions = predictions,
-																					   evaluation_mask = evaluation_mask,
-																					   goodness = TRUE),
-												 regexp = NULL)
-						expect_equal(object =unname(measures(observations = observations,
-																				         predictions = predictions,
-																								 evaluation_mask = evaluation_mask,
-																								 goodness = TRUE)[c("AUC", "maxTSS")]),
-												 expected = c(NA_real_, NA_real_)) %>% suppressWarnings()
-						expect_type(object = measures(observations = observations,
-																					predictions = predictions,
-																					evaluation_mask = evaluation_mask,
-																					goodness = TRUE),
-												type = "double") %>% suppressWarnings()
-						expect_vector(object = measures(observations = observations,
+if (requireNamespace("ROCR", quietly = TRUE)) {
+	test_that(desc = "returns expexted value for normal parameters - goodness = TRUE, ROCR unavailable",
+						code = {
+							mockery::stub(measures, "requireNamespace", FALSE)
+							observations <- c(0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L, 1L)
+							predictions <- c(0.1, 0.2, 0.4, 0.5, 0.5, 0.2, 0.3, 0.3, 0.4,    0.3, 0.65, 0.9, 0.9, 1, 0.1, 0.5, 0.8, 0.8)
+							evaluation_mask <- c(FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, TRUE)
+							expect_warning(object = measures(observations = observations,
+																						   predictions = predictions,
+																						   evaluation_mask = evaluation_mask,
+																						   goodness = TRUE),
+													 regexp = NULL)
+							expect_equal(object =unname(measures(observations = observations,
+																					         predictions = predictions,
+																									 evaluation_mask = evaluation_mask,
+																									 goodness = TRUE)[c("AUC", "maxTSS")]),
+													 expected = c(NA_real_, NA_real_)) %>% suppressWarnings()
+							expect_type(object = measures(observations = observations,
 																						predictions = predictions,
 																						evaluation_mask = evaluation_mask,
 																						goodness = TRUE),
-													ptype = numeric(length = 0)) %>% suppressWarnings()
-						expect_length(object = measures(observations = observations,
-																						predictions = predictions,
-																						evaluation_mask = evaluation_mask,
-																						goodness = TRUE),
-													n = 8) %>% suppressWarnings()
-					}
-)
+													type = "double") %>% suppressWarnings()
+							expect_vector(object = measures(observations = observations,
+																							predictions = predictions,
+																							evaluation_mask = evaluation_mask,
+																							goodness = TRUE),
+														ptype = numeric(length = 0)) %>% suppressWarnings()
+							expect_length(object = measures(observations = observations,
+																							predictions = predictions,
+																							evaluation_mask = evaluation_mask,
+																							goodness = TRUE),
+														n = 8) %>% suppressWarnings()
+						}
+	)
+}
 
 test_that(desc = "returns expexted value for normal parameters - df = TRUE",
 					code = {
