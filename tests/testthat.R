@@ -1,5 +1,5 @@
 library(testthat)
 library(confcons)
-requireNamespace(ROCR)
+requireNamespace("ROCR", quietly = TRUE)
 
 test_check("confcons")
