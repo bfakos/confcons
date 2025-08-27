@@ -378,8 +378,8 @@ hyperparameter_evaluation <- ENMeval::ENMevaluate(
   algorithm = "maxnet",
   partitions = "block",
   user.eval = calculate_conf_and_cons,
-  quiet = TRUE,
-  updateProgress = FALSE)
+  updateProgress = FALSE,
+  quiet = TRUE)
 hyperparameter_evaluation@results[, c("fc", "rm", "cbi.val.avg", "confidence.avg", "consistency.avg")]
 ```
 
