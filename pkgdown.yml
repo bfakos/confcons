@@ -3,7 +3,7 @@ pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   introduction_to_confcons: introduction_to_confcons.html
-last_built: 2025-08-29T06:22Z
+last_built: 2025-08-29T06:26Z
 urls:
   reference: https://bfakos.github.io/confcons/reference
   article: https://bfakos.github.io/confcons/articles
